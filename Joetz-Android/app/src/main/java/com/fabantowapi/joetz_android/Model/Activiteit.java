@@ -1,4 +1,4 @@
-package com.fabantowapi.joetz_android.Model;
+package com.fabantowapi.joetz_android.model;
 
 import java.util.ArrayList;
 import java.util.Date;
