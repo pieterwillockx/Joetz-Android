@@ -2,6 +2,7 @@ package com.fabantowapi.joetz_android.model;
 
 import android.media.Image;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,8 +30,10 @@ public class Kamp {
     private Image sfeerFoto;
     private List<Image> sfeerImages;
     private List<Medewerker> medewerkers;
+    private List<Inschrijving> inschrijvingen;
+    private Adres adres;
 
-    public Kamp(String naam, String omschrijving, Date startDatum, Date eindeDatum, int aantalDagen, int aantalNachten, String vervoer, String formule, Double basisPrijs, Double bondPrijs, int kortingen, int inbegrepenInPrijs, int maxLeeftijd, int minLeeftijd, int maxDeelnemers, String contact, Image sfeerFoto, List<Image> sfeerImages) {
+    public Kamp(String naam, String omschrijving, Date startDatum, Date eindeDatum, int aantalDagen, int aantalNachten, String vervoer, String formule, Double basisPrijs, Double bondPrijs, int kortingen, int inbegrepenInPrijs, int maxLeeftijd, int minLeeftijd, int maxDeelnemers, String contact, Image sfeerFoto, List<Image> sfeerImages,Adres adres) {
         this.naam = naam;
         this.omschrijving = omschrijving;
         this.startDatum = startDatum;
@@ -49,6 +52,33 @@ public class Kamp {
         this.contact = contact;
         this.sfeerFoto = sfeerFoto;
         this.sfeerImages = sfeerImages;
+        inschrijvingen = new ArrayList<>();
+        medewerkers = new ArrayList<>();
+       this.adres = adres;
+
+    }
+
+    public Adres getAdres() {
+        return adres;
+    }
+
+    public void addMedewerker(Medewerker medewerker){
+        medewerkers.add(medewerker);
+
+    }
+
+    public void addInschrijving(Inschrijving inschrijving){
+        inschrijvingen.add(inschrijving);
+
+    }
+
+
+    public List<Medewerker> getMedewerkers() {
+        return medewerkers;
+    }
+
+    public List<Inschrijving> getInschrijvingen() {
+        return inschrijvingen;
     }
 
     public String getNaam() {

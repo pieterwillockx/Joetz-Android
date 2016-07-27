@@ -15,10 +15,12 @@ public class Contactpersoon {
     private int aansluitNummer;
     private Boolean betaland;
     private Boolean ouder;
-
+    private Adres adres;
     private List<Lid> leden;
 
-    public Contactpersoon(String naam, String voornaam, String rijksregisternummer, String telefoonNummer, String email, int aansluitNummer, Boolean betaland, Boolean ouder, List<Lid> leden) {
+
+
+    public Contactpersoon(String naam, String voornaam, String rijksregisternummer, String telefoonNummer, String email, int aansluitNummer, Boolean betaland, Boolean ouder, List<Lid> leden, Adres adres) {
         this.naam = naam;
         this.voornaam = voornaam;
         this.rijksregisternummer = rijksregisternummer;
@@ -28,6 +30,11 @@ public class Contactpersoon {
         this.betaland = betaland;
         this.ouder = ouder;
         this.leden = leden;
+        this.adres = adres;
+    }
+
+    public Adres getAdres() {
+        return adres;
     }
 
     public String getNaam() {

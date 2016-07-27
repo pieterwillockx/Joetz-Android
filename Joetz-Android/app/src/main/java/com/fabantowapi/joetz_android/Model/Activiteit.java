@@ -14,7 +14,7 @@ public class Activiteit {
     private Boolean heleDag;
     private Date begin;
     private Date einde;
-    private List<Gebruiker> deelnemers;
+    private List<Medewerker> medewerkers;
 
     public Activiteit(String naam, Date einde, Date begin, Boolean heleDag, String locatie) {
         this.naam = naam;
@@ -22,12 +22,16 @@ public class Activiteit {
         this.begin = begin;
         this.heleDag = heleDag;
         this.locatie = locatie;
-        deelnemers = new ArrayList<>();
+        medewerkers = new ArrayList<>();
 
     }
 
-    public void addDeelnemer(Gebruiker deelnemer){
-        deelnemers.add(deelnemer);
+    public List<Medewerker> getMedewerkers() {
+        return medewerkers;
+    }
+
+    public void addDeelnemer(Medewerker deelnemer){
+        medewerkers.add(deelnemer);
 
     }
 
