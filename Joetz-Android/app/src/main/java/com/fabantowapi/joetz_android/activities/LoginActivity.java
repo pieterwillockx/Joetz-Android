@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.BinderThread;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.fabantowapi.joetz_android.R;
 
@@ -20,6 +21,9 @@ public class LoginActivity extends AppCompatActivity{
     @Bind(R.id.btnLogin)
     public Button btnLogin;
 
+    @Bind(R.id.txtwwVergeten)
+    public TextView txtWwVergeten;
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -30,5 +34,14 @@ public class LoginActivity extends AppCompatActivity{
     @OnClick(R.id.btnLogin)
     public void onLoginButtonClicked() {
     // valideer;
+    }
+    @OnClick(R.id.txtwwVergeten)
+    public void wachtwoordVergeten(){
+       // Start ww vergeten procedure
+    }
+
+    @OnClick(R.id.txtRegistreer)
+    public void registreer(){
+        // start registreer procedure
     }
 }

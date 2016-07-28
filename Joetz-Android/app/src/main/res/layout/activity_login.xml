@@ -11,14 +11,14 @@
         android:layout_height="wrap_content"
         android:text="Login"
         android:id="@+id/btnLogin"
-        android:layout_marginBottom="47dp"
+        android:layout_marginBottom="128dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="numberPassword"
+        android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/txtWachtwoord"
         android:layout_above="@+id/btnLogin"
@@ -42,9 +42,9 @@
         android:inputType="textEmailAddress"
         android:ems="10"
         android:id="@+id/txtEmail"
-        android:layout_centerVertical="true"
+        android:layout_above="@+id/lblWachtwoord"
         android:layout_alignLeft="@+id/lblWachtwoord"
-        android:layout_alignStart="@+id/lblWachtwoord" />
+        android:layout_alignStart="@+id/lblWachtwoord"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -65,5 +65,30 @@
         android:layout_marginBottom="67dp"
         android:layout_above="@+id/lblEmail"
         android:layout_alignLeft="@+id/lblEmail"
-        android:layout_alignStart="@+id/lblEmail" />
+        android:layout_alignStart="@+id/lblEmail"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Wachtwoord vergeten"
+        android:id="@+id/txtwwVergeten"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/btnLogin"
+        android:layout_alignStart="@+id/btnLogin"
+        android:layout_marginBottom="38dp"
+        android:textColor="#0000EE"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Registreer"
+        android:id="@+id/txtRegistreer"
+        android:layout_above="@+id/txtwwVergeten"
+        android:layout_alignLeft="@+id/txtwwVergeten"
+        android:layout_alignStart="@+id/txtwwVergeten"
+        android:textColor="#0000EE"/>
+
+
 </RelativeLayout>
