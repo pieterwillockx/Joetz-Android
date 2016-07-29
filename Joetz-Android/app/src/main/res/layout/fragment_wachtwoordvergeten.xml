@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Verstuur"
+        android:id="@+id/btnVerstuurRecoveryEmail"
+        android:layout_marginBottom="165dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/txtRecoveryEmail"
+        android:layout_above="@+id/btnVerstuurRecoveryEmail"
+        android:layout_alignLeft="@+id/btnVerstuurRecoveryEmail"
+        android:layout_alignStart="@+id/btnVerstuurRecoveryEmail"
+        android:layout_alignRight="@+id/btnVerstuurRecoveryEmail"
+        android:layout_alignEnd="@+id/btnVerstuurRecoveryEmail" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Geef het E-mailadres van je account in om een recovery Email te versturen"
+        android:id="@+id/lblRecoveryEmail"
+        android:layout_above="@+id/txtRecoveryEmail"
+        android:layout_alignLeft="@+id/txtRecoveryEmail"
+        android:layout_alignStart="@+id/txtRecoveryEmail"
+        android:layout_alignRight="@+id/txtRecoveryEmail"
+        android:layout_alignEnd="@+id/txtRecoveryEmail" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Wachtwoord vergeten"
+        android:id="@+id/lblWachtwoordVergeten"
+        android:layout_above="@+id/lblRecoveryEmail"
+        android:layout_alignLeft="@+id/lblRecoveryEmail"
+        android:layout_alignStart="@+id/lblRecoveryEmail"
+        android:layout_marginBottom="76dp" />
+</RelativeLayout>

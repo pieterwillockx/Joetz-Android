@@ -32,16 +32,29 @@ public class LoginFragment extends Fragment {
     }
     @OnClick(R.id.txtwwVergeten)
     public void wachtwoordVergeten(){
-        // Start ww vergeten procedure
+        navigate(2);
     }
 
     @OnClick(R.id.txtRegistreer)
     public void registreer(){
-        // start registreer procedure
+      navigate(1);
+    }
+
+    public void navigate(int fragmentId){
+        Fragment fragment;
+
         Bundle args =new Bundle();
         FragmentManager manager = getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        Fragment fragment = new RegistratieFragment();
+
+        switch(fragmentId){
+            case 1: fragment = new RegistratieFragment();
+                break;
+            case 2: fragment = new WachtwoordVergetenFragment();
+                break;
+            default : fragment = new LoginFragment();
+        }
+
         fragment.setArguments(args);
         transaction.replace(R.id.fragment_container, fragment);
         transaction.commit();

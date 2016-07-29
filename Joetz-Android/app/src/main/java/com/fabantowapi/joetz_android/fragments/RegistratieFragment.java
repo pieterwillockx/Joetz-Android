@@ -22,17 +22,17 @@ import butterknife.OnClick;
 public class RegistratieFragment extends Fragment{
 
     @Bind(R.id.txtEmailRegistreer)
-    private EditText txtEmail;
+    public EditText txtEmail;
     @Bind(R.id.txtWachtwoordRegistreer)
-    private EditText txtWachtwoord;
+    public EditText txtWachtwoord;
     @Bind(R.id.txtNaam)
-    private EditText txtNaam;
+    public EditText txtNaam;
     @Bind(R.id.txtVoornaam)
-    private EditText txtVoornaam;
+    public EditText txtVoornaam;
     @Bind(R.id.txtRijksregisternummer)
-    private EditText txtRijksregisternumer;
+    public EditText txtRijksregisternumer;
     @Bind(R.id.txtGeboorteDatum)
-    private EditText txtGeboorteDatum;
+    public EditText txtGeboorteDatum;
 
 
 
