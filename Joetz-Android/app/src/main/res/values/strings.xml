@@ -13,5 +13,9 @@
     <string name="regEmail">E-mailadres :</string>
     <string name="verstuur">Verstuur</string>
     <string name="geheimeVraag">Geef het antwoord op je geheime vraag :</string>
-
+    <string name="nav_drawer_historiek">Historiek</string>
+    <string name="nav_drawer_activiteit">Activiteiten</string>
+    <string name="nav_drawer_forum">Forum</string>
+    <string name="nav_drawer_kampen">Kampen</string>
+    <string name="nav_drawer_home">Home</string>
 </resources>

@@ -3,6 +3,7 @@ package com.fabantowapi.joetz_android.activities;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
@@ -40,4 +41,7 @@ public class LoginActivity extends AppCompatActivity{
         transaction.add(R.id.fragment_container, fragment);
         transaction.commit();
     }
+
+
+
 }

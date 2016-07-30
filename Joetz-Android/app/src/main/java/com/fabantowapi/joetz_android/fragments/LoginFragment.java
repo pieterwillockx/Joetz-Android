@@ -3,12 +3,15 @@ package com.fabantowapi.joetz_android.fragments;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.fabantowapi.joetz_android.R;
+import com.fabantowapi.joetz_android.activities.LoginActivity;
+import com.fabantowapi.joetz_android.activities.MainActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -29,7 +32,7 @@ public class LoginFragment extends Fragment {
     @OnClick(R.id.btnLogin)
     public void onLoginButtonClicked() {
         // valideer;
-    }
+        getActivity().startActivity(new Intent(getActivity(),MainActivity.class));       }
     @OnClick(R.id.txtwwVergeten)
     public void wachtwoordVergeten(){
         navigate(2);
