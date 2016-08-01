@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -43,6 +44,13 @@ public class MainActivity extends AppCompatActivity {
     public DrawerLayout mDrawerLayout;
     @Bind(R.id.left_drawer)
     public NavigationView mLeftDrawer;
+    @Bind(R.id.fragment_container)
+    public View fragementView;
+    @Bind(R.id.loading_mainpage)
+    public View loadingMainpage;
+
+    @Bind(R.id.loading_mainpage_image)
+    public ImageView imageLoading;
 
     private List<Artikel> artikels;
 
@@ -51,7 +59,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+     //   fragementView.setVisibility(View.INVISIBLE);
        initializeDrawer();
+        System.out.println("set invis");
+        //fragementView.setVisibility(View.VISIBLE);
+        downloadArtikels();
+
+
     }
 
     public void initializeDrawer(){
@@ -83,8 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 fragmentClass = LoginFragment.class;
                 break;
             case R.id.nav_forum:
-               testArtikels();
-                toonArtikelLijst();
+
                 break;
             case R.id.nav_activiteiten:
                 break;
@@ -111,11 +125,16 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private void testArtikels(){
+    private void downloadArtikels(){
+        // dl artikels van api
+
         artikels = new ArrayList<>();
-        artikels.add(new Artikel(1,"Voorbeeld titel 1","Test",null));
-        artikels.add(new Artikel(2,"Voorbeeld titel 2","Testen",null));
-        artikels.add(new Artikel(3,"Voorbeeld titel 3","Test",null));
+        artikels.add(new Artikel(1,"BEESTIG LEUKE VAKANTIES","","http://blog.joetz.be/wp-content/uploads/zee-3IMG_0063.jpg"));
+        artikels.add(new Artikel(2,"100% PLEZIERGARANTIE","","http://blog.joetz.be/wp-content/uploads/plezier.jpg"));
+        artikels.add(new Artikel(3,"X-PLORE AUSTRIA","","http://blog.joetz.be/wp-content/uploads/x_plore_austria_01.jpg"));
+
+        toonArtikelLijst();
+
     }
     private void toonArtikelLijst(){
         ListView listView = (ListView) findViewById(R.id.artikel_list);
@@ -129,8 +148,7 @@ public class MainActivity extends AppCompatActivity {
              //   getActivity().onChallengeItemClicked(position);
             }
         };
-
-        listView.setOnItemClickListener(listener);
+       listView.setOnItemClickListener(listener);
     }
 
 }

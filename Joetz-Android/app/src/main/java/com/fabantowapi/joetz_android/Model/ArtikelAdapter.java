@@ -10,8 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fabantowapi.joetz_android.R;
+import com.fabantowapi.joetz_android.tasks.ImageDownloadTask;
 
 import org.w3c.dom.Text;
+
+import java.io.InputStream;
 
 /**
  * Created by a_176_000 on 30-7-2016.
@@ -21,6 +24,8 @@ public class ArtikelAdapter extends ArrayAdapter<Artikel> {
     Context context;
     int layoutResourceId;
     Artikel[] artikels = null;
+
+    View test;
 
     public ArtikelAdapter (Context context, int layoutResourceId, Artikel[] artikels){
         super(context,layoutResourceId,artikels);
@@ -39,7 +44,7 @@ public class ArtikelAdapter extends ArrayAdapter<Artikel> {
 
                 LayoutInflater inflater = ((Activity) context).getLayoutInflater();
                 row = inflater.inflate(layoutResourceId, parent, false);
-
+                test = parent;
                 holder = new ArtikelHolder();
                 holder.artikelTitel = (TextView) row.findViewById(R.id.artikeldetail_titel);
                 holder.artikelImage = (ImageView) row.findViewById(R.id.artikel_image);
@@ -52,10 +57,19 @@ public class ArtikelAdapter extends ArrayAdapter<Artikel> {
             }
         Artikel artikel = artikels[position];
         holder.artikelTitel.setText(artikel.getArtikelTitel());
-        holder.artikelImage.setImageResource(R.mipmap.ic_launcher);
+        new ImageDownloadTask(holder.artikelImage).execute(artikel.getArtikelImageUrl());
+
+        System.out.println("CHECKD");
+        if(artikel == artikels[artikels.length-1]){
+            System.out.println("set Visibibleee");
+        //    test.setVisibility(View.INVISIBLE);
+        }
+
 
         return row;
     }
+
+
 
     static class ArtikelHolder{
         TextView artikelTitel;

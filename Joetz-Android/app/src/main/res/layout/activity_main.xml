@@ -9,22 +9,41 @@
     <RelativeLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
 
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:fillViewport="true"
-        android:id="@+id/scrollView2"
-        android:padding="15dp">
+    >
 
-        <ListView
-            android:id="@+id/artikel_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:fillViewport="true"
+            android:id="@+id/scrollView2"
+             android:padding="15dp">
 
-        </ListView>
-      </ScrollView>
+            <ListView
+                android:id="@+id/artikel_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </ListView>
+        </ScrollView>
+
+    </RelativeLayout>
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:id="@+id/loading_mainpage">
+       <ImageView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_centerInParent="true"
+           android:id="@+id/loading_mainpage_image"
+          android:src="@drawable/ic_action_loading_image"
+           android:contentDescription="@string/loadingImage" />
+   </RelativeLayout>
+
+
 
     <android.support.design.widget.NavigationView
         android:id="@+id/left_drawer"

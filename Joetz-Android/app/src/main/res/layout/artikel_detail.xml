@@ -12,9 +12,10 @@
 
         <ImageView
             android:id="@+id/artikel_image"
-            android:layout_width="70dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="left"
+            android:scaleType="centerCrop"
             android:paddingRight="15dp"/>
 
 
