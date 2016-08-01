@@ -6,7 +6,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="120dp"
+        android:layout_height="150dp"
         android:gravity="center_horizontal"
         android:padding="15dp">
 
@@ -22,11 +22,12 @@
 
     </LinearLayout>
 
-
     <TextView
         android:id="@+id/artikeldetail_titel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="15dp"/>
+
+
 
 </LinearLayout>

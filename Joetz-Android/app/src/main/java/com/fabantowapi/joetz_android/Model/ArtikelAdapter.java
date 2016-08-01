@@ -2,6 +2,7 @@ package com.fabantowapi.joetz_android.model;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,11 +58,11 @@ public class ArtikelAdapter extends ArrayAdapter<Artikel> {
             }
         Artikel artikel = artikels[position];
         holder.artikelTitel.setText(artikel.getArtikelTitel());
+        holder.artikelImage.setImageDrawable(context.getResources().getDrawable(R.drawable.offline_image));
+
         new ImageDownloadTask(holder.artikelImage).execute(artikel.getArtikelImageUrl());
 
-        System.out.println("CHECKD");
         if(artikel == artikels[artikels.length-1]){
-            System.out.println("set Visibibleee");
         //    test.setVisibility(View.INVISIBLE);
         }
 

@@ -1,30 +1,23 @@
 package com.fabantowapi.joetz_android.activities;
 
-import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.DialogInterface;
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.fabantowapi.joetz_android.R;
+import com.fabantowapi.joetz_android.fragments.ArtikelDetailFragment;
+import com.fabantowapi.joetz_android.fragments.ArtikelListFragment;
 import com.fabantowapi.joetz_android.fragments.LoginFragment;
-import com.fabantowapi.joetz_android.fragments.RegistratieFragment;
-import com.fabantowapi.joetz_android.fragments.WachtwoordVergetenFragment;
 import com.fabantowapi.joetz_android.model.Artikel;
 import com.fabantowapi.joetz_android.model.ArtikelAdapter;
 
@@ -33,7 +26,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by a_176_000 on 29-7-2016.
@@ -44,15 +36,9 @@ public class MainActivity extends AppCompatActivity {
     public DrawerLayout mDrawerLayout;
     @Bind(R.id.left_drawer)
     public NavigationView mLeftDrawer;
-    @Bind(R.id.fragment_container)
-    public View fragementView;
-    @Bind(R.id.loading_mainpage)
-    public View loadingMainpage;
 
-    @Bind(R.id.loading_mainpage_image)
-    public ImageView imageLoading;
 
-    private List<Artikel> artikels;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -60,13 +46,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-     //   fragementView.setVisibility(View.INVISIBLE);
        initializeDrawer();
-        System.out.println("set invis");
-        //fragementView.setVisibility(View.VISIBLE);
-        downloadArtikels();
+       laadArtikels();
 
 
+
+    }
+    public void laadArtikels(){
+
+        Bundle args =new Bundle();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ArtikelListFragment artikelDetailFragment = new ArtikelListFragment();
+        artikelDetailFragment.setArguments(args);
+        ft.replace(R.id.mainpage_container, artikelDetailFragment);
+        ft.commit();
     }
 
     public void initializeDrawer(){
@@ -125,30 +119,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private void downloadArtikels(){
-        // dl artikels van api
 
-        artikels = new ArrayList<>();
-        artikels.add(new Artikel(1,"BEESTIG LEUKE VAKANTIES","","http://blog.joetz.be/wp-content/uploads/zee-3IMG_0063.jpg"));
-        artikels.add(new Artikel(2,"100% PLEZIERGARANTIE","","http://blog.joetz.be/wp-content/uploads/plezier.jpg"));
-        artikels.add(new Artikel(3,"X-PLORE AUSTRIA","","http://blog.joetz.be/wp-content/uploads/x_plore_austria_01.jpg"));
 
-        toonArtikelLijst();
 
-    }
-    private void toonArtikelLijst(){
-        ListView listView = (ListView) findViewById(R.id.artikel_list);
-        ArtikelAdapter artikelAdapter = new ArtikelAdapter(
-                this, R.layout.artikel_detail, artikels.toArray(new Artikel[artikels.size()]));
-        listView.setAdapter(artikelAdapter);
-
-        AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener(){
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-             //   getActivity().onChallengeItemClicked(position);
-            }
-        };
-       listView.setOnItemClickListener(listener);
-    }
 
 }

@@ -1,11 +1,14 @@
 package com.fabantowapi.joetz_android.model;
 
 import android.media.Image;
+import android.os.Parcelable;
+
+import java.io.Serializable;
 
 /**
  * Created by a_176_000 on 30-7-2016.
  */
-public class Artikel {
+public class Artikel implements Serializable {
 
     private int artikelId;
     private String artikelTitel;
