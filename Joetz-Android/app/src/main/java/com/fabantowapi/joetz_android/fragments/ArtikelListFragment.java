@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.model.Artikel;
 import com.fabantowapi.joetz_android.model.ArtikelAdapter;
@@ -38,6 +37,7 @@ public class ArtikelListFragment extends Fragment {
 
     private void downloadArtikels(){
         // dl artikels van api
+        //tijdelijk hardcoded artikels
 
         artikels = new ArrayList<>();
         artikels.add(new Artikel(5,"BEESTIG LEUKE VAKANTIES","Bij JOETZ betaal je geen euro te veel!\n" +
@@ -79,17 +79,13 @@ public class ArtikelListFragment extends Fragment {
         AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-                //   getActivity().onChallengeItemClicked(position);
-                System.out.println("item click " + artikels.get(position).getArtikelTitel());
-                System.out.println(position);
-                System.out.println(id);
+
                 laadArtikel(position);
-
-
             }
         };
         listView.setOnItemClickListener(listener);
     }
+
     public void laadArtikel( int positie){
 
         Bundle args =new Bundle();

@@ -4,11 +4,22 @@
     android:layout_height="match_parent"
     android:id="@+id/fragment_container">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/nieuwtjes"
+        android:id="@+id/txtArtikelLijst"
+        android:layout_alignParentTop="true"
+        android:padding="15dp"
+       />
+
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_below="@id/txtArtikelLijst"
         android:fillViewport="true"
-        android:id="@+id/scrollView2"
+        android:id="@+id/svArtikelList"
         android:padding="15dp">
 
         <ListView
@@ -18,4 +29,6 @@
 
         </ListView>
     </ScrollView>
+
+
 </RelativeLayout>

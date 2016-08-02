@@ -62,9 +62,6 @@ public class ArtikelAdapter extends ArrayAdapter<Artikel> {
 
         new ImageDownloadTask(holder.artikelImage).execute(artikel.getArtikelImageUrl());
 
-        if(artikel == artikels[artikels.length-1]){
-        //    test.setVisibility(View.INVISIBLE);
-        }
 
 
         return row;
