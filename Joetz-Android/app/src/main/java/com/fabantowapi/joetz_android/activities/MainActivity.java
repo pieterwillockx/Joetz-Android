@@ -14,6 +14,7 @@ import android.view.View;
 
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.fragments.ArtikelListFragment;
+import com.fabantowapi.joetz_android.fragments.KampenListFragment;
 import com.fabantowapi.joetz_android.fragments.LoginFragment;
 
 import butterknife.Bind;
@@ -62,11 +63,11 @@ public class MainActivity extends AppCompatActivity {
                 fragmentClass = LoginFragment.class;
                 break;
             case R.id.nav_forum:
-
                 break;
             case R.id.nav_activiteiten:
                 break;
             case R.id.nav_kampen:
+                fragmentClass = KampenListFragment.class;
                 break;
             default:
                 fragmentClass = MainActivity.class;
