@@ -40,6 +40,8 @@ public class KampenListFragment extends Fragment {
 
         mAdapter = new KampAdapter(testData().toArray(new Kamp[testData().size()]),getActivity());
         mRecyclerView.setAdapter(mAdapter);
+
+
         return view;
     }
 

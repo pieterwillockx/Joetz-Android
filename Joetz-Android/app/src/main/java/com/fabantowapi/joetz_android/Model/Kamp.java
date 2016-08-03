@@ -2,6 +2,7 @@ package com.fabantowapi.joetz_android.model;
 
 import android.media.Image;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 /**
  * Created by a_176_000 on 26-7-2016.
  */
-public class Kamp {
+public class Kamp implements Serializable {
 
     private String naam;
     private String omschrijving;

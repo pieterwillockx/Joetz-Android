@@ -2,7 +2,11 @@ package com.fabantowapi.joetz_android.model;
 
 
 
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +15,10 @@ import android.widget.ImageView;
 import android.widget.TextView;;
 
 import com.fabantowapi.joetz_android.R;
+import com.fabantowapi.joetz_android.fragments.ArtikelDetailFragment;
+import com.fabantowapi.joetz_android.fragments.KampenDetailFragment;
+
+import butterknife.OnClick;
 
 
 /**
@@ -20,6 +28,7 @@ public class KampAdapter extends RecyclerView.Adapter<KampAdapter.ViewHolder>{
 
     public Kamp[] kampen;
     public Context context;
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView txtKampTitel;
@@ -58,12 +67,27 @@ public class KampAdapter extends RecyclerView.Adapter<KampAdapter.ViewHolder>{
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        System.out.println("done");
+        final Kamp kamp = kampen[position];
         holder.txtKampTitel.setText(kampen[position].getNaam());
         holder.txtDatum.setText("Placeholder Datum");
         holder.txtLocatie.setText("Placeholder Locatie");
         holder.imgKamp.setImageDrawable(context.getResources().getDrawable(R.drawable.offline_image));
 
+        holder.itemView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Bundle args =new Bundle();
+                FragmentManager fragmentManager = ((Activity) context).getFragmentManager();
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+                KampenDetailFragment kampenDetailFragment = new KampenDetailFragment();
+                kampenDetailFragment.setArguments(args);
+
+                ((Activity) context).getIntent().putExtra("kamp", kamp);
+                ft.replace(R.id.mainpage_container, kampenDetailFragment);
+                ft.commit();
+
+            }
+        });
 
     }
     @Override
@@ -71,4 +95,6 @@ public class KampAdapter extends RecyclerView.Adapter<KampAdapter.ViewHolder>{
         return kampen.length;
 
     }
+
+
 }
