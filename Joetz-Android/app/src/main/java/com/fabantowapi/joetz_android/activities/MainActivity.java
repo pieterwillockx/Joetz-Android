@@ -14,6 +14,7 @@ import android.view.View;
 
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.fragments.ArtikelListFragment;
+import com.fabantowapi.joetz_android.fragments.HistoriekListFragment;
 import com.fabantowapi.joetz_android.fragments.KampenListFragment;
 import com.fabantowapi.joetz_android.fragments.LoginFragment;
 
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (itemId) {
             case R.id.nav_historiek:
-                fragmentClass = LoginFragment.class;
+                fragmentClass = HistoriekListFragment.class;
                 break;
             case R.id.nav_forum:
                 break;

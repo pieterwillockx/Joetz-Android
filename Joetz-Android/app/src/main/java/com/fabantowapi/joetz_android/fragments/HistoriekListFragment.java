@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.fabantowapi.joetz_android.R;
+import com.fabantowapi.joetz_android.model.HistoriekAdapter;
 import com.fabantowapi.joetz_android.model.Kamp;
 import com.fabantowapi.joetz_android.model.KampAdapter;
 
@@ -19,26 +20,26 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by Anton Rooseleer on 2-8-2016.
+ * Created by Anton Rooseleer on 9-8-2016.
  */
-public class KampenListFragment extends Fragment {
+public class HistoriekListFragment extends Fragment {
+    @Bind(R.id.historiek_recycler_view)
 
-    @Bind(R.id.kampen_recycler_view)
     public RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_kampen_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_historiek_list, container, false);
         ButterKnife.bind(this, view);
 
 
         mRecyclerView.setHasFixedSize(true);
-       mLayoutManager = new LinearLayoutManager(getActivity());
+        mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new KampAdapter(testData().toArray(new Kamp[testData().size()]),getActivity());
+        mAdapter = new HistoriekAdapter(testData().toArray(new Kamp[testData().size()]),getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
 
@@ -46,7 +47,7 @@ public class KampenListFragment extends Fragment {
     }
 
     public List<Kamp> testData(){
-       List<Kamp> testData = new ArrayList<>();
+        List<Kamp> testData = new ArrayList<>();
         testData.add(new Kamp("Smurf's up","test omschrijving",null,null,4,4,"auto","goede",20.0,30.0,5,10,10,5,10,"mij",null,null,null));
         testData.add(new Kamp("Boekenwurmen En Speelvogels","test omschrijving",null,null,4,4,"auto","goede",20.0,30.0,5,10,10,5,10,"mij",null,null,null));
         testData.add(new Kamp("Sierkus Hatsjoe","test omschrijving",null,null,4,4,"auto","goede",20.0,30.0,5,10,10,5,10,"mij",null,null,null));

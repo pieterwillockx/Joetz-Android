@@ -66,7 +66,7 @@ public class KampenDetailFragment extends Fragment {
     @OnClick(R.id.kampenDetail_mededelers)
     public void toonMededelers(){
 
-        
+
 
     }
 }
