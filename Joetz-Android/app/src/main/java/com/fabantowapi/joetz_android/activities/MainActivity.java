@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.fabantowapi.joetz_android.R;
+import com.fabantowapi.joetz_android.fragments.ActivityListFragment;
 import com.fabantowapi.joetz_android.fragments.ArtikelListFragment;
 import com.fabantowapi.joetz_android.fragments.HistoriekListFragment;
 import com.fabantowapi.joetz_android.fragments.KampenListFragment;
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.nav_forum:
                 break;
             case R.id.nav_activiteiten:
+                fragmentClass = ActivityListFragment.class;
                 break;
             case R.id.nav_kampen:
                 fragmentClass = KampenListFragment.class;

@@ -1,5 +1,6 @@
 package com.fabantowapi.joetz_android.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -7,20 +8,19 @@ import java.util.List;
 /**
  * Created by a_176_000 on 26-7-2016.
  */
-public class Activiteit {
+public class Activiteit implements Serializable {
 
     private String naam;
     private String locatie;
-    private Boolean heleDag;
     private Date begin;
     private Date einde;
     private List<Medewerker> medewerkers;
 
-    public Activiteit(String naam, Date einde, Date begin, Boolean heleDag, String locatie) {
+    public Activiteit(String naam, Date einde, Date begin, String locatie) {
         this.naam = naam;
         this.einde = einde;
         this.begin = begin;
-        this.heleDag = heleDag;
+
         this.locatie = locatie;
         medewerkers = new ArrayList<>();
 
@@ -49,14 +49,6 @@ public class Activiteit {
 
     public void setLocatie(String locatie) {
         this.locatie = locatie;
-    }
-
-    public Boolean getHeleDag() {
-        return heleDag;
-    }
-
-    public void setHeleDag(Boolean heleDag) {
-        this.heleDag = heleDag;
     }
 
     public Date getBegin() {

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/activiteitDetail_inhoud_text"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activiteitDetail_inhoud_text"
+        android:id="@+id/activiteitDetail_aanwezig_text"
+        android:text="@string/aanwezig"
+        android:layout_marginBottom="10dp"/>
+
+    <ImageView
+
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/activiteitDetail_aanwezig_img1"
+        android:layout_below="@+id/activiteitDetail_aanwezig_text"
+        />
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_toRightOf="@+id/activiteitDetail_aanwezig_img1"
+        android:layout_below="@+id/activiteitDetail_aanwezig_text"
+        android:id="@+id/activiteitDetail_aanwezig_img2"
+        />
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_below="@+id/activiteitDetail_aanwezig_text"
+        android:layout_toRightOf="@+id/activiteitDetail_aanwezig_img2"
+        android:id="@+id/activiteitDetail_mischien_img3"
+        />
+
+
+
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/activiteitDetail_mischien_aanwezig_text"
+        android:text="@string/mischien_aanwezig"
+        android:layout_below="@+id/activiteitDetail_aanwezig_img1"
+        android:layout_marginBottom="10dp"/>
+
+    <ImageView
+
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/activiteitDetail_mischien_aanwezig_img1"
+        android:layout_below="@+id/activiteitDetail_mischien_aanwezig_text"
+        />
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_toRightOf="@+id/activiteitDetail_mischien_aanwezig_img1"
+        android:layout_below="@+id/activiteitDetail_mischien_aanwezig_text"
+        android:id="@+id/activiteitDetail_mischien_aanwezig_img2"
+        />
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_below="@+id/activiteitDetail_mischien_aanwezig_text"
+        android:layout_toRightOf="@+id/activiteitDetail_mischien_aanwezig_img2"
+        android:id="@+id/activiteitDetail_mischien_aanwezig_img3"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/activiteitDetail_aanwezig"
+        android:text="@string/aanwezig"
+        android:layout_below="@+id/activiteitDetail_mischien_aanwezig_img1"
+        android:gravity="center"/>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/activiteitDetail_mischien_aanwezig"
+        android:text="@string/mischien_aanwezig"
+        android:layout_below="@+id/activiteitDetail_aanwezig"
+        android:gravity="center"/>
+
+
+
+
+</RelativeLayout>
