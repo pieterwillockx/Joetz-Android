@@ -8,11 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.model.Artikel;
 import com.fabantowapi.joetz_android.tasks.ImageDownloadTask;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -21,8 +19,8 @@ import butterknife.ButterKnife;
  */
 public class ArtikelDetailFragment extends Fragment {
 
-     @Bind(R.id.artikel_detail_titel)
-     public TextView txtTitel;
+    @Bind(R.id.artikel_detail_titel)
+    public TextView txtTitel;
 
     @Bind(R.id.artikel_detail_inhoud)
     public TextView txtArtikelInhoud;
@@ -50,6 +48,5 @@ public class ArtikelDetailFragment extends Fragment {
         new ImageDownloadTask(artikelImg).execute(artikel.getArtikelImageUrl());
 
     }
-
 
 }

@@ -8,11 +8,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.TextView;
 import com.fabantowapi.joetz_android.R;
-import com.fabantowapi.joetz_android.activities.LoginActivity;
 import com.fabantowapi.joetz_android.activities.MainActivity;
-
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -21,10 +20,15 @@ import butterknife.OnClick;
  */
 public class LoginFragment extends Fragment {
 
+    @Bind(R.id.txtEmail)
+    TextView txtEmail;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
+
         ButterKnife.bind(this, view);
+        txtEmail.requestFocus();
         return view;
     }
 

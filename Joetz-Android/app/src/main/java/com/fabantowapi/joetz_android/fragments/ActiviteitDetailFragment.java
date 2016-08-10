@@ -8,13 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.model.Activiteit;
-import com.fabantowapi.joetz_android.model.Kamp;
-
-import org.w3c.dom.Text;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -23,8 +18,6 @@ import butterknife.OnClick;
  * Created by Anton Rooseleer on 3-8-2016.
  */
 public class ActiviteitDetailFragment extends Fragment {
-
-
 
 
     @Bind(R.id.activiteitDetail_aanwezig_img1)
@@ -47,7 +40,6 @@ public class ActiviteitDetailFragment extends Fragment {
     public TextView txtPlaats;
     @Bind(R.id.activiteitDetail_naam)
     public TextView txtNaam;
-
     private Activiteit activiteit;
 
     @Override

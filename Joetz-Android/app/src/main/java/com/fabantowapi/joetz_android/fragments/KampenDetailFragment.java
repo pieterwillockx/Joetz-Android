@@ -8,11 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.model.Kamp;
-
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;

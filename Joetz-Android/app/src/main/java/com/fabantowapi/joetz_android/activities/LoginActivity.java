@@ -3,19 +3,11 @@ package com.fabantowapi.joetz_android.activities;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Button;
-import android.widget.TextView;
-
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.fragments.LoginFragment;
-import com.fabantowapi.joetz_android.fragments.RegistratieFragment;
-
-import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 
 /**
@@ -41,7 +33,5 @@ public class LoginActivity extends AppCompatActivity{
         transaction.add(R.id.fragment_container, fragment);
         transaction.commit();
     }
-
-
 
 }

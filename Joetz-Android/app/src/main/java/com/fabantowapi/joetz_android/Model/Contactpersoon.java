@@ -19,7 +19,6 @@ public class Contactpersoon {
     private List<Lid> leden;
 
 
-
     public Contactpersoon(String naam, String voornaam, String rijksregisternummer, String telefoonNummer, String email, int aansluitNummer, Boolean betaland, Boolean ouder, List<Lid> leden, Adres adres) {
         this.naam = naam;
         this.voornaam = voornaam;

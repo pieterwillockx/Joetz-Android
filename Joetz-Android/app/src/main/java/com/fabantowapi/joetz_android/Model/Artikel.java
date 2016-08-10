@@ -1,8 +1,5 @@
 package com.fabantowapi.joetz_android.model;
 
-import android.media.Image;
-import android.os.Parcelable;
-
 import java.io.Serializable;
 
 /**

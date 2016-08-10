@@ -13,9 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;;
-
 import com.fabantowapi.joetz_android.R;
-import com.fabantowapi.joetz_android.fragments.ArtikelDetailFragment;
 import com.fabantowapi.joetz_android.fragments.KampenDetailFragment;
 
 import butterknife.OnClick;
@@ -52,13 +50,11 @@ public class KampAdapter extends RecyclerView.Adapter<KampAdapter.ViewHolder>{
     }
 
     @Override
-    public KampAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                   int viewType) {
+    public KampAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         // create a new view
         System.out.println("View type " + viewType);
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_kampen_item, parent, false);
-       // TextView test =(TextView)view.findViewById(R.id.test);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_kampen_item, parent, false);
         ViewHolder vh =  new ViewHolder(view);
 
         return vh;

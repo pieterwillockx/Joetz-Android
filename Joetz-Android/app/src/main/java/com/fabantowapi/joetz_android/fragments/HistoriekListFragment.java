@@ -9,15 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.model.HistoriekAdapter;
 import com.fabantowapi.joetz_android.model.Kamp;
-import com.fabantowapi.joetz_android.model.KampAdapter;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -41,7 +37,6 @@ public class HistoriekListFragment extends Fragment {
 
         if(kampen == null)
             geenKampen();
-        
 
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());

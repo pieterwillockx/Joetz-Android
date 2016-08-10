@@ -10,11 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.fragments.ActiviteitDetailFragment;
-import com.fabantowapi.joetz_android.fragments.KampenDetailFragment;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -27,6 +24,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
     public Context context;
     public Date currentDate;
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView txtDate;
@@ -48,12 +46,9 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
     }
 
     @Override
-    public ActivityAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                     int viewType) {
+    public ActivityAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,  int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_activity_item, parent, false);
-
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_activity_item, parent, false);
         ViewHolder vh =  new ViewHolder(view);
 
         return vh;
@@ -86,13 +81,10 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
             }
         });
-
     }
     @Override
     public int getItemCount() {
         return activiteiten.length;
 
     }
-
-
 }

@@ -6,12 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
-
 import com.fabantowapi.joetz_android.R;
-
-import org.w3c.dom.Text;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -33,7 +28,6 @@ public class RegistratieFragment extends Fragment{
     public EditText txtRijksregisternumer;
     @Bind(R.id.txtGeboorteDatum)
     public EditText txtGeboorteDatum;
-
 
 
     @Override

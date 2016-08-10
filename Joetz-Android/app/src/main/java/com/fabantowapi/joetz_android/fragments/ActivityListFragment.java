@@ -1,6 +1,5 @@
 package com.fabantowapi.joetz_android.fragments;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,13 +11,11 @@ import android.widget.TextView;
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.model.Activiteit;
 import com.fabantowapi.joetz_android.model.ActivityAdapter;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -41,7 +38,6 @@ public class ActivityListFragment extends Fragment{
         ButterKnife.bind(this, view);
         initActiviteitenLijst();
 
-
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -49,7 +45,6 @@ public class ActivityListFragment extends Fragment{
         mAdapter = new ActivityAdapter(testData().toArray(new Activiteit[testData().size()]),getActivity());
         mRecyclerView.setAdapter(mAdapter);
         return view;
-
 
     }
 

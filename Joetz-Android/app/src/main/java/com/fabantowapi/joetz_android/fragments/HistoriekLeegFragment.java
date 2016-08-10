@@ -7,9 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.fabantowapi.joetz_android.R;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
