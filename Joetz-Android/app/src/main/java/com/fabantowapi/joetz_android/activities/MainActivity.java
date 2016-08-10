@@ -72,8 +72,12 @@ public class MainActivity extends AppCompatActivity {
             case R.id.nav_kampen:
                 fragmentClass = KampenListFragment.class;
                 break;
+            case R.id.nav_home:
+                fragmentClass = ArtikelListFragment.class;
+                break;
             default:
-                fragmentClass = MainActivity.class;
+                fragmentClass = ArtikelListFragment.class;
+                break;
         }
         navigate(fragmentClass);
 

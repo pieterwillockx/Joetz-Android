@@ -46,6 +46,7 @@ public class KampenListFragment extends Fragment {
     }
 
     public List<Kamp> testData(){
+        //todo heel echte kampen op
        List<Kamp> testData = new ArrayList<>();
         testData.add(new Kamp("Smurf's up","test omschrijving",null,null,4,4,"auto","goede",20.0,30.0,5,10,10,5,10,"mij",null,null,null));
         testData.add(new Kamp("Boekenwurmen En Speelvogels","test omschrijving",null,null,4,4,"auto","goede",20.0,30.0,5,10,10,5,10,"mij",null,null,null));

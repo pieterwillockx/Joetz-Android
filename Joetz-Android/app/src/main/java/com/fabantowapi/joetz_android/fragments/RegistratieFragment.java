@@ -46,7 +46,7 @@ public class RegistratieFragment extends Fragment{
 
     @OnClick(R.id.btnRegistreer)
     public void Registreer(){
-    // registreer logic
+    //todo sla de nieuwe gebruiker op in de databank
 
     }
 

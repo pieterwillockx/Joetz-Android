@@ -21,4 +21,5 @@ public class WachtwoordVergetenFragment extends Fragment {
         ButterKnife.bind(this, view);
         return view;
     }
+    //todo schrijf logica over ww vergeten
 }

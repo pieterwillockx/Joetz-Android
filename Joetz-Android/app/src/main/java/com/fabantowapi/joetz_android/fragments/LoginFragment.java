@@ -31,7 +31,7 @@ public class LoginFragment extends Fragment {
 
     @OnClick(R.id.btnLogin)
     public void onLoginButtonClicked() {
-        // valideer;
+        //todo schrijf inlog logica
         getActivity().startActivity(new Intent(getActivity(),MainActivity.class));       }
     @OnClick(R.id.txtwwVergeten)
     public void wachtwoordVergeten(){

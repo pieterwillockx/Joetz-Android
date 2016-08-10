@@ -36,8 +36,7 @@ public class ArtikelListFragment extends Fragment {
     }
 
     private void downloadArtikels(){
-        // dl artikels van api
-        //tijdelijk hardcoded artikels
+       //todo laad echte artikels
 
         artikels = new ArrayList<>();
         artikels.add(new Artikel(5,"BEESTIG LEUKE VAKANTIES","Bij JOETZ betaal je geen euro te veel!\n" +

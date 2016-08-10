@@ -60,12 +60,13 @@ public class KampenDetailFragment extends Fragment {
     }
     @OnClick(R.id.kampenDetail_inschrvijven)
     public void schrijfIn(){
-    // LOGIN LOGICA
+        // todo schrijf in voor kamp logica
+
     }
 
     @OnClick(R.id.kampenDetail_mededelers)
     public void toonMededelers(){
-
+          //todo toon alle mededelers
 
 
     }

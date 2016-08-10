@@ -28,6 +28,7 @@ public class HistoriekLeegFragment extends Fragment {
 
     @OnClick(R.id.historiekLeeg_btnKiesKamp)
     public void kiesKamp(){
+
         Fragment fragment = new KampenListFragment();
         Bundle args =new Bundle();
         FragmentManager fragmentManager = getFragmentManager();

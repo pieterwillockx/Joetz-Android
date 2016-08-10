@@ -54,6 +54,8 @@ public class ActivityListFragment extends Fragment{
     }
 
     public List<Activiteit> testData(){
+
+        //todo haal data op uit api
         List<Activiteit> activiteiten = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
