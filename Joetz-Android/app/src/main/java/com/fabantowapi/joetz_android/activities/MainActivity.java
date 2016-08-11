@@ -15,6 +15,8 @@ import com.fabantowapi.joetz_android.fragments.ArtikelListFragment;
 import com.fabantowapi.joetz_android.fragments.ForumFragment;
 import com.fabantowapi.joetz_android.fragments.HistoriekListFragment;
 import com.fabantowapi.joetz_android.fragments.KampenListFragment;
+import com.fabantowapi.joetz_android.fragments.ProfielFragment;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -71,6 +73,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.nav_home:
                 fragmentClass = ArtikelListFragment.class;
+                break;
+            case R.id.nav_profiel :
+                fragmentClass = ProfielFragment.class;
                 break;
             default:
                 fragmentClass = ArtikelListFragment.class;

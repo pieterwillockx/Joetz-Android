@@ -18,6 +18,7 @@
     <string name="nav_drawer_forum">Forum</string>
     <string name="nav_drawer_kampen">Kampen</string>
     <string name="nav_drawer_home">Home</string>
+    <string name="nav_drawer_profiel">Profiel</string>
     <string name="loadingImage">loading image</string>
     <string name="nieuwtjes">Nieuwtjes</string>
     <string name="mededelers">Wie gaat er mee?</string>
@@ -30,5 +31,6 @@
     <string name="deelnemer">Deelnemer</string>
     <string name="aanwezig">Aanwezig</string>
     <string name="ouders">Ouders</string>
+    <string name="save">Opslagen</string>
 
 </resources>
