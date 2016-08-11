@@ -10,9 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/mainpage_container">
-
     </RelativeLayout>
-
 
     <android.support.design.widget.NavigationView
         android:id="@+id/left_drawer"
@@ -22,4 +20,5 @@
         android:background="@android:color/white"
         app:menu="@menu/drawer_view_menu"
         app:elevation="5dp"/>
+
 </android.support.v4.widget.DrawerLayout>

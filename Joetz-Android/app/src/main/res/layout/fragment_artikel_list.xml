@@ -11,8 +11,7 @@
         android:text="@string/nieuwtjes"
         android:id="@+id/txtArtikelLijst"
         android:layout_alignParentTop="true"
-        android:padding="15dp"
-       />
+        android:padding="15dp" />
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -26,9 +25,8 @@
             android:id="@+id/artikel_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
         </ListView>
-    </ScrollView>
 
+    </ScrollView>
 
 </RelativeLayout>

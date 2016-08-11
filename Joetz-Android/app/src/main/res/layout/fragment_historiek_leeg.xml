@@ -14,22 +14,21 @@
         android:contentDescription="@string/historiek_leeg_imagebeschrijving" />
 
     <TextView
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:id="@+id/historiekLeeg_lblAanDeSlag"
-        android:text="@string/historiek_leeg_slag"
-        />
+        android:text="@string/historiek_leeg_slag"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:id="@+id/historiekLeeg_geenKamp"
-        android:text="@string/historiek_leeg_geenKamp"
-        />
+        android:text="@string/historiek_leeg_geenKamp"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,4 +36,5 @@
         android:layout_marginTop="30dp"
         android:id="@+id/historiekLeeg_btnKiesKamp"
         android:text="@string/historiek_leeg_kiesKamp"/>
+
 </LinearLayout>

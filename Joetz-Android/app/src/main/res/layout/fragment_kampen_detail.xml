@@ -7,35 +7,35 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:id="@+id/kampenDetail_image"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/kampenDetail_image"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:paddingTop="5dp"
-        android:id="@+id/kampenDetail_titel"
-        />
+        android:id="@+id/kampenDetail_titel"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/kampenDetail_locatie"
         android:layout_below="@id/kampenDetail_titel"
         android:gravity="left"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/kampenDetail_datum"
         android:layout_below="@id/kampenDetail_titel"
         android:gravity="right"
-        android:layout_toRightOf="@+id/kampenDetail_locatie"
-        />
+        android:layout_toRightOf="@+id/kampenDetail_locatie"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/kampenDetail_inhoud"
-        android:layout_below="@id/kampenDetail_locatie"
-        />
-
+        android:layout_below="@id/kampenDetail_locatie"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -54,8 +54,5 @@
         android:text="@string/inschrijven"
         android:layout_below="@+id/kampenDetail_mededelers"
         android:gravity="center"/>
-
-
-
 
 </RelativeLayout>

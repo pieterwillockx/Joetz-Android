@@ -18,16 +18,12 @@
             android:scaleType="centerCrop"
             android:paddingRight="15dp"/>
 
-
-
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/artikeldetail_titel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="15dp"/>
-
-
+        <TextView
+           android:id="@+id/artikeldetail_titel"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:padding="15dp"/>
 
 </LinearLayout>

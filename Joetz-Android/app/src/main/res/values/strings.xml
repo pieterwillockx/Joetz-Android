@@ -27,5 +27,8 @@
     <string name="historiek_leeg_kiesKamp">kies snel een kamp!</string>
     <string name="historiek_leeg_imagebeschrijving">lege Historiek pagina foto</string>
     <string name="mischien_aanwezig">Mischien aanwezig</string>
+    <string name="deelnemer">Deelnemer</string>
     <string name="aanwezig">Aanwezig</string>
+    <string name="ouders">Ouders</string>
+
 </resources>

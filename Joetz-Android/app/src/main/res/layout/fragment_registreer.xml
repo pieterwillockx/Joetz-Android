@@ -133,8 +133,8 @@
         android:layout_alignLeft="@+id/txtWachtwoordRegistreer"
         android:layout_alignStart="@+id/txtWachtwoordRegistreer"
         android:layout_alignRight="@+id/txtWachtwoordRegistreer"
-        android:layout_alignEnd="@+id/txtWachtwoordRegistreer"
-        />
+        android:layout_alignEnd="@+id/txtWachtwoordRegistreer"/>
+
 
     <TextView
         android:layout_width="wrap_content"
