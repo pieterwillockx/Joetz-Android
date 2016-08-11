@@ -43,7 +43,7 @@ public class ProfielFragment extends Fragment {
     }
     @OnClick(R.id.profielOuder)
     public void editOuder(){
-
+      navigate(new ProfielOuderFragment());
     }
 
     @OnClick(R.id.profielWachtwoord)
