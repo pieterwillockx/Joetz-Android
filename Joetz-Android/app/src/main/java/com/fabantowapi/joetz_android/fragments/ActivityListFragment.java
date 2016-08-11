@@ -55,7 +55,6 @@ public class ActivityListFragment extends Fragment{
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         currentDate.setText(df.format(calendar.getTime()));
-        Date ter= new Date(31,5,1994);
         Date niew = new Date(1994,5,31);
         System.out.println("datum" +niew.toString());
         Date test = calendar.getTime();

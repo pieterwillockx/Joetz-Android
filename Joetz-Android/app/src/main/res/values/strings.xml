@@ -32,5 +32,8 @@
     <string name="aanwezig">Aanwezig</string>
     <string name="ouders">Ouders</string>
     <string name="save">Opslagen</string>
+    <string name="oudWachtwoord">Huidig wachtwoord</string>
+    <string name="nieuwWachtwoord">Nieuw wachtwoord</string>
+    <string name="herhaalNieuwWachtwoord">Herhaal nieuw wachtwoord</string>
 
 </resources>

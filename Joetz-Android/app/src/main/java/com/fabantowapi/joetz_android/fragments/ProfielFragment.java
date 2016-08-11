@@ -39,14 +39,7 @@ public class ProfielFragment extends Fragment {
     @OnClick(R.id.profielDeelnemer)
     public void editDeelnemer(){
 
-        Fragment fragment = new ProfielDeelnemerFragment();
-        Bundle args =new Bundle();
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        fragment.setArguments(args);
-        ft.replace(R.id.mainpage_container, fragment);
-        ft.commit();
-
+      navigate( new ProfielDeelnemerFragment());
     }
     @OnClick(R.id.profielOuder)
     public void editOuder(){
@@ -55,6 +48,17 @@ public class ProfielFragment extends Fragment {
 
     @OnClick(R.id.profielWachtwoord)
     public void editWachtwoord(){
+      navigate(new ProfielWachtwoordFragment());
+    }
+
+    private void navigate(Fragment fragment){
+
+        Bundle args =new Bundle();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        fragment.setArguments(args);
+        ft.replace(R.id.mainpage_container, fragment);
+        ft.commit();
 
     }
 }
