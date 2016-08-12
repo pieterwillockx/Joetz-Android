@@ -3,12 +3,18 @@ package com.fabantowapi.joetz_android.activities;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.fragments.ActivityListFragment;
 import com.fabantowapi.joetz_android.fragments.ArtikelListFragment;
@@ -30,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.left_drawer)
     public NavigationView mLeftDrawer;
 
+    ActionBarDrawerToggle mDrawerToggle;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -51,7 +58,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mDrawerLayout.setScrimColor(Color.parseColor("#00ffffff"));
+        final ActionBar actionBar = getSupportActionBar();
+
+        if(actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.material_drawer_open, R.string.material_drawer_close){
+                public void onDrawerClosed(View view){
+                    supportInvalidateOptionsMenu();
+                }
+
+                public void onDrawerOpened(View drawerView){
+                    supportInvalidateOptionsMenu();
+                }
+            };
+            mDrawerToggle.setDrawerIndicatorEnabled(true);
+            mDrawerLayout.setDrawerListener(mDrawerToggle);
+            mDrawerToggle.syncState();
+        }
+
+        //mDrawerLayout.setScrimColor(Color.parseColor("#00ffffff"));
     }
 
     public void navigate(MenuItem item) {
@@ -85,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     public void navigate (Class fragmentClass){
         Fragment fragment = null;
         try {
@@ -104,4 +128,26 @@ public class MainActivity extends AppCompatActivity {
         ft.commit();
     }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState)
+    {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig)
+    {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

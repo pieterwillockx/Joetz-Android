@@ -18,13 +18,13 @@
         android:layout_height="fill_parent"
         android:layout_below="@id/txtArtikelLijst"
         android:fillViewport="true"
-        android:id="@+id/svArtikelList"
-        android:padding="15dp">
+        android:id="@+id/svArtikelList">
 
         <ListView
             android:id="@+id/artikel_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:divider="@null">
         </ListView>
 
     </ScrollView>
