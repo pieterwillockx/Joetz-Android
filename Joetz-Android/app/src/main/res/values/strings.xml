@@ -1,3 +1,39 @@
 <resources>
-    <string name="app_name">Joetz-Android</string>
+    <string name="app_name">Joetz!</string>
+    <string name="login">Login</string>
+    <string name="wachtwoord">Wachtwoord</string>
+    <string name="wachtwoordVergeten">Wachtwoord vergeten</string>
+    <string name="registreer">Registreer</string>
+    <string name="email">E-mailadres</string>
+    <string name="regGeboortedatum">Geboortedatum :</string>
+    <string name="regRijksregisternummer">Rijksregisternummer :</string>
+    <string name="regVoornaam">Voornaam :</string>
+    <string name="regNaam">Naam :</string>
+    <string name="regWachtwoord">Wachtwoord :</string>
+    <string name="regEmail">E-mailadres :</string>
+    <string name="verstuur">Verstuur</string>
+    <string name="geheimeVraag">Geef het antwoord op je geheime vraag :</string>
+    <string name="nav_drawer_historiek">Historiek</string>
+    <string name="nav_drawer_activiteit">Activiteiten</string>
+    <string name="nav_drawer_forum">Forum</string>
+    <string name="nav_drawer_kampen">Kampen</string>
+    <string name="nav_drawer_home">Home</string>
+    <string name="nav_drawer_profiel">Profiel</string>
+    <string name="loadingImage">loading image</string>
+    <string name="nieuwtjes">Nieuwtjes</string>
+    <string name="mededelers">Wie gaat er mee?</string>
+    <string name="inschrijven">Inschrijven voor dit kamp</string>
+    <string name="historiek_leeg_slag">Aan de slag!</string>
+    <string name="historiek_leeg_geenKamp">Je bent nog niet op kamp geweest...</string>
+    <string name="historiek_leeg_kiesKamp">kies snel een kamp!</string>
+    <string name="historiek_leeg_imagebeschrijving">lege Historiek pagina foto</string>
+    <string name="mischien_aanwezig">Mischien aanwezig</string>
+    <string name="deelnemer">Deelnemer</string>
+    <string name="aanwezig">Aanwezig</string>
+    <string name="ouders">Ouders</string>
+    <string name="save">Opslagen</string>
+    <string name="oudWachtwoord">Huidig wachtwoord</string>
+    <string name="nieuwWachtwoord">Nieuw wachtwoord</string>
+    <string name="herhaalNieuwWachtwoord">Herhaal nieuw wachtwoord</string>
+
 </resources>

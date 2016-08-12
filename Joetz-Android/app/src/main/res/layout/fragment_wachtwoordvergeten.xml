@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="@string/verstuur"
+        android:id="@+id/btnVerstuurRecoveryEmail"
+        android:layout_marginBottom="165dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/txtGeheimeVraag"
+        android:layout_above="@+id/btnVerstuurRecoveryEmail"
+        android:layout_alignLeft="@+id/btnVerstuurRecoveryEmail"
+        android:layout_alignStart="@+id/btnVerstuurRecoveryEmail"
+        android:layout_alignRight="@+id/btnVerstuurRecoveryEmail"
+        android:layout_alignEnd="@+id/btnVerstuurRecoveryEmail" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/geheimeVraag"
+        android:id="@+id/lblGeheimeVraag"
+        android:layout_above="@+id/txtGeheimeVraag"
+        android:layout_alignLeft="@+id/txtGeheimeVraag"
+        android:layout_alignStart="@+id/txtGeheimeVraag"
+        android:layout_alignRight="@+id/txtGeheimeVraag"
+        android:layout_alignEnd="@+id/txtGeheimeVraag" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/wachtwoordVergeten"
+        android:id="@+id/lblWachtwoordVergeten"
+        android:layout_above="@+id/lblGeheimeVraag"
+        android:layout_alignLeft="@+id/lblGeheimeVraag"
+        android:layout_alignStart="@+id/lblGeheimeVraag"
+        android:layout_marginBottom="76dp" />
+</RelativeLayout>
