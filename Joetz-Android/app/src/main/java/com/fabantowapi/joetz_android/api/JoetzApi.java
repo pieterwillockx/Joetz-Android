@@ -1,12 +1,12 @@
 package com.fabantowapi.joetz_android.api;
 
-import android.database.Observable;
+import rx.Observable;
 
 import com.fabantowapi.joetz_android.model.api.LoginRequest;
 
-import retrofit2.Response;
-import retrofit2.http.Body;
-import retrofit2.http.POST;
+import retrofit.client.Response;
+import retrofit.http.Body;
+import retrofit.http.POST;
 
 /**
  * Created by Pieter on 26-7-2016.
