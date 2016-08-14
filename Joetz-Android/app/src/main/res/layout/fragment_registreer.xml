@@ -1,148 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
 
-
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_gravity="center"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
         android:text="@string/registreer"
-        android:id="@+id/btnRegistreer"
-        android:layout_marginBottom="40dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/regGeboortedatum"
-        android:id="@+id/lblGeboorteDatum"
-        android:layout_marginBottom="53dp"
-        android:layout_above="@+id/btnRegistreer"
-        android:layout_marginLeft="15dp" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="date"
-        android:ems="10"
-        android:id="@+id/txtGeboorteDatum"
-        android:layout_alignBottom="@+id/lblGeboorteDatum"
-        android:layout_toRightOf="@+id/lblGeboorteDatum"
-        android:layout_toEndOf="@+id/lblGeboorteDatum" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/regRijksregisternummer"
-        android:id="@+id/lblRijksregisternummer"
-        android:layout_above="@+id/txtGeboorteDatum"
-        android:layout_alignLeft="@+id/lblGeboorteDatum"
-        android:layout_alignStart="@+id/lblGeboorteDatum" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtRijksregisternummer"
-        android:layout_above="@+id/txtGeboorteDatum"
-        android:layout_alignRight="@+id/txtGeboorteDatum"
-        android:layout_alignEnd="@+id/txtGeboorteDatum"
-        android:layout_toRightOf="@+id/lblRijksregisternummer"
-        android:layout_toEndOf="@+id/lblRijksregisternummer" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/regVoornaam"
-        android:id="@+id/lblVoornaam"
-        android:layout_above="@+id/txtRijksregisternummer"
-        android:layout_alignLeft="@+id/lblRijksregisternummer"
-        android:layout_alignStart="@+id/lblRijksregisternummer"
-        android:layout_toLeftOf="@+id/txtVoornaam"
-        android:layout_toStartOf="@+id/txtVoornaam" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtVoornaam"
-        android:layout_above="@+id/txtRijksregisternummer"
-        android:layout_alignLeft="@+id/txtGeboorteDatum"
-        android:layout_alignStart="@+id/txtGeboorteDatum"
-        android:layout_alignRight="@+id/txtGeboorteDatum"
-        android:layout_alignEnd="@+id/txtGeboorteDatum" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/regNaam"
-        android:id="@+id/lblNaam"
-        android:layout_above="@+id/txtVoornaam"
-        android:layout_alignLeft="@+id/lblVoornaam"
-        android:layout_alignStart="@+id/lblVoornaam" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtNaam"
-        android:layout_above="@+id/txtVoornaam"
-        android:layout_alignRight="@+id/txtRijksregisternummer"
-        android:layout_alignEnd="@+id/txtRijksregisternummer"
-        android:layout_alignLeft="@+id/txtVoornaam"
-        android:layout_alignStart="@+id/txtVoornaam" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/regWachtwoord"
-        android:id="@+id/lblWachtwoordRegistreer"
-        android:layout_above="@+id/txtNaam"
-        android:layout_alignLeft="@+id/lblNaam"
-        android:layout_alignStart="@+id/lblNaam" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtWachtwoordRegistreer"
-        android:layout_above="@+id/txtNaam"
-        android:layout_alignLeft="@+id/txtNaam"
-        android:layout_alignStart="@+id/txtNaam"
-        android:layout_alignRight="@+id/txtRijksregisternummer"
-        android:layout_alignEnd="@+id/txtRijksregisternummer" />
+        android:id="@+id/lblRegistreer"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/regEmail"
-        android:id="@+id/lblEmail"
-        android:layout_above="@+id/txtWachtwoordRegistreer"
-        android:layout_alignLeft="@+id/lblWachtwoordRegistreer"
-        android:layout_alignStart="@+id/lblWachtwoordRegistreer" />
+        android:id="@+id/lblEmail" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txtEmailRegistreer"
-        android:layout_above="@+id/txtWachtwoordRegistreer"
-        android:layout_alignLeft="@+id/txtWachtwoordRegistreer"
-        android:layout_alignStart="@+id/txtWachtwoordRegistreer"
-        android:layout_alignRight="@+id/txtWachtwoordRegistreer"
-        android:layout_alignEnd="@+id/txtWachtwoordRegistreer"/>
-
+        android:id="@+id/txtEmailRegistreer"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/registreer"
-        android:id="@+id/lblRegistreer"
-        android:layout_marginTop="50dp"
-        android:layout_alignLeft="@+id/lblEmail"/>
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/regWachtwoord"
+        android:id="@+id/lblWachtwoordRegistreer"/>
 
-</RelativeLayout>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtWachtwoordRegistreer" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/regNaam"
+        android:id="@+id/lblNaam" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtNaam" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/regVoornaam"
+        android:id="@+id/lblVoornaam"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtVoornaam" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/regRijksregisternummer"
+        android:id="@+id/lblRijksregisternummer" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtRijksregisternummer" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/regGeboortedatum"
+        android:id="@+id/lblGeboorteDatum"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:id="@+id/txtGeboorteDatum" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/regGebruikersnaam"
+        android:id="@+id/lblGebruikersnaam"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtGebruikersnaam" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/registreer"
+        android:id="@+id/btnRegistreer"/>
+
+</LinearLayout>
