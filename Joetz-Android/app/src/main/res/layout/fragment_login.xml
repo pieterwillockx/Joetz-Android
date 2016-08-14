@@ -1,68 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
 
-    <Button
+    <ImageView
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="@string/login"
-        android:id="@+id/btnLogin"
-        android:layout_marginBottom="128dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/txtWachtwoord"
-        android:layout_above="@+id/btnLogin"
-        android:layout_alignLeft="@+id/btnLogin"
-        android:layout_alignStart="@+id/btnLogin"
-        android:layout_marginBottom="49dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/wachtwoord"
-        android:id="@+id/lblWachtwoord"
-        android:layout_above="@+id/txtWachtwoord"
-        android:layout_alignLeft="@+id/txtWachtwoord"
-        android:layout_alignStart="@+id/txtWachtwoord" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:ems="10"
-        android:id="@+id/txtEmail"
-        android:layout_above="@+id/lblWachtwoord"
-        android:layout_alignLeft="@+id/lblWachtwoord"
-        android:layout_alignStart="@+id/lblWachtwoord"/>
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
+        android:id="@+id/lblLogin"
+        android:src="@drawable/joetz"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/email"
-        android:id="@+id/lblEmail"
-        android:layout_above="@+id/txtEmail"
-        android:layout_alignLeft="@+id/txtEmail"
-        android:layout_alignStart="@+id/txtEmail" />
+        android:id="@+id/lblEmail"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:id="@+id/txtEmail"/>
 
     <TextView
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/wachtwoord"
+        android:id="@+id/lblWachtwoord" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:id="@+id/txtWachtwoord" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="@string/login"
-        android:id="@+id/lblLogin"
-        android:layout_marginBottom="67dp"
-        android:layout_above="@+id/lblEmail"
-        android:layout_alignLeft="@+id/lblEmail"
-        android:layout_alignStart="@+id/lblEmail"/>
+        android:id="@+id/btnLogin" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -70,10 +52,6 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/wachtwoordVergeten"
         android:id="@+id/txtwwVergeten"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/btnLogin"
-        android:layout_alignStart="@+id/btnLogin"
-        android:layout_marginBottom="38dp"
         android:textColor="#0000EE"/>
 
     <TextView
@@ -82,9 +60,6 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/registreer"
         android:id="@+id/txtRegistreer"
-        android:layout_above="@+id/txtwwVergeten"
-        android:layout_alignLeft="@+id/txtwwVergeten"
-        android:layout_alignStart="@+id/txtwwVergeten"
         android:textColor="#0000EE"/>
 
-</RelativeLayout>
+</LinearLayout>

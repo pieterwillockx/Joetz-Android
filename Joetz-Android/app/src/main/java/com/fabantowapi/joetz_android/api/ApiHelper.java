@@ -15,6 +15,8 @@ import java.io.IOException;
 import retrofit.RestAdapter;
 import retrofit.converter.ConversionException;
 import retrofit.converter.GsonConverter;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 
 /**
@@ -25,7 +27,8 @@ public class ApiHelper {
 
     private static JoetzApi getService(Context context){
         if(service == null){
-            String domain = SharedHelper.getDomain();
+            //String domain = SharedHelper.getDomain();
+            String domain = "10.0.3.2:8085";
 
             RestAdapter restAdapter = new RestAdapter.Builder()
                     .setEndpoint("http://" + domain)
@@ -74,7 +77,11 @@ public class ApiHelper {
                     }
                 })
                 .doOnNext(loginResponse -> {
-                    PreferencesHelper.saveAccessToken(context, loginResponse.)
+                    PreferencesHelper.saveAccessToken(context, loginResponse.getAccessToken());
+                    PreferencesHelper.saveRefreshToken(context, loginResponse.getRefreshToken());
                 })
+                .flatMap(loginResponse -> Observable.empty())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 }

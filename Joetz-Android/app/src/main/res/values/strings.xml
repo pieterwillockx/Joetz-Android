@@ -35,5 +35,7 @@
     <string name="oudWachtwoord">Huidig wachtwoord</string>
     <string name="nieuwWachtwoord">Nieuw wachtwoord</string>
     <string name="herhaalNieuwWachtwoord">Herhaal nieuw wachtwoord</string>
-
+    <string name="dialog_error">Fout</string>
+    <string name="login_login_error">Er ging iets fout tijdens het inloggen.</string>
+    <string name="dialog_positive">OK</string>
 </resources>

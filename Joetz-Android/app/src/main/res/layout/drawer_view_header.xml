@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/nav_header"
+    android:paddingTop="25dp"
+    android:paddingBottom="25dp"
+    android:paddingLeft="10dp"
+    android:background="@drawable/body_water">
+
+    <ImageView
+        android:id="@+id/nav_header_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/no_avatar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dp">
+
+        <TextView
+            android:id="@+id/nav_header_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_marginBottom="5dp"
+            android:text="pieter@test.com" />
+
+        <TextView
+            android:id="@+id/nav_header_typeofuser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="2dp"
+            android:text="Gewone gebruiker"/>
+
+    </LinearLayout>
+
+</LinearLayout>

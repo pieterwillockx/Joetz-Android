@@ -6,11 +6,11 @@ import com.google.gson.annotations.SerializedName;
  * Created by Pieter on 26-7-2016.
  */
 public class LoginRequest {
-    @SerializedName("Login")
+    @SerializedName("login")
     private String login;
-    @SerializedName("Password")
+    @SerializedName("password")
     private String password;
-    @SerializedName("Permanent")
+    @SerializedName("permanent")
     private boolean permanent;
 
     public LoginRequest(String login, String password, boolean permanent){
