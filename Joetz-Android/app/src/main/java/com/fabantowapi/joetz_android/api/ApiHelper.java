@@ -1,10 +1,14 @@
 package com.fabantowapi.joetz_android.api;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 
 import retrofit.client.Response;
 import rx.Observable;
 
+import com.fabantowapi.joetz_android.contentproviders.ContactpersoonContentProvider;
+import com.fabantowapi.joetz_android.contentproviders.UserContentProvider;
 import com.fabantowapi.joetz_android.model.api.GetUserResponse;
 import com.fabantowapi.joetz_android.model.api.LoginRequest;
 import com.fabantowapi.joetz_android.model.api.LoginResponse;
@@ -130,10 +134,10 @@ public class ApiHelper {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public static Observable<Object> getUser(Context context, String username){
+    public static Observable<Object> getUser(Context context, String email){
         ApiHelper.resetService();
 
-        return ApiHelper.getService(context).getUser(username)
+        return ApiHelper.getService(context).getUser(email)
                 .flatMap(response -> {
                     String applicationCookie = CookieHelper.getApplicationCookie(response.getHeaders());
                     PreferencesHelper.saveApplicationCookie(context, applicationCookie);
@@ -148,7 +152,7 @@ public class ApiHelper {
                     }
 
                     if(getUserResponse != null && response.getStatus() == 200){
-                        return Observable.just(getUserResponse);
+                        return Observable.just(getUserResponse.getUser());
                     }
                     else{
                         int status = response.getStatus();
@@ -163,10 +167,21 @@ public class ApiHelper {
                         return Observable.error(new IOException(error));
                     }
                 })
-                .doOnNext(getUserResponse -> {
-                    // TODO: contentResolver stuff
+                .doOnNext(user -> {
+                    ContentResolver contentResolver = context.getContentResolver();
+                    contentResolver.delete(UserContentProvider.CONTENT_URI, null, null);
+
+                    ContentValues cvUser = user.getContentValues();
+                    contentResolver.insert(UserContentProvider.CONTENT_URI, cvUser);
                 })
-                .flatMap(getUserResponse -> Observable.empty())
+                //.flatMap(user -> Observable.from(user.getContactpersonen()))
+                //.doOnNext(contactpersoon -> {
+                //    ContentResolver contentResolver = context.getContentResolver();
+                //    ContentValues cv = contactpersoon.getContentValues();
+                //    contentResolver.insert(ContactpersoonContentProvider.CONTENT_URI, cv);
+                //})
+                //.toList()
+                .flatMap(user -> Observable.empty())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

@@ -21,6 +21,6 @@ public interface JoetzApi {
     @POST("/user")
     Observable<Response> register(@Body RegisterRequest request);
 
-    @GET("/user/{username}")
-    Observable<Response> getUser(@Path("username") String username);
+    @GET("/user/{email}")
+    Observable<Response> getUser(@Path("email") String email);
 }

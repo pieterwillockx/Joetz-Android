@@ -82,7 +82,7 @@ public class RegistratieFragment extends Fragment{
         {
             if(RegistratieFragment.this.getActivity() != null)
             {
-                Toast.makeText(RegistratieFragment.this.getActivity(), "Account aangemaakt!", Toast.LENGTH_LONG);
+                Toast.makeText(RegistratieFragment.this.getActivity(), "Account aangemaakt!", Toast.LENGTH_LONG).show();
                 getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
             }
         }

@@ -20,6 +20,17 @@
         <activity android:name=".activities.MainActivity">
 
         </activity>
+
+        <provider
+            android:name=".contentproviders.UserContentProvider"
+            android:authorities="com.fabantowapi.joetz_android.contentproviders.UserContentProvider"
+            android:exported="false"/>
+
+        <provider
+            android:name=".contentproviders.ContactpersoonContentProvider"
+            android:authorities="com.fabantowapi.joetz_android.contentproviders.ContactpersoonContentProvider"
+            android:exported="false"/>
+
     </application>
 
 </manifest>

@@ -5,7 +5,11 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +20,9 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.activities.MainActivity;
 import com.fabantowapi.joetz_android.api.ApiHelper;
+import com.fabantowapi.joetz_android.contentproviders.UserContentProvider;
+import com.fabantowapi.joetz_android.database.UserTable;
+import com.fabantowapi.joetz_android.utils.Constants;
 import com.fabantowapi.joetz_android.utils.Observer;
 
 import butterknife.Bind;
@@ -25,7 +32,7 @@ import butterknife.OnClick;
 /**
  * Created by a_176_000 on 29-7-2016.
  */
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment{
 
     @Bind(R.id.txtEmail)
     EditText txtEmail;
@@ -44,16 +51,16 @@ public class LoginFragment extends Fragment {
 
     @OnClick(R.id.btnLogin)
     public void onLoginButtonClicked() {
-        getActivity().startActivity(new Intent(getActivity(),MainActivity.class));
-        //String email = txtEmail.getText().toString();
-        //String password = txtWachtwoord.getText().toString();
-//
-        //if(email != "" && password != ""){
-        //    ApiHelper.logIn(LoginFragment.this.getActivity(), email, password, true).subscribe(this.loginObserver);
-        //}
-        //else {
-        //    showLoginErrorDialog(LoginFragment.this.getActivity(), "Alle velden moeten ingevuld zijn!");
-        //}
+        //getActivity().startActivity(new Intent(getActivity(),MainActivity.class));
+        String email = txtEmail.getText().toString();
+        String password = txtWachtwoord.getText().toString();
+
+        if(email != "" && password != ""){
+            ApiHelper.logIn(LoginFragment.this.getActivity(), email, password, true).subscribe(this.loginObserver);
+        }
+        else {
+            showLoginErrorDialog(LoginFragment.this.getActivity(), "Alle velden moeten ingevuld zijn!");
+        }
     }
 
     @OnClick(R.id.txtwwVergeten)
@@ -64,6 +71,12 @@ public class LoginFragment extends Fragment {
     @OnClick(R.id.txtRegistreer)
     public void registreer(){
       navigate(1);
+    }
+
+    @OnClick(R.id.btnBeQuick)
+    public void beQuick(){
+        txtEmail.setText("test@changepassword.com");
+        txtWachtwoord.setText("@Testings123456789");
     }
 
     public void navigate(int fragmentId){
@@ -102,7 +115,11 @@ public class LoginFragment extends Fragment {
         {
             if(LoginFragment.this.getActivity() != null)
             {
-                getActivity().startActivity(new Intent(getActivity(),MainActivity.class));
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                String email = txtEmail.getText().toString();
+                intent.putExtra("EMAIL", email);
+
+                getActivity().startActivity(intent);
             }
         }
 

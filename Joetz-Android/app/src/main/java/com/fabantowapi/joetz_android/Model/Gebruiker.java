@@ -1,5 +1,10 @@
 package com.fabantowapi.joetz_android.model;
 
+import android.database.Cursor;
+
+import com.fabantowapi.joetz_android.database.UserTable;
+import com.fabantowapi.joetz_android.model.api.*;
+
 /**
  * Created by a_176_000 on 26-7-2016.
  */

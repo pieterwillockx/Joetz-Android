@@ -11,7 +11,7 @@ import java.util.Map;
 public class UserTable {
     public static final String TABLE_NAME = "users";
 
-    public static final String COLUMN_ID = "_id";
+    //public static final String COLUMN_ID = "_id";
     public static final String COLUMN_EMAIL = "email";
     public static final String COLUMN_USERNAME = "username";
     public static final String COLUMN_FIRSTNAME = "firstname";
@@ -28,7 +28,7 @@ public class UserTable {
     public static final String COLUMN_DATE_JOINED = "date_joined";
     public static final String COLUMN_RIJKSREGISTERNUMMER = "rijksregisternummer";
 
-    public static final String COLUMN_ID_FULL = TABLE_NAME + "_" + COLUMN_ID;
+    //public static final String COLUMN_ID_FULL = TABLE_NAME + "_" + COLUMN_ID;
     public static final String COLUMN_EMAIL_FULL = TABLE_NAME + "_" + COLUMN_EMAIL;
     public static final String COLUMN_USERNAME_FULL = TABLE_NAME + "_" + COLUMN_USERNAME;
     public static final String COLUMN_FIRSTNAME_FULL = TABLE_NAME + "_" + COLUMN_FIRSTNAME;
@@ -49,7 +49,7 @@ public class UserTable {
 
     static{
         PROJECTION_MAP = new HashMap<>();
-        PROJECTION_MAP.put(TABLE_NAME + "." + COLUMN_ID, TABLE_NAME + "." + COLUMN_ID + " AS " + COLUMN_ID_FULL);
+        //PROJECTION_MAP.put(TABLE_NAME + "." + COLUMN_ID, TABLE_NAME + "." + COLUMN_ID + " AS " + COLUMN_ID_FULL);
         PROJECTION_MAP.put(TABLE_NAME + "." + COLUMN_EMAIL, TABLE_NAME + "." + COLUMN_EMAIL + " AS " + COLUMN_EMAIL_FULL);
         PROJECTION_MAP.put(TABLE_NAME + "." + COLUMN_USERNAME, TABLE_NAME + "." + COLUMN_USERNAME + " AS " + COLUMN_USERNAME_FULL);
         PROJECTION_MAP.put(TABLE_NAME + "." + COLUMN_FIRSTNAME, TABLE_NAME + "." + COLUMN_FIRSTNAME + " AS " + COLUMN_FIRSTNAME_FULL);
@@ -68,8 +68,8 @@ public class UserTable {
     }
 
     private static final String CREATE_TABLE = "create table IF NOT EXISTS " + TABLE_NAME + "("
-            + COLUMN_ID + " integer primary key autoincrement, "
-            + COLUMN_EMAIL + " text, "
+            //+ COLUMN_ID + " integer primary key autoincrement, "
+            + COLUMN_EMAIL + " text primary key, "
             + COLUMN_USERNAME + " text, "
             + COLUMN_FIRSTNAME + " text, "
             + COLUMN_LASTNAME + " text, "
