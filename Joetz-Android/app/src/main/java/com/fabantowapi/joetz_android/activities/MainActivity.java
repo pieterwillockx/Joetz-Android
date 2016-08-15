@@ -39,7 +39,7 @@ import butterknife.ButterKnife;
 /**
  * Created by a_176_000 on 29-7-2016.
  */
-public class MainActivity extends AppCompatActivity implements /*android.app.LoaderManager.LoaderCallbacks<Cursor>*/ {
+public class MainActivity extends AppCompatActivity /*implements android.app.LoaderManager.LoaderCallbacks<Cursor>*/ {
 
     @Bind(R.id.drawer_layout)
     public DrawerLayout mDrawerLayout;
