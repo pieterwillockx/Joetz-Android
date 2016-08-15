@@ -55,6 +55,7 @@ public class LoginFragment extends Fragment {
         //    showLoginErrorDialog(LoginFragment.this.getActivity(), "Alle velden moeten ingevuld zijn!");
         //}
     }
+
     @OnClick(R.id.txtwwVergeten)
     public void wachtwoordVergeten(){
         navigate(2);
