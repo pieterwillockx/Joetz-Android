@@ -12,8 +12,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.fragments.ActivityListFragment;
@@ -50,10 +52,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void initializeDrawer(){
+        LinearLayout navHeader = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.drawer_view_header, null);
+        navHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigate(ProfielFragment.class);
+                mDrawerLayout.closeDrawers();
+            }
+        });
+
+        // fill up header info here
+        mLeftDrawer.addHeaderView(navHeader);
         mLeftDrawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 navigate(item);
+                mDrawerLayout.closeDrawers();
                 return true;
             }
         });

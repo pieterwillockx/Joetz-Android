@@ -1,4 +1,4 @@
-package com.fabantowapi.joetz_android.model;
+package com.fabantowapi.joetz_android.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fabantowapi.joetz_android.R;
+import com.fabantowapi.joetz_android.model.Artikel;
 import com.fabantowapi.joetz_android.tasks.ImageDownloadTask;
 
 /**

@@ -23,10 +23,13 @@
     <string name="nieuwtjes">Nieuwtjes</string>
     <string name="mededelers">Wie gaat er mee?</string>
     <string name="inschrijven">Inschrijven voor dit kamp</string>
+    <string name="historiek">Historiek</string>
     <string name="historiek_leeg_slag">Aan de slag!</string>
     <string name="historiek_leeg_geenKamp">Je bent nog niet op kamp geweest...</string>
     <string name="historiek_leeg_kiesKamp">kies snel een kamp!</string>
     <string name="historiek_leeg_imagebeschrijving">lege Historiek pagina foto</string>
+    <string name="kampen">Kampen</string>
+    <string name="activiteiten">Activiteiten</string>
     <string name="mischien_aanwezig">Mischien aanwezig</string>
     <string name="deelnemer">Deelnemer</string>
     <string name="aanwezig">Aanwezig</string>

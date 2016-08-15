@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/accent"
+        android:textColor="@color/colorPrimary"
         android:text="@string/email"
         android:id="@+id/lblEmail" />
 
@@ -26,14 +26,14 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:inputType="textEmailAddress"
-        android:textColor="@color/accent"
+        android:textColor="@color/colorPrimary"
         android:id="@+id/txtEmail"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/accent"
+        android:textColor="@color/colorPrimary"
         android:text="@string/wachtwoord"
         android:id="@+id/lblWachtwoord" />
 
@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:inputType="textPassword"
-        android:textColor="@color/accent"
+        android:textColor="@color/colorPrimary"
         android:id="@+id/txtWachtwoord" />
 
     <Button
@@ -51,7 +51,7 @@
         android:layout_marginBottom="20dp"
         android:text="@string/login"
         android:textColor="@color/md_white_1000"
-        android:background="@color/accent"
+        android:background="@color/colorPrimary"
         android:id="@+id/btnLogin" />
 
     <TextView

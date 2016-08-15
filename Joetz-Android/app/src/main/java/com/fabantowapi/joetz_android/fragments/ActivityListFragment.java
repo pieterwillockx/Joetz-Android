@@ -9,8 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.fabantowapi.joetz_android.R;
+import com.fabantowapi.joetz_android.adapters.itemdecorations.VerticalSpaceItemDecoration;
 import com.fabantowapi.joetz_android.model.Activiteit;
-import com.fabantowapi.joetz_android.model.ActivityAdapter;
+import com.fabantowapi.joetz_android.adapters.ActivityAdapter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,6 +32,9 @@ public class ActivityListFragment extends Fragment{
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
+    private static final int VERTICAL_ITEM_SPACE = 10;
+    private static final int PADDING_LEFT_RIGHT = 20;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -41,6 +45,7 @@ public class ActivityListFragment extends Fragment{
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_ITEM_SPACE, PADDING_LEFT_RIGHT));
 
         mAdapter = new ActivityAdapter(testData().toArray(new Activiteit[testData().size()]),getActivity());
         mRecyclerView.setAdapter(mAdapter);

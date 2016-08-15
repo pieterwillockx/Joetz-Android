@@ -10,7 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.fabantowapi.joetz_android.R;
-import com.fabantowapi.joetz_android.model.HistoriekAdapter;
+import com.fabantowapi.joetz_android.adapters.HistoriekAdapter;
+import com.fabantowapi.joetz_android.adapters.itemdecorations.VerticalSpaceItemDecoration;
 import com.fabantowapi.joetz_android.model.Kamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +23,14 @@ import butterknife.ButterKnife;
  */
 public class HistoriekListFragment extends Fragment {
     @Bind(R.id.historiek_recycler_view)
-
     public RecyclerView mRecyclerView;
+
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<Kamp> kampen = null;
+
+    private static final int VERTICAL_ITEM_SPACE = 10;
+    private static final int PADDING_LEFT_RIGHT = 20;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,6 +45,7 @@ public class HistoriekListFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_ITEM_SPACE, PADDING_LEFT_RIGHT));
 
         mAdapter = new HistoriekAdapter(getkampen().toArray(new Kamp[getkampen().size()]),getActivity());
         mRecyclerView.setAdapter(mAdapter);

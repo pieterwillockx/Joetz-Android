@@ -8,32 +8,43 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
-        android:src="@drawable/ic_action_user"/>
+        android:src="@drawable/no_avatar"/>
 
     <TextView
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textColor="@color/colorPrimary"
         android:id="@+id/profielNaam"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/deelnemer"
-        android:id="@+id/profielDeelnemer" />
+        android:id="@+id/profielDeelnemer"
+        android:layout_margin="5dp"
+        android:textColor="#ffffff"
+        android:background="@color/colorPrimary"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/ouders"
-        android:id="@+id/profielOuder"/>
+        android:id="@+id/profielOuder"
+        android:layout_margin="5dp"
+        android:textColor="#ffffff"
+        android:background="@color/colorPrimary"/>
 
 
     <Button
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:text="@string/wachtwoord"
-       android:id="@+id/profielWachtwoord" />
+       android:id="@+id/profielWachtwoord"
+        android:layout_margin="5dp"
+        android:textColor="#ffffff"
+        android:background="@color/colorPrimary"/>
 
 </LinearLayout>

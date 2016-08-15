@@ -1,6 +1,4 @@
-package com.fabantowapi.joetz_android.model;
-
-
+package com.fabantowapi.joetz_android.adapters;
 
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -12,49 +10,49 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;;
+import android.widget.TextView;
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.fragments.KampenDetailFragment;
-
-import butterknife.OnClick;
-
+import com.fabantowapi.joetz_android.model.Kamp;
 
 /**
- * Created by Anton Rooseleer on 2-8-2016.
+ * Created by Anton Rooseleer on 9-8-2016.
  */
-public class KampAdapter extends RecyclerView.Adapter<KampAdapter.ViewHolder>{
+public class HistoriekAdapter  extends RecyclerView.Adapter<HistoriekAdapter.ViewHolder>{
 
     public Kamp[] kampen;
     public Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView txtKampTitel;
-        public ImageView imgKamp;
+        public TextView txtHistoriekTitel;
+        public ImageView imgHistoriek;
         public TextView txtLocatie;
         public TextView txtDatum;
 
-        public ViewHolder(View  itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
-            txtKampTitel = (TextView) itemView.findViewById(R.id.kampenLijst_titel);
-            imgKamp = (ImageView) itemView.findViewById(R.id.kampenLijst_image);
-            txtLocatie = (TextView) itemView.findViewById(R.id.kampenLijst_locatie);
-            txtDatum =(TextView) itemView.findViewById(R.id.kampenLijstDatum);
+            txtHistoriekTitel = (TextView) itemView.findViewById(R.id.historiekLijst_titel);
+            imgHistoriek = (ImageView) itemView.findViewById(R.id.historiekLijst_image);
+            txtLocatie = (TextView) itemView.findViewById(R.id.historiekLijst_locatie);
+            txtDatum =(TextView) itemView.findViewById(R.id.historiekDatum);
 
         }
     }
-    public KampAdapter(Kamp[] kampen,Context context) {
+    public HistoriekAdapter(Kamp[] kampen,Context context) {
         this.kampen = kampen;
         this.context = context;
 
     }
 
     @Override
-    public KampAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public HistoriekAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,  int viewType) {
 
         // create a new view
         System.out.println("View type " + viewType);
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_kampen_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()) .inflate(R.layout.fragment_historiek_item, parent, false);
+
+        // TextView test =(TextView)view.findViewById(R.id.test);
         ViewHolder vh =  new ViewHolder(view);
 
         return vh;
@@ -64,10 +62,10 @@ public class KampAdapter extends RecyclerView.Adapter<KampAdapter.ViewHolder>{
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         final Kamp kamp = kampen[position];
-        holder.txtKampTitel.setText(kampen[position].getNaam());
+        holder.txtHistoriekTitel.setText(kampen[position].getNaam());
+        holder.imgHistoriek.setImageDrawable(context.getResources().getDrawable(R.drawable.offline_image));
         holder.txtDatum.setText("Placeholder Datum");
         holder.txtLocatie.setText("Placeholder Locatie");
-        holder.imgKamp.setImageDrawable(context.getResources().getDrawable(R.drawable.offline_image));
 
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
