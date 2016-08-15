@@ -19,6 +19,7 @@ public class ContactpersoonTable {
     public static final String COLUMN_AANSLUITNUMMER = "aansluitnummer";
     public static final String COLUMN_BETALEND = "betalend";
     public static final String COLUMN_OUDER = "ouder";
+    public static final String COLUMN_RIJKSREGISTERNUMMER = "rijksregisternummer";
 
     public static final String COLUMN_ID_FULL = TABLE_NAME + "_" + COLUMN_ID;
     public static final String COLUMN_NAAM_FULL = TABLE_NAME + "_" + COLUMN_NAAM;
@@ -28,6 +29,7 @@ public class ContactpersoonTable {
     public static final String COLUMN_AANSLUITNUMMER_FULL = TABLE_NAME + "_" + COLUMN_AANSLUITNUMMER;
     public static final String COLUMN_BETALEND_FULL = TABLE_NAME + "_" + COLUMN_BETALEND;
     public static final String COLUMN_OUDER_FULL = TABLE_NAME + "_" + COLUMN_OUDER;
+    public static final String COLUMN_RIJKSREGISTERNUMMER_FULL = TABLE_NAME + "_" + COLUMN_RIJKSREGISTERNUMMER;
 
     public static final Map<String, String> PROJECTION_MAP;
 
@@ -41,6 +43,7 @@ public class ContactpersoonTable {
         PROJECTION_MAP.put(TABLE_NAME + "." + COLUMN_AANSLUITNUMMER, TABLE_NAME + "." + COLUMN_AANSLUITNUMMER + " AS " + COLUMN_AANSLUITNUMMER_FULL);
         PROJECTION_MAP.put(TABLE_NAME + "." + COLUMN_BETALEND, TABLE_NAME + "." + COLUMN_BETALEND + " AS " + COLUMN_BETALEND_FULL);
         PROJECTION_MAP.put(TABLE_NAME + "." + COLUMN_OUDER, TABLE_NAME + "." + COLUMN_OUDER + " AS " + COLUMN_OUDER_FULL);
+        PROJECTION_MAP.put(TABLE_NAME + "." + COLUMN_RIJKSREGISTERNUMMER, TABLE_NAME + "." + COLUMN_RIJKSREGISTERNUMMER + " AS " + COLUMN_RIJKSREGISTERNUMMER_FULL);
     }
 
     private static final String CREATE_TABLE = "create table IF NOT EXISTS " + TABLE_NAME + "("
@@ -51,6 +54,7 @@ public class ContactpersoonTable {
             + COLUMN_EMAIL + " text, "
             + COLUMN_AANSLUITNUMMER + " text, "
             + COLUMN_BETALEND + " integer, "
+            + COLUMN_RIJKSREGISTERNUMMER + " text, "
             + COLUMN_OUDER + " integer "
             + ");";
 
