@@ -3,7 +3,11 @@ package com.fabantowapi.joetz_android.activities;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+<<<<<<< HEAD
 import android.database.Cursor;
+=======
+import android.content.res.Configuration;
+>>>>>>> feature/design
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,13 +15,21 @@ import android.support.design.widget.NavigationView;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+<<<<<<< HEAD
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+=======
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.view.View;
+>>>>>>> feature/design
 
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.api.ApiHelper;
@@ -46,8 +58,12 @@ public class MainActivity extends AppCompatActivity /*implements android.app.Loa
     @Bind(R.id.left_drawer)
     public NavigationView mLeftDrawer;
 
+<<<<<<< HEAD
     private String email;
     private User currentUser;
+=======
+    ActionBarDrawerToggle mDrawerToggle;
+>>>>>>> feature/design
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -86,7 +102,25 @@ public class MainActivity extends AppCompatActivity /*implements android.app.Loa
             }
         });
 
-        mDrawerLayout.setScrimColor(Color.parseColor("#00ffffff"));
+        final ActionBar actionBar = getSupportActionBar();
+
+        if(actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.material_drawer_open, R.string.material_drawer_close){
+                public void onDrawerClosed(View view){
+                    supportInvalidateOptionsMenu();
+                }
+
+                public void onDrawerOpened(View drawerView){
+                    supportInvalidateOptionsMenu();
+                }
+            };
+            mDrawerToggle.setDrawerIndicatorEnabled(true);
+            mDrawerLayout.setDrawerListener(mDrawerToggle);
+            mDrawerToggle.syncState();
+        }
+
+        //mDrawerLayout.setScrimColor(Color.parseColor("#00ffffff"));
     }
 
     public void navigate(MenuItem item) {
@@ -137,6 +171,7 @@ public class MainActivity extends AppCompatActivity /*implements android.app.Loa
         ft.commit();
     }
 
+<<<<<<< HEAD
     //@Override
     //public Loader<Cursor> onCreateLoader(int id, Bundle args) {
     //    switch (id) {
@@ -182,4 +217,28 @@ public class MainActivity extends AppCompatActivity /*implements android.app.Loa
             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
         }
     };
+=======
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState)
+    {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig)
+    {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+>>>>>>> feature/design
 }

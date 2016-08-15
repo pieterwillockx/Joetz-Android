@@ -82,7 +82,7 @@ public class LoginFragment extends Fragment{
     public void navigate(int fragmentId){
         Fragment fragment;
 
-        Bundle args =new Bundle();
+        Bundle args = new Bundle();
         FragmentManager manager = getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
 
