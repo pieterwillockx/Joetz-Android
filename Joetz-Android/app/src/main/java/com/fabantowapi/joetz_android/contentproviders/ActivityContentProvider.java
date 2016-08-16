@@ -11,23 +11,24 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 
+import com.fabantowapi.joetz_android.database.ActiviteitTable;
 import com.fabantowapi.joetz_android.database.ContactpersoonTable;
 import com.fabantowapi.joetz_android.database.DatabaseHelper;
 
 /**
- * Created by Pieter on 15-8-2016.
+ * Created by Pieter on 16-8-2016.
  */
-public class ContactpersoonContentProvider extends ContentProvider {
+public class ActivityContentProvider extends ContentProvider {
     private DatabaseHelper databaseHelper;
 
-    private static final String PROVIDER_NAME = "com.fabantowapi.joetz_android.contentproviders.ContactpersoonContentProvider";
+    private static final String PROVIDER_NAME = "com.fabantowapi.joetz_android.contentproviders.ActivityContentProvider";
     public static final Uri CONTENT_URI = Uri.parse("content://" + PROVIDER_NAME + "/");
-    private static final int CONTACTPERSONEN = 1;
+    private static final int ACTIVITIES = 1;
     private static final UriMatcher URI_MATCHER;
 
-    static{
+    static {
         URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
-        URI_MATCHER.addURI(PROVIDER_NAME, null, CONTACTPERSONEN);
+        URI_MATCHER.addURI(PROVIDER_NAME, null, ACTIVITIES);
     }
 
     @Override
@@ -40,7 +41,7 @@ public class ContactpersoonContentProvider extends ContentProvider {
     @Override
     public String getType(Uri uri){
         switch(URI_MATCHER.match(uri)){
-            case CONTACTPERSONEN:
+            case ACTIVITIES:
                 return "vnd.android.cursor.dir/" + PROVIDER_NAME;
         }
 
@@ -51,11 +52,11 @@ public class ContactpersoonContentProvider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder){
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-        queryBuilder.setTables(ContactpersoonTable.TABLE_NAME);
-        queryBuilder.setProjectionMap(ContactpersoonTable.PROJECTION_MAP);
+        queryBuilder.setTables(ActiviteitTable.TABLE_NAME);
+        queryBuilder.setProjectionMap(ActiviteitTable.PROJECTION_MAP);
 
         switch(URI_MATCHER.match(uri)){
-            case CONTACTPERSONEN:
+            case ACTIVITIES:
                 break;
 
             default:
@@ -74,9 +75,9 @@ public class ContactpersoonContentProvider extends ContentProvider {
         long rowId;
 
         switch(URI_MATCHER.match(uri)){
-            case CONTACTPERSONEN:
+            case ACTIVITIES:
                 SQLiteDatabase db = this.databaseHelper.getWritableDatabase();
-                rowId = db.replace(ContactpersoonTable.TABLE_NAME, null, values);
+                rowId = db.replace(ActiviteitTable.TABLE_NAME, null, values);
                 break;
 
             default:
@@ -96,9 +97,9 @@ public class ContactpersoonContentProvider extends ContentProvider {
         int rowsDeleted;
 
         switch(URI_MATCHER.match(uri)){
-            case CONTACTPERSONEN:
+            case ACTIVITIES:
                 SQLiteDatabase db = this.databaseHelper.getWritableDatabase();
-                rowsDeleted = db.delete(ContactpersoonTable.TABLE_NAME, selection, selectionArgs);
+                rowsDeleted = db.delete(ActiviteitTable.TABLE_NAME, selection, selectionArgs);
                 break;
 
             default:
@@ -117,9 +118,9 @@ public class ContactpersoonContentProvider extends ContentProvider {
         int rowsUpdated;
 
         switch(URI_MATCHER.match(uri)){
-            case CONTACTPERSONEN:
+            case ACTIVITIES:
                 SQLiteDatabase db = this.databaseHelper.getWritableDatabase();
-                rowsUpdated = db.update(ContactpersoonTable.TABLE_NAME, values, selection, selectionArgs);
+                rowsUpdated = db.update(ActiviteitTable.TABLE_NAME, values, selection, selectionArgs);
                 break;
 
             default:
@@ -138,9 +139,9 @@ public class ContactpersoonContentProvider extends ContentProvider {
         int rowsInserted = 0;
 
         switch(URI_MATCHER.match(uri)){
-            case CONTACTPERSONEN:
+            case ACTIVITIES:
                 SQLiteDatabase db = this.databaseHelper.getWritableDatabase();
-                DatabaseUtils.InsertHelper inserter = new DatabaseUtils.InsertHelper(db, ContactpersoonTable.TABLE_NAME);
+                DatabaseUtils.InsertHelper inserter = new DatabaseUtils.InsertHelper(db, ActiviteitTable.TABLE_NAME);
 
                 db.beginTransaction();
                 try{
@@ -148,20 +149,13 @@ public class ContactpersoonContentProvider extends ContentProvider {
                         for(ContentValues cv : values){
                             if(cv != null){
                                 inserter.prepareForInsert();
-                                inserter.bind(inserter.getColumnIndex(ContactpersoonTable.COLUMN_NAAM), cv.getAsString(ContactpersoonTable.COLUMN_EMAIL));
-                                inserter.bind(inserter.getColumnIndex(ContactpersoonTable.COLUMN_VOORNAAM), cv.getAsString(ContactpersoonTable.COLUMN_VOORNAAM));
-                                inserter.bind(inserter.getColumnIndex(ContactpersoonTable.COLUMN_NAAMGEBOUW), cv.getAsString(ContactpersoonTable.COLUMN_NAAMGEBOUW));
-                                inserter.bind(inserter.getColumnIndex(ContactpersoonTable.COLUMN_STRAAT), cv.getAsString(ContactpersoonTable.COLUMN_STRAAT));
-                                inserter.bind(inserter.getColumnIndex(ContactpersoonTable.COLUMN_HUISNUMMER), cv.getAsInteger(ContactpersoonTable.COLUMN_HUISNUMMER));
-                                inserter.bind(inserter.getColumnIndex(ContactpersoonTable.COLUMN_BUS), cv.getAsString(ContactpersoonTable.COLUMN_BUS));
-                                inserter.bind(inserter.getColumnIndex(ContactpersoonTable.COLUMN_GEMEENTE), cv.getAsString(ContactpersoonTable.COLUMN_GEMEENTE));
-                                inserter.bind(inserter.getColumnIndex(ContactpersoonTable.COLUMN_POSTCODE), cv.getAsInteger(ContactpersoonTable.COLUMN_POSTCODE));
-                                inserter.bind(inserter.getColumnIndex(ContactpersoonTable.COLUMN_TELEFOONNUMMER), cv.getAsString(ContactpersoonTable.COLUMN_TELEFOONNUMMER));
-                                inserter.bind(inserter.getColumnIndex(ContactpersoonTable.COLUMN_EMAIL), cv.getAsString(ContactpersoonTable.COLUMN_EMAIL));
-                                inserter.bind(inserter.getColumnIndex(ContactpersoonTable.COLUMN_AANSLUITNUMMER), cv.getAsString(ContactpersoonTable.COLUMN_AANSLUITNUMMER));
-                                inserter.bind(inserter.getColumnIndex(ContactpersoonTable.COLUMN_BETALEND), cv.getAsBoolean(ContactpersoonTable.COLUMN_BETALEND));
-                                inserter.bind(inserter.getColumnIndex(ContactpersoonTable.COLUMN_OUDER), cv.getAsBoolean(ContactpersoonTable.COLUMN_OUDER));
-                                inserter.bind(inserter.getColumnIndex(ContactpersoonTable.COLUMN_RIJKSREGISTERNUMMER), cv.getAsString(ContactpersoonTable.COLUMN_RIJKSREGISTERNUMMER));
+                                inserter.bind(inserter.getColumnIndex(ActiviteitTable.COLUMN_ID), cv.getAsString(ActiviteitTable.COLUMN_ID));
+                                inserter.bind(inserter.getColumnIndex(ActiviteitTable.COLUMN_NAAM), cv.getAsString(ActiviteitTable.COLUMN_NAAM));
+                                inserter.bind(inserter.getColumnIndex(ActiviteitTable.COLUMN_DATUM), cv.getAsInteger(ActiviteitTable.COLUMN_DATUM));
+                                inserter.bind(inserter.getColumnIndex(ActiviteitTable.COLUMN_LOCATIE), cv.getAsString(ActiviteitTable.COLUMN_LOCATIE));
+                                inserter.bind(inserter.getColumnIndex(ActiviteitTable.COLUMN_HELEDAG), cv.getAsInteger(ActiviteitTable.COLUMN_HELEDAG));
+                                inserter.bind(inserter.getColumnIndex(ActiviteitTable.COLUMN_BEGIN), cv.getAsInteger(ActiviteitTable.COLUMN_BEGIN));
+                                inserter.bind(inserter.getColumnIndex(ActiviteitTable.COLUMN_EINDE), cv.getAsString(ActiviteitTable.COLUMN_EINDE));
                                 long rowId = inserter.execute();
 
                                 if(rowId != -1){

@@ -135,6 +135,24 @@ public class LoginFragment extends Fragment{
         {
             if(LoginFragment.this.getActivity() != null)
             {
+                ApiHelper.getActivities(LoginFragment.this.getActivity()).subscribe(LoginFragment.this.startUpCallsObserver);
+            }
+        }
+
+        @Override
+        public void onError(Throwable e)
+        {
+            if(LoginFragment.this.getActivity() != null)
+            {
+                LoginFragment.this.showLoginErrorDialog(LoginFragment.this.getActivity(), "Error while getting user: " + e.getMessage());
+            }
+        }
+    };
+
+    public Observer<Object> startUpCallsObserver = new Observer<Object>(){
+        @Override
+        public void onCompleted(){
+            if(LoginFragment.this.getActivity() != null){
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 String email = txtEmail.getText().toString();
                 intent.putExtra("EMAIL", email);
@@ -148,7 +166,7 @@ public class LoginFragment extends Fragment{
         {
             if(LoginFragment.this.getActivity() != null)
             {
-                LoginFragment.this.showLoginErrorDialog(LoginFragment.this.getActivity(), "Error while getting user: " + e.getMessage());
+                LoginFragment.this.showLoginErrorDialog(LoginFragment.this.getActivity(), "Error while getting data: " + e.getMessage());
             }
         }
     };

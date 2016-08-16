@@ -6,8 +6,10 @@ import android.content.Context;
 
 import rx.Observable;
 
+import com.fabantowapi.joetz_android.contentproviders.ActivityContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.ContactpersoonContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.UserContentProvider;
+import com.fabantowapi.joetz_android.model.api.Activity;
 import com.fabantowapi.joetz_android.model.api.GetUserResponse;
 import com.fabantowapi.joetz_android.model.api.LoginRequest;
 import com.fabantowapi.joetz_android.model.api.LoginResponse;
@@ -199,6 +201,56 @@ public class ApiHelper {
                 })
                 .toList()
                 .flatMap(user -> Observable.empty())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static Observable<Object> getActivities(Context context){
+        ApiHelper.resetService();
+
+        return ApiHelper.getService(context).getActivities()
+                .flatMap(response -> {
+                    String applicationCookie = CookieHelper.getApplicationCookie(response.getHeaders());
+                    PreferencesHelper.saveApplicationCookie(context, applicationCookie);
+
+                    Activity[] activities;
+
+                    try{
+                        GsonConverter converter = new GsonConverter(new Gson());
+                        activities = (Activity[]) converter.fromBody(response.getBody(), Activity[].class);
+                    }
+                    catch(ConversionException e){
+                        return Observable.error(e);
+                    }
+
+                    if(activities != null && activities.length > 0 && response.getStatus() == 200){
+                        return Observable.just(activities);
+                    }
+                    else{
+                        int statusId = response.getStatus();
+                        String error;
+
+                        switch(statusId){
+                            case 400 : error = "Bad Request"; break;
+                            case 401 : error = "Unauthorized"; break;
+                            default : error = "Unknown Error"; break;
+                        }
+
+                        return Observable.error(new IOException(error));
+                    }
+                })
+                .doOnNext(activityResponses -> {
+                    ContentResolver contentResolver = context.getContentResolver();
+                    contentResolver.delete(ActivityContentProvider.CONTENT_URI, null, null);
+                })
+                .flatMap(activityResponses -> Observable.from(activityResponses))
+                .doOnNext(activity -> {
+                    ContentResolver contentResolver = context.getContentResolver();
+                    ContentValues cvActivity = activity.getContentValues();
+                    contentResolver.insert(ActivityContentProvider.CONTENT_URI, cvActivity);
+                })
+                .toList()
+                .flatMap(activityResponses -> Observable.empty())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

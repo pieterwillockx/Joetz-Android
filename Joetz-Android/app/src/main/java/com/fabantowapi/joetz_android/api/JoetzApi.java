@@ -27,4 +27,7 @@ public interface JoetzApi {
 
     @GET("/user/{email}")
     Observable<Response> getUser(@Path("email") String email);
+
+    @GET("/activiteit")
+    Observable<Response> getActivities();
 }
