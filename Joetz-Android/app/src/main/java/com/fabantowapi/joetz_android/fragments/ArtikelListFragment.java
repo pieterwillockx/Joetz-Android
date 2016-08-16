@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.model.Artikel;
-import com.fabantowapi.joetz_android.model.ArtikelAdapter;
+import com.fabantowapi.joetz_android.adapters.ArtikelAdapter;
 import java.util.ArrayList;
 import java.util.List;
 

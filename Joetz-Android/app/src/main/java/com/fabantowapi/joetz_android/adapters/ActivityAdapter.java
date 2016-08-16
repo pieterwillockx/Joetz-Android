@@ -1,4 +1,4 @@
-package com.fabantowapi.joetz_android.model;
+package com.fabantowapi.joetz_android.adapters;
 
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.fragments.ActiviteitDetailFragment;
+import com.fabantowapi.joetz_android.model.Activiteit;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
