@@ -112,8 +112,6 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
             mDrawerLayout.setDrawerListener(mDrawerToggle);
             mDrawerToggle.syncState();
         }
-
-        mDrawerLayout.setScrimColor(Color.parseColor("#00ffffff"));
     }
 
     public User getCurrentUser(){
