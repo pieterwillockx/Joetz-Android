@@ -11,7 +11,6 @@ import com.google.gson.annotations.SerializedName;
  * Created by Pieter on 15-8-2016.
  */
 public class Contactpersoon {
-    private int id;
     @SerializedName("email")
     private String email;
     @SerializedName("firstname")
@@ -46,6 +45,9 @@ public class Contactpersoon {
     public String getEmail() {
         return email;
     }
+    public String getFirstname() { return firstname; }
+    public String getLastname() { return lastname; }
+    public String getTelefoonnummer() { return telefoonnummer; }
 
     public ContentValues getContentValues(){
         ContentValues cv = new ContentValues();

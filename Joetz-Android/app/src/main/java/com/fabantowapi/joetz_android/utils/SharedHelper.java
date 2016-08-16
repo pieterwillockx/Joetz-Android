@@ -9,4 +9,16 @@ public class SharedHelper {
     public static String getDomain(){
         return DOMAIN;
     }
+
+    public static String convertDate(String unformattedDate){
+        String formattedDate;
+
+        formattedDate = unformattedDate.split("T")[0];
+
+        String[] splittedDate = formattedDate.split("-");
+
+        String date = splittedDate[2] + "-" + splittedDate[1] + "-" + splittedDate[0];
+
+        return date;
+    }
 }

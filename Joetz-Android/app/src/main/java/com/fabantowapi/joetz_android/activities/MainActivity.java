@@ -25,9 +25,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
-import android.view.View;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -117,6 +114,10 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
         }
 
         mDrawerLayout.setScrimColor(Color.parseColor("#00ffffff"));
+    }
+
+    public User getCurrentUser(){
+        return currentUser;
     }
 
     public void navigate(MenuItem item) {

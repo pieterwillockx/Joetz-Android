@@ -46,6 +46,13 @@ public class User {
     }
     public String getFirstname() { return firstname; }
     public String getLastname() { return lastname; }
+    public String getUsername() { return username; }
+    public Contactpersoon getContactpersoon1() { return contactpersoon1; }
+    public Contactpersoon getContactpersoon2() { return contactpersoon2; }
+    public String getRole() { return role; }
+    public String getDateJoined() { return dateJoined; }
+    public Adres getAdres() { return adres; }
+
     public String getContactpersoon1Email() { return contactpersoon1Email; }
     public String getContactpersoon2Email() { return contactpersoon2Email; }
 
