@@ -38,4 +38,8 @@ public class PreferencesHelper {
         prefs.putString(PREFERENCE_REFRESH_TOKEN, refreshToken);
         prefs.apply();
     }
+
+    public static String getRefreshToken(Context context){
+        return PreferencesHelper.getPreferences(context).getString(PREFERENCE_REFRESH_TOKEN, null);
+    }
 }

@@ -5,6 +5,7 @@ import retrofit.http.Path;
 import rx.Observable;
 
 import com.fabantowapi.joetz_android.model.api.LoginRequest;
+import com.fabantowapi.joetz_android.model.api.LogoutRequest;
 import com.fabantowapi.joetz_android.model.api.RegisterRequest;
 
 import retrofit.client.Response;
@@ -17,6 +18,9 @@ import retrofit.http.POST;
 public interface JoetzApi {
     @POST("/authentication/login")
     Observable<Response> logIn(@Body LoginRequest request);
+
+    @POST("/authentication/logout")
+    Observable<Response> logOut(@Body LogoutRequest request);
 
     @POST("/user")
     Observable<Response> register(@Body RegisterRequest request);

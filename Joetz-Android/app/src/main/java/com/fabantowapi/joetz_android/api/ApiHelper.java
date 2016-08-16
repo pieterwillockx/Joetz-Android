@@ -4,7 +4,6 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 
-import retrofit.client.Response;
 import rx.Observable;
 
 import com.fabantowapi.joetz_android.contentproviders.ContactpersoonContentProvider;
@@ -12,11 +11,10 @@ import com.fabantowapi.joetz_android.contentproviders.UserContentProvider;
 import com.fabantowapi.joetz_android.model.api.GetUserResponse;
 import com.fabantowapi.joetz_android.model.api.LoginRequest;
 import com.fabantowapi.joetz_android.model.api.LoginResponse;
+import com.fabantowapi.joetz_android.model.api.LogoutRequest;
 import com.fabantowapi.joetz_android.model.api.RegisterRequest;
-import com.fabantowapi.joetz_android.model.api.RegisterResponse;
 import com.fabantowapi.joetz_android.utils.CookieHelper;
 import com.fabantowapi.joetz_android.utils.PreferencesHelper;
-import com.fabantowapi.joetz_android.utils.SharedHelper;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -90,6 +88,34 @@ public class ApiHelper {
                     PreferencesHelper.saveRefreshToken(context, loginResponse.getRefreshToken());
                 })
                 .flatMap(loginResponse -> Observable.empty())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static Observable<Object> logOut(Context context, String refreshToken){
+        ApiHelper.resetService();
+
+        return ApiHelper.getService(context).logOut(new LogoutRequest(refreshToken))
+                .flatMap(response -> {
+                    String applicationCookie = CookieHelper.getApplicationCookie(response.getHeaders());
+                    PreferencesHelper.saveApplicationCookie(context, applicationCookie);
+
+                    if(response.getStatus() == 200){
+                        return Observable.empty();
+                    }
+                    else{
+                        int status = response.getStatus();
+                        String error;
+
+                        switch(status){
+                            case 400 : error = "Bad Request"; break;
+                            case 401 : error = "Unauthorized"; break;
+                            default: error = "Unknown Error"; break;
+                        }
+
+                        return Observable.error(new IOException(error));
+                    }
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

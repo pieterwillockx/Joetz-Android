@@ -3,12 +3,14 @@ package com.fabantowapi.joetz_android.activities;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.database.Cursor;
 import android.content.res.Configuration;
 import android.database.DatabaseUtils;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.content.CursorLoader;
 import android.content.Loader;
@@ -27,6 +29,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.api.ApiHelper;
 import com.fabantowapi.joetz_android.contentproviders.ContactpersoonContentProvider;
@@ -43,6 +47,7 @@ import com.fabantowapi.joetz_android.model.api.Contactpersoon;
 import com.fabantowapi.joetz_android.model.api.User;
 import com.fabantowapi.joetz_android.utils.Constants;
 import com.fabantowapi.joetz_android.utils.Observer;
+import com.fabantowapi.joetz_android.utils.PreferencesHelper;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -111,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
             mDrawerToggle.syncState();
         }
 
-        //mDrawerLayout.setScrimColor(Color.parseColor("#00ffffff"));
+        mDrawerLayout.setScrimColor(Color.parseColor("#00ffffff"));
     }
 
     public void navigate(MenuItem item) {
@@ -134,14 +139,40 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
             case R.id.nav_home:
                 fragmentClass = ArtikelListFragment.class;
                 break;
-            case R.id.nav_profiel :
-                fragmentClass = ProfielFragment.class;
+            case R.id.nav_logout :
+                showLogoutConfirmDialog(MainActivity.this);
                 break;
             default:
                 fragmentClass = ArtikelListFragment.class;
                 break;
         }
-        navigate(fragmentClass);
+        if(itemId != R.id.nav_logout){
+            navigate(fragmentClass);
+        }
+    }
+
+    private void showLogoutConfirmDialog(Context context)
+    {
+        new MaterialDialog.Builder(context)
+                .title(R.string.dialog_logout)
+                .content("Weet u zeker dat u wil uitloggen?")
+                .positiveText(R.string.dialog_yes)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                        String refreshToken = PreferencesHelper.getRefreshToken(MainActivity.this);
+                        ApiHelper.logOut(MainActivity.this, refreshToken).subscribe(MainActivity.this.logoutObserver);
+                    }
+                })
+                .negativeText(R.string.dialog_no)
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 
     public void navigate (Class fragmentClass){
@@ -161,6 +192,27 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
         ft.replace(R.id.mainpage_container, fragment);
         ft.commit();
     }
+
+    private Observer<Object> logoutObserver = new Observer<Object>()
+    {
+        @Override
+        public void onCompleted()
+        {
+            if(MainActivity.this != null)
+            {
+                MainActivity.this.finish();
+            }
+        }
+
+        @Override
+        public void onError(Throwable e)
+        {
+            if(MainActivity.this != null)
+            {
+                Toast.makeText(MainActivity.this, "Fout bij het uitloggen", Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {

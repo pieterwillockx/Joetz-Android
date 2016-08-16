@@ -22,5 +22,9 @@
             android:id="@+id/nav_forum"
             android:title="@string/nav_drawer_forum" />
 
+        <item
+            android:id="@+id/nav_logout"
+            android:title="@string/logout" />
+
     </group>
 </menu>

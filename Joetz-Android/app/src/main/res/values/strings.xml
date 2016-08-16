@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Joetz!</string>
     <string name="login">Login</string>
+    <string name="logout">Logout</string>
     <string name="wachtwoord">Wachtwoord</string>
     <string name="wachtwoordVergeten">Wachtwoord vergeten</string>
     <string name="registreer">Registreer</string>
@@ -39,8 +40,11 @@
     <string name="nieuwWachtwoord">Nieuw wachtwoord</string>
     <string name="herhaalNieuwWachtwoord">Herhaal nieuw wachtwoord</string>
     <string name="dialog_error">Fout</string>
+    <string name="dialog_logout">Uitloggen</string>
     <string name="login_login_error">Er ging iets fout tijdens het inloggen.</string>
     <string name="register_register_error">Er ging iets fout tijdens het registreren.</string>
     <string name="dialog_positive">OK</string>
+    <string name="dialog_yes">Ja</string>
+    <string name="dialog_no">Nee</string>
     <string name="be_quick">BE QUICK!!!</string>
 </resources>
