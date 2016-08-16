@@ -19,6 +19,15 @@ public class Adres{
     @SerializedName("postcode")
     private int postcode;
 
+    public Adres(String naamgebouw, String straat, int huisnummer, String bus, String gemeente, int postcode){
+        this.naamgebouw = naamgebouw;
+        this.straat = straat;
+        this.huisnummer = huisnummer;
+        this.bus = bus;
+        this.gemeente = gemeente;
+        this.postcode = postcode;
+    }
+
     public String getNaamgebouw() { return naamgebouw; }
     public String getStraat() { return straat; }
     public int getHuisnummer() { return huisnummer; }

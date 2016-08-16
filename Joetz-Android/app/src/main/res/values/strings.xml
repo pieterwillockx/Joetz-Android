@@ -30,6 +30,8 @@
     <string name="historiek_leeg_imagebeschrijving">lege Historiek pagina foto</string>
     <string name="mischien_aanwezig">Mischien aanwezig</string>
     <string name="deelnemer">Deelnemer</string>
+    <string name="material_drawer_open">Open</string>
+    <string name="material_drawer_close">Closed</string>
     <string name="aanwezig">Aanwezig</string>
     <string name="ouders">Ouders</string>
     <string name="save">Opslagen</string>

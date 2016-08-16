@@ -11,8 +11,6 @@ import java.util.Map;
 public class ContactpersoonTable {
     public static final String TABLE_NAME = "contactpersonen";
 
-    public static final String COLUMN_ID = "_id";
-    //public static final String COLUMN_USER_ID = "user_id";
     public static final String COLUMN_NAAM = "naam";
     public static final String COLUMN_VOORNAAM = "voornaam";
     public static final String COLUMN_NAAMGEBOUW = "naamgebouw";
@@ -28,8 +26,6 @@ public class ContactpersoonTable {
     public static final String COLUMN_OUDER = "ouder";
     public static final String COLUMN_RIJKSREGISTERNUMMER = "rijksregisternummer";
 
-    public static final String COLUMN_ID_FULL = TABLE_NAME + "_" + COLUMN_ID;
-    //public static final String COLUMN_USER_ID_FULL = TABLE_NAME + "_" + COLUMN_USER_ID;
     public static final String COLUMN_NAAM_FULL = TABLE_NAME + "_" + COLUMN_NAAM;
     public static final String COLUMN_VOORNAAM_FULL = TABLE_NAME + "_" + COLUMN_VOORNAAM;
     public static final String COLUMN_NAAMGEBOUW_FULL = TABLE_NAME + "_" + COLUMN_NAAMGEBOUW;
@@ -49,8 +45,6 @@ public class ContactpersoonTable {
 
     static{
         PROJECTION_MAP = new HashMap<>();
-        PROJECTION_MAP.put(TABLE_NAME + "." + COLUMN_ID, TABLE_NAME + "." + COLUMN_ID + " AS " + COLUMN_ID_FULL);
-        //PROJECTION_MAP.put(TABLE_NAME + "." + COLUMN_ID, TABLE_NAME + "." + COLUMN_USER_ID + " AS " + COLUMN_USER_ID_FULL);
         PROJECTION_MAP.put(TABLE_NAME + "." + COLUMN_NAAM, TABLE_NAME + "." + COLUMN_NAAM + " AS " + COLUMN_NAAM_FULL);
         PROJECTION_MAP.put(TABLE_NAME + "." + COLUMN_VOORNAAM, TABLE_NAME + "." + COLUMN_VOORNAAM + " AS " + COLUMN_VOORNAAM_FULL);
         PROJECTION_MAP.put(TABLE_NAME + "." + COLUMN_NAAMGEBOUW, TABLE_NAME + "." + COLUMN_NAAMGEBOUW + " AS " + COLUMN_NAAMGEBOUW_FULL);
@@ -68,9 +62,7 @@ public class ContactpersoonTable {
     }
 
     private static final String CREATE_TABLE = "create table IF NOT EXISTS " + TABLE_NAME + "("
-            + COLUMN_ID + " integer primary key autoincrement, "
-            //+ COLUMN_USER_ID + " integer, "
-            + COLUMN_NAAM + " text primary key, "
+            + COLUMN_NAAM + " text, "
             + COLUMN_VOORNAAM + " text, "
             + COLUMN_NAAMGEBOUW + " text, "
             + COLUMN_STRAAT + " text, "
@@ -79,7 +71,7 @@ public class ContactpersoonTable {
             + COLUMN_GEMEENTE + " text, "
             + COLUMN_POSTCODE + " integer, "
             + COLUMN_TELEFOONNUMMER + " text, "
-            + COLUMN_EMAIL + " text, "
+            + COLUMN_EMAIL + " text primary key, "
             + COLUMN_AANSLUITNUMMER + " text, "
             + COLUMN_BETALEND + " integer, "
             + COLUMN_RIJKSREGISTERNUMMER + " text, "

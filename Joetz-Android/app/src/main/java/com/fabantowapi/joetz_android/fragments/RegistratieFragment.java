@@ -36,8 +36,8 @@ public class RegistratieFragment extends Fragment{
     public EditText txtVoornaam;
     @Bind(R.id.txtRijksregisternummer)
     public EditText txtRijksregisternumer;
-    @Bind(R.id.txtGeboorteDatum)
-    public EditText txtGeboorteDatum;
+    //@Bind(R.id.txtGeboorteDatum)
+    //public EditText txtGeboorteDatum;
     @Bind(R.id.txtGebruikersnaam)
     public EditText txtGebruikersnaam;
 
@@ -65,6 +65,16 @@ public class RegistratieFragment extends Fragment{
             showRegisterErrorDialog(RegistratieFragment.this.getActivity(), "Alle velden moeten ingevuld zijn!");
         }
 
+    }
+
+    @OnClick(R.id.be_quick_register)
+    public void beQuick(){
+        txtEmail.setText("pieter@test.com");
+        txtVoornaam.setText("Pieter");
+        txtNaam.setText("Willockx");
+        txtWachtwoord.setText("@Test123456789");
+        txtRijksregisternumer.setText("95050316727");
+        txtGebruikersnaam.setText("papelierke");
     }
 
     private void showRegisterErrorDialog(Context context, String error){

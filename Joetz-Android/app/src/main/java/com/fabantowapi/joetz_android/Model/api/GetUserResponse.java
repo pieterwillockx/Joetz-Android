@@ -38,7 +38,7 @@ public class GetUserResponse {
     public String getDateJoined() { return dateJoined; }
 
     public User getUser(){
-        User user = new User(email, username, firstname, lastname, contactpersoon1, contactpersoon2, role, dateJoined, adres.getNaamgebouw(), adres.getStraat(), adres.getHuisnummer(), adres.getBus(), adres.getGemeente(), adres.getPostcode());
+        User user = new User(email, username, firstname, lastname, contactpersoon1.getEmail(), contactpersoon2.getEmail(), contactpersoon1, contactpersoon2, role, dateJoined, adres);
         return user;
     }
 }

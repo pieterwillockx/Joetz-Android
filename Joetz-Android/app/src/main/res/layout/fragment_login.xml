@@ -3,19 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-<<<<<<< HEAD
     android:padding="10dp">
-
-    <ImageView
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="50dp"
-        android:id="@+id/lblLogin"
-        android:src="@drawable/joetz"/>
-=======
-    android:padding="20dp">
 
     <ImageView
         android:layout_width="match_parent"
@@ -24,74 +12,56 @@
         android:layout_marginBottom="20dp"
         android:src="@drawable/joetz"
         android:id="@+id/lblLogin"/>
->>>>>>> feature/design
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-<<<<<<< HEAD
-        android:text="@string/email"
-        android:id="@+id/lblEmail"/>
-=======
-        android:textColor="@color/accent"
+        android:textColor="@color/colorAccent"
         android:text="@string/email"
         android:id="@+id/lblEmail" />
->>>>>>> feature/design
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:inputType="textEmailAddress"
-<<<<<<< HEAD
-=======
-        android:textColor="@color/accent"
->>>>>>> feature/design
+        android:textColor="@color/colorAccent"
         android:id="@+id/txtEmail"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-<<<<<<< HEAD
-=======
-        android:textColor="@color/accent"
->>>>>>> feature/design
+        android:textColor="@color/colorAccent"
         android:text="@string/wachtwoord"
         android:id="@+id/lblWachtwoord" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-<<<<<<< HEAD
-        android:inputType="textPassword"
-=======
         android:layout_marginBottom="20dp"
         android:inputType="textPassword"
-        android:textColor="@color/accent"
->>>>>>> feature/design
+        android:textColor="@color/colorAccent"
         android:id="@+id/txtWachtwoord" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-<<<<<<< HEAD
+        android:id="@+id/btnLogin"
+        android:layout_marginBottom="20dp"
         android:text="@string/login"
-        android:id="@+id/btnLogin" />
+        android:textColor="#ffffff"
+        android:background="@color/colorAccent"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/be_quick"
-        android:id="@+id/btnBeQuick" />
-=======
+        android:id="@+id/btnBeQuick"
         android:layout_marginBottom="20dp"
-        android:text="@string/login"
-        android:textColor="@color/md_white_1000"
-        android:background="@color/accent"
-        android:id="@+id/btnLogin" />
->>>>>>> feature/design
+        android:textColor="#ffffff"
+        android:background="@color/colorAccent" />
 
     <TextView
         android:layout_width="wrap_content"

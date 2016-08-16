@@ -75,7 +75,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/txtRijksregisternummer" />
 
-    <TextView
+    <!--<TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -86,7 +86,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="date"
-        android:id="@+id/txtGeboorteDatum" />
+        android:id="@+id/txtGeboorteDatum" />-->
 
     <TextView
         android:layout_width="wrap_content"
@@ -104,6 +104,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/registreer"
+        android:layout_marginBottom="20dp"
+        android:background="@color/colorPrimary"
+        android:textColor="#ffffff"
         android:id="@+id/btnRegistreer"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/be_quick"
+        android:background="@color/colorPrimary"
+        android:textColor="#ffffff"
+        android:id="@+id/be_quick_register"/>
 
 </LinearLayout>

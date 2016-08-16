@@ -32,11 +32,11 @@
             android:text="testings" />
 
         <TextView
-            android:id="@+id/nav_header_typeofuser"
+            android:id="@+id/nav_header_fullname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="2dp"
-            android:text="Gewone gebruiker"/>
+            android:text="Piet Pieters"/>
 
     </LinearLayout>
 

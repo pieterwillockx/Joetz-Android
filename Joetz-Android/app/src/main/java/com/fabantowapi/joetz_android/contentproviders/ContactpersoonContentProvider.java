@@ -147,7 +147,6 @@ public class ContactpersoonContentProvider extends ContentProvider {
                         for(ContentValues cv : values){
                             if(cv != null){
                                 inserter.prepareForInsert();
-                                inserter.bind(inserter.getColumnIndex(ContactpersoonTable.COLUMN_ID), cv.getAsInteger(ContactpersoonTable.COLUMN_ID));
                                 inserter.bind(inserter.getColumnIndex(ContactpersoonTable.COLUMN_NAAM), cv.getAsString(ContactpersoonTable.COLUMN_EMAIL));
                                 inserter.bind(inserter.getColumnIndex(ContactpersoonTable.COLUMN_VOORNAAM), cv.getAsString(ContactpersoonTable.COLUMN_VOORNAAM));
                                 inserter.bind(inserter.getColumnIndex(ContactpersoonTable.COLUMN_NAAMGEBOUW), cv.getAsString(ContactpersoonTable.COLUMN_NAAMGEBOUW));

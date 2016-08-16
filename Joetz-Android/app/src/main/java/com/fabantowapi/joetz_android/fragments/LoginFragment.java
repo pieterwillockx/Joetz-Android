@@ -51,7 +51,6 @@ public class LoginFragment extends Fragment{
 
     @OnClick(R.id.btnLogin)
     public void onLoginButtonClicked() {
-        //getActivity().startActivity(new Intent(getActivity(),MainActivity.class));
         String email = txtEmail.getText().toString();
         String password = txtWachtwoord.getText().toString();
 
@@ -115,6 +114,27 @@ public class LoginFragment extends Fragment{
         {
             if(LoginFragment.this.getActivity() != null)
             {
+                String email = txtEmail.getText().toString();
+                ApiHelper.getUser(LoginFragment.this.getActivity(), email).subscribe(LoginFragment.this.getUserObserver);
+            }
+        }
+
+        @Override
+        public void onError(Throwable e)
+        {
+            if(LoginFragment.this.getActivity() != null)
+            {
+                LoginFragment.this.showLoginErrorDialog(LoginFragment.this.getActivity(), "Error while logging in: " + e.getMessage());
+            }
+        }
+    };
+
+    public Observer<Object> getUserObserver = new Observer<Object>(){
+        @Override
+        public void onCompleted()
+        {
+            if(LoginFragment.this.getActivity() != null)
+            {
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 String email = txtEmail.getText().toString();
                 intent.putExtra("EMAIL", email);
@@ -128,7 +148,7 @@ public class LoginFragment extends Fragment{
         {
             if(LoginFragment.this.getActivity() != null)
             {
-                LoginFragment.this.showLoginErrorDialog(LoginFragment.this.getActivity(), e.getMessage());
+                LoginFragment.this.showLoginErrorDialog(LoginFragment.this.getActivity(), "Error while getting user: " + e.getMessage());
             }
         }
     };

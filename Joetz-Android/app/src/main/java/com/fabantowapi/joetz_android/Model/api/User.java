@@ -16,37 +16,38 @@ public class User {
     private String username;
     private String firstname;
     private String lastname;
+    private String contactpersoon1Email;
+    private String contactpersoon2Email;
     private Contactpersoon contactpersoon1;
     private Contactpersoon contactpersoon2;
     private String role;
     private String dateJoined;
-    private String naamgebouw;
-    private String straat;
-    private int huisnummer;
-    private String bus;
-    private String gemeente;
-    private int postcode;
+    private Adres adres;
 
-    public User(String email, String username, String firstname, String lastname, Contactpersoon contactpersoon1, Contactpersoon contactpersoon2, String role, String dateJoined, String naamgebouw, String straat, int huisnummer, String bus, String gemeente, int postcode) {
+    public User(String email, String username, String firstname, String lastname, String contactpersoon1Email, String contactpersoon2Email, Contactpersoon contactpersoon1, Contactpersoon contactpersoon2, String role, String dateJoined, Adres adres) {
         this.email = email;
         this.username = username;
         this.firstname = firstname;
         this.lastname = lastname;
+        this.contactpersoon1Email = contactpersoon1Email;
+        this.contactpersoon2Email = contactpersoon2Email;
         this.contactpersoon1 = contactpersoon1;
         this.contactpersoon2 = contactpersoon2;
         this.role = role;
         this.dateJoined = dateJoined;
-        this.naamgebouw = naamgebouw;
-        this.straat = straat;
-        this.huisnummer = huisnummer;
-        this.bus = bus;
-        this.gemeente = gemeente;
-        this.postcode = postcode;
+        this.adres = adres;
     }
+
+    public void setContactpersoon1(Contactpersoon contactpersoon1) { this.contactpersoon1 = contactpersoon1; }
+    public void setContactpersoon2(Contactpersoon contactpersoon2) { this.contactpersoon2 = contactpersoon2; }
 
     public String getEmail() {
         return email;
     }
+    public String getFirstname() { return firstname; }
+    public String getLastname() { return lastname; }
+    public String getContactpersoon1Email() { return contactpersoon1Email; }
+    public String getContactpersoon2Email() { return contactpersoon2Email; }
 
     public ContentValues getContentValues(){
         ContentValues cv = new ContentValues();
@@ -57,12 +58,14 @@ public class User {
         cv.put(UserTable.COLUMN_LASTNAME, this.lastname);
         cv.put(UserTable.COLUMN_ROLE, this.role);
         cv.put(UserTable.COLUMN_DATE_JOINED, this.dateJoined);
-        cv.put(UserTable.COLUMN_NAAMGEBOUW, this.naamgebouw);
-        cv.put(UserTable.COLUMN_STRAAT, this.straat);
-        cv.put(UserTable.COLUMN_HUISNUMMER, this.huisnummer);
-        cv.put(UserTable.COLUMN_BUS, this.bus);
-        cv.put(UserTable.COLUMN_GEMEENTE, this.gemeente);
-        cv.put(UserTable.COLUMN_POSTCODE, this.postcode);
+        cv.put(UserTable.COLUMN_NAAMGEBOUW, this.adres.getNaamgebouw());
+        cv.put(UserTable.COLUMN_STRAAT, this.adres.getStraat());
+        cv.put(UserTable.COLUMN_HUISNUMMER, this.adres.getHuisnummer());
+        cv.put(UserTable.COLUMN_BUS, this.adres.getBus());
+        cv.put(UserTable.COLUMN_GEMEENTE, this.adres.getGemeente());
+        cv.put(UserTable.COLUMN_POSTCODE, this.adres.getPostcode());
+        cv.put(UserTable.COLUMN_CONTACTPERSOON1_EMAIL, this.contactpersoon1Email);
+        cv.put(UserTable.COLUMN_CONTACTPERSOON2_EMAIL, this.contactpersoon1Email);
 
         return cv;
     }
@@ -82,6 +85,8 @@ public class User {
         int lastnameIndex = cursor.getColumnIndex(UserTable.COLUMN_LASTNAME_FULL);
         int roleIndex = cursor.getColumnIndex(UserTable.COLUMN_ROLE_FULL);
         int dateJoinedIndex = cursor.getColumnIndex(UserTable.COLUMN_DATE_JOINED_FULL);
+        int contactpersoon1EmailIndex = cursor.getColumnIndex(UserTable.COLUMN_CONTACTPERSOON1_EMAIL_FULL);
+        int contactpersoon2EmailIndex = cursor.getColumnIndex(UserTable.COLUMN_CONTACTPERSOON2_EMAIL_FULL);
         int naamgebouwIndex = cursor.getColumnIndex(UserTable.COLUMN_NAAMGEBOUW_FULL);
         int straatIndex = cursor.getColumnIndex(UserTable.COLUMN_STRAAT_FULL);
         int huisnummerIndex = cursor.getColumnIndex(UserTable.COLUMN_HUISNUMMER_FULL);
@@ -89,12 +94,16 @@ public class User {
         int gemeenteIndex = cursor.getColumnIndex(UserTable.COLUMN_GEMEENTE_FULL);
         int postcodeIndex = cursor.getColumnIndex(UserTable.COLUMN_POSTCODE_FULL);
 
+        cursor.moveToFirst();
+
         String email = cursor.getString(emailIndex);
         String username = cursor.getString(usernameIndex);
         String firstname = cursor.getString(firstnameIndex);
         String lastname = cursor.getString(lastnameIndex);
         String role = cursor.getString(roleIndex);
         String dateJoined = cursor.getString(dateJoinedIndex);
+        String contactpersoon1Email = cursor.getString(contactpersoon1EmailIndex);
+        String contactpersoon2Email = cursor.getString(contactpersoon2EmailIndex);
         String naamgebouw = cursor.getString(naamgebouwIndex);
         String straat = cursor.getString(straatIndex);
         int huisnummer = cursor.getInt(huisnummerIndex);
@@ -102,8 +111,19 @@ public class User {
         String gemeente = cursor.getString(gemeenteIndex);
         int postcode = cursor.getInt(postcodeIndex);
 
-        User user = new User(email, username, firstname, lastname, null, null, role, dateJoined, naamgebouw, straat, huisnummer, bus, gemeente, postcode);
+        Adres adres = new Adres(naamgebouw, straat, huisnummer, bus, gemeente, postcode);
+
+        User user = new User(email, username, firstname, lastname, contactpersoon1Email, contactpersoon2Email, null, null, role, dateJoined, adres);
 
         return user;
+    }
+
+    @Override
+    public String toString(){
+        String out = "User " + this.firstname + " " + this.lastname + " with email " + this.email + ":\n";
+        out += "Contactpersoon 1: " + contactpersoon1.getEmail() + "\n";
+        out += "Contactpersoon 2: " + contactpersoon2.getEmail() + "\n";
+
+        return out;
     }
 }

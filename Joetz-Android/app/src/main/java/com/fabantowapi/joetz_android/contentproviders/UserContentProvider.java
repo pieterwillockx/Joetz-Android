@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.fabantowapi.joetz_android.database.DatabaseHelper;
 import com.fabantowapi.joetz_android.database.UserTable;
@@ -85,6 +86,11 @@ public class UserContentProvider extends ContentProvider{
 
         if(rowId > 0){
             this.getContext().getContentResolver().notifyChange(CONTENT_URI, null);
+
+            // log database
+            Log.d("UserContentProvider", "Printing DB after insert...");
+            printDatabase();
+
             return Uri.withAppendedPath(CONTENT_URI, String.valueOf(rowId));
         }
 
@@ -107,6 +113,10 @@ public class UserContentProvider extends ContentProvider{
 
         if(rowsDeleted > 0){
             this.getContext().getContentResolver().notifyChange(CONTENT_URI, null);
+
+            // log database
+            Log.d("UserContentProvider", "Printing DB after delete...");
+            printDatabase();
         }
 
         return rowsDeleted;
@@ -128,6 +138,10 @@ public class UserContentProvider extends ContentProvider{
 
         if(rowsUpdated > 0){
             this.getContext().getContentResolver().notifyChange(CONTENT_URI, null);
+
+            // log database
+            Log.d("UserContentProvider", "Printing DB after update...");
+            printDatabase();
         }
 
         return rowsUpdated;
@@ -159,8 +173,8 @@ public class UserContentProvider extends ContentProvider{
                                 inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_GEMEENTE), cv.getAsString(UserTable.COLUMN_GEMEENTE));
                                 inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_POSTCODE), cv.getAsInteger(UserTable.COLUMN_POSTCODE));
                                 inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_EMAIL), cv.getAsString(UserTable.COLUMN_EMAIL));
-                                inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_CONTACTPERSOON1_ID), cv.getAsInteger(UserTable.COLUMN_CONTACTPERSOON1_ID));
-                                inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_CONTACTPERSOON2_ID), cv.getAsInteger(UserTable.COLUMN_CONTACTPERSOON2_ID));
+                                inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_CONTACTPERSOON1_EMAIL), cv.getAsInteger(UserTable.COLUMN_CONTACTPERSOON1_EMAIL));
+                                inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_CONTACTPERSOON2_EMAIL), cv.getAsInteger(UserTable.COLUMN_CONTACTPERSOON2_EMAIL));
                                 inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_ROLE), cv.getAsString(UserTable.COLUMN_ROLE));
                                 inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_DATE_JOINED), cv.getAsString(UserTable.COLUMN_DATE_JOINED));
                                 inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_RIJKSREGISTERNUMMER), cv.getAsString(UserTable.COLUMN_RIJKSREGISTERNUMMER));
@@ -194,5 +208,10 @@ public class UserContentProvider extends ContentProvider{
         }
 
         return rowsInserted;
+    }
+
+    public void printDatabase(){
+        SQLiteDatabase db = this.databaseHelper.getReadableDatabase();
+        Log.d("UserContentProvider", this.databaseHelper.getTableAsString(db, UserTable.TABLE_NAME));
     }
 }

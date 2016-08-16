@@ -103,17 +103,8 @@ public class ApiHelper {
                     String applicationCookie = CookieHelper.getApplicationCookie(response.getHeaders());
                     PreferencesHelper.saveApplicationCookie(context, applicationCookie);
 
-                    RegisterResponse registerResponse;
-
-                    try{
-                        GsonConverter converter = new GsonConverter(new Gson());
-                        registerResponse = (RegisterResponse) converter.fromBody(response.getBody(), RegisterResponse.class);
-                    }catch (ConversionException e){
-                        return Observable.error(e);
-                    }
-
-                    if(registerResponse != null && response.getStatus() == 200){
-                            return Observable.just(registerResponse);
+                    if(response.getStatus() == 200){
+                            return Observable.empty();
                     }
                     else{
                         int status = response.getStatus();
@@ -128,8 +119,6 @@ public class ApiHelper {
                         return Observable.error(new IOException(error));
                     }
                 })
-                .doOnNext(registerResponse -> {})
-                .flatMap(registerResponse -> Observable.empty())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -170,17 +159,19 @@ public class ApiHelper {
                 .doOnNext(user -> {
                     ContentResolver contentResolver = context.getContentResolver();
                     contentResolver.delete(UserContentProvider.CONTENT_URI, null, null);
+                    contentResolver.delete(ContactpersoonContentProvider.CONTENT_URI, null, null);
 
                     ContentValues cvUser = user.getContentValues();
                     contentResolver.insert(UserContentProvider.CONTENT_URI, cvUser);
                 })
-                //.flatMap(user -> Observable.from(user.getContactpersonen()))
-                //.doOnNext(contactpersoon -> {
-                //    ContentResolver contentResolver = context.getContentResolver();
-                //    ContentValues cv = contactpersoon.getContentValues();
-                //    contentResolver.insert(ContactpersoonContentProvider.CONTENT_URI, cv);
-                //})
-                //.toList()
+                .flatMap(user -> Observable.from(user.getContactpersonen()))
+                .doOnNext(contactpersoon -> {
+                    ContentResolver contentResolver = context.getContentResolver();
+
+                    ContentValues cv = contactpersoon.getContentValues();
+                    contentResolver.insert(ContactpersoonContentProvider.CONTENT_URI, cv);
+                })
+                .toList()
                 .flatMap(user -> Observable.empty())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
