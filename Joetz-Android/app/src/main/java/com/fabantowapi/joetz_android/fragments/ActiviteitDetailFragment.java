@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.model.Activiteit;
+import com.fabantowapi.joetz_android.model.api.Activity;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -40,20 +42,20 @@ public class ActiviteitDetailFragment extends Fragment {
     public TextView txtPlaats;
     @Bind(R.id.activiteitDetail_naam)
     public TextView txtNaam;
-    private Activiteit activiteit;
+    private Activity activiteit;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_activiteit_detail, container, false);
         ButterKnife.bind(this, view);
         Intent i = getActivity().getIntent();
-        activiteit =(Activiteit) i.getSerializableExtra("activiteit");
+        activiteit =(Activity) i.getSerializableExtra("activity");
         setDetails(activiteit);;
 
         return view;
     }
 
-    public void setDetails(Activiteit activiteit){
+    public void setDetails(Activity activiteit){
 
         txtNaam.setText(activiteit.getNaam());
         txtDatum.setText("placeholder");

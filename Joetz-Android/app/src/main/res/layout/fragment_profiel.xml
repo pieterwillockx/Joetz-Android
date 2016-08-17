@@ -38,7 +38,7 @@
 
                 <TextView
                     android:id="@+id/profile_lbl_email"
-                    android:layout_width="150dp"
+                    android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:textAppearanceMedium"
                     android:textColor="@color/colorPrimary"
@@ -60,7 +60,7 @@
 
                 <TextView
                     android:id="@+id/profile_lbl_username"
-                    android:layout_width="150dp"
+                    android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:textAppearanceMedium"
                     android:textColor="@color/colorPrimary"
@@ -82,7 +82,7 @@
 
                 <TextView
                     android:id="@+id/profile_lbl_address"
-                    android:layout_width="150dp"
+                    android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:textAppearanceMedium"
                     android:textColor="@color/colorPrimary"
@@ -121,8 +121,74 @@
                 android:layout_marginBottom="10dp">
 
                 <TextView
+                    android:id="@+id/profile_lbl_birthdate"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/colorPrimary"
+                    android:text="@string/profile_birthdate"/>
+
+                <TextView
+                    android:id="@+id/profile_val_birthdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:textAppearanceMedium"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:id="@+id/profile_lbl_owner_code"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/colorPrimary"
+                    android:text="@string/profile_ownercode"/>
+
+                <TextView
+                    android:id="@+id/profile_val_owner_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:textAppearanceMedium"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:id="@+id/profile_lbl_securitynumber"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/colorPrimary"
+                    android:text="@string/profile_securitynumber"/>
+
+                <TextView
+                    android:id="@+id/profile_val_securitynumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:textAppearanceMedium"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp">
+
+                <TextView
                     android:id="@+id/profile_lbl_role"
-                    android:layout_width="150dp"
+                    android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:textAppearanceMedium"
                     android:textColor="@color/colorPrimary"
@@ -144,7 +210,7 @@
 
                 <TextView
                     android:id="@+id/profile_lbl_datejoined"
-                    android:layout_width="150dp"
+                    android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:textAppearanceMedium"
                     android:textColor="@color/colorPrimary"
@@ -164,13 +230,29 @@
                 android:orientation="horizontal"
                 android:layout_marginBottom="10dp">
 
-                <TextView
-                    android:id="@+id/profile_lbl_contactperson1"
-                    android:layout_width="150dp"
+                <LinearLayout
+                    android:layout_width="220dp"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/colorPrimary"
-                    android:text="@string/profile_contactperson1"/>
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/profile_lbl_contactperson1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@color/colorPrimary"
+                        android:text="@string/profile_contactperson1"/>
+
+                    <TextView
+                        android:id="@+id/profile_btn_edit_contactperson1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:textColor="@color/colorLink"
+                        android:text="Bewerken"/>
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -204,13 +286,29 @@
                 android:orientation="horizontal"
                 android:layout_marginBottom="10dp">
 
-                <TextView
-                    android:id="@+id/profile_lbl_contactperson2"
-                    android:layout_width="150dp"
+                <LinearLayout
+                    android:layout_width="220dp"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/colorPrimary"
-                    android:text="@string/profile_contactperson2"/>
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/profile_lbl_contactperson2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@color/colorPrimary"
+                        android:text="@string/profile_contactperson2"/>
+
+                    <TextView
+                        android:id="@+id/profile_btn_edit_contactperson2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:textColor="@color/colorLink"
+                        android:text="Bewerken"/>
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

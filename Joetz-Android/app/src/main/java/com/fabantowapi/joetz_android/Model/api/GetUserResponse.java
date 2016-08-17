@@ -16,6 +16,12 @@ public class GetUserResponse {
     private String firstname;
     @SerializedName("lastname")
     private String lastname;
+    @SerializedName("rijksregisternummer")
+    private String rijksregisternummer;
+    @SerializedName("geboortedatum")
+    private String geboortedatum;
+    @SerializedName("codegerechtigde")
+    private String codegerechtigde;
     @SerializedName("adres")
     private Adres adres;
     @SerializedName("contactpersoon1")
@@ -31,6 +37,9 @@ public class GetUserResponse {
     public String getUsername() { return username; }
     public String getFirstname() { return firstname; }
     public String getLastname() { return lastname; }
+    public String getRijksregisternummer() { return rijksregisternummer; }
+    public String getGeboortedatum() { return geboortedatum; }
+    public String getCodegerechtigde() { return codegerechtigde; }
     public Adres getAdres() { return adres; }
     public Contactpersoon getContactpersoon1() { return contactpersoon1; }
     public Contactpersoon getContactpersoon2() { return contactpersoon2; }
@@ -38,7 +47,7 @@ public class GetUserResponse {
     public String getDateJoined() { return dateJoined; }
 
     public User getUser(){
-        User user = new User(email, username, firstname, lastname, contactpersoon1.getEmail(), contactpersoon2.getEmail(), contactpersoon1, contactpersoon2, role, dateJoined, adres);
+        User user = new User(email, username, firstname, lastname, rijksregisternummer, geboortedatum, codegerechtigde, contactpersoon1.getEmail(), contactpersoon2.getEmail(), contactpersoon1, contactpersoon2, role, dateJoined, adres);
         return user;
     }
 }

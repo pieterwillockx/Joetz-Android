@@ -14,6 +14,7 @@ import android.util.Log;
 
 import com.fabantowapi.joetz_android.database.DatabaseHelper;
 import com.fabantowapi.joetz_android.database.UserTable;
+import com.fabantowapi.joetz_android.model.api.User;
 
 /**
  * Created by Pieter on 15-8-2016.
@@ -178,6 +179,8 @@ public class UserContentProvider extends ContentProvider{
                                 inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_ROLE), cv.getAsString(UserTable.COLUMN_ROLE));
                                 inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_DATE_JOINED), cv.getAsString(UserTable.COLUMN_DATE_JOINED));
                                 inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_RIJKSREGISTERNUMMER), cv.getAsString(UserTable.COLUMN_RIJKSREGISTERNUMMER));
+                                inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_GEBOORTEDATUM), cv.getAsString(UserTable.COLUMN_GEBOORTEDATUM));
+                                inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_CODEGERECHTIGDE), cv.getAsString(UserTable.COLUMN_CODEGERECHTIGDE));
 
                                 long rowId = inserter.execute();
 

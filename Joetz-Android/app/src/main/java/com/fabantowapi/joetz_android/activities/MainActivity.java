@@ -36,6 +36,7 @@ import com.fabantowapi.joetz_android.database.ContactpersoonTable;
 import com.fabantowapi.joetz_android.database.UserTable;
 import com.fabantowapi.joetz_android.fragments.ActivityListFragment;
 import com.fabantowapi.joetz_android.fragments.ArtikelListFragment;
+import com.fabantowapi.joetz_android.fragments.EditContactPersonFragment;
 import com.fabantowapi.joetz_android.fragments.ForumFragment;
 import com.fabantowapi.joetz_android.fragments.HistoriekListFragment;
 import com.fabantowapi.joetz_android.fragments.KampenListFragment;
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
         ButterKnife.bind(this);
         initializeDrawer();
         this.getLoaderManager().initLoader(Constants.LOADER_USERS, null, this);
-        navigate(ArtikelListFragment.class);
+        navigate(ArtikelListFragment.class, false);
     }
 
     public void initializeDrawer(){
@@ -79,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
         navHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigate(ProfielFragment.class);
+                navigate(ProfielFragment.class, true);
                 mDrawerLayout.closeDrawers();
             }
         });
@@ -118,6 +119,10 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
         return currentUser;
     }
 
+    public void reloadUser(){
+        this.getLoaderManager().initLoader(Constants.LOADER_USERS, null, this);
+    }
+
     public void navigate(MenuItem item) {
         final int itemId = item.getItemId();
         Class fragmentClass = null;
@@ -146,8 +151,42 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
                 break;
         }
         if(itemId != R.id.nav_logout){
-            navigate(fragmentClass);
+            navigate(fragmentClass, true);
         }
+    }
+
+    public void navigate (Class fragmentClass, boolean addToBackStack){
+        Fragment fragment = null;
+        try {
+            if (fragmentClass != null) {
+                fragment = (Fragment) fragmentClass.newInstance();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Bundle args =new Bundle();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        fragment.setArguments(args);
+        ft.replace(R.id.mainpage_container, fragment);
+        if(addToBackStack){
+            ft.addToBackStack("FRAGMENT");
+        }
+        ft.commit();
+    }
+
+    public void navigateToEditContactPerson(int contactpersonId, boolean addToBackStack){
+        Fragment fragment = new EditContactPersonFragment();
+        getIntent().putExtra("CONTACTPERSON_ID", contactpersonId);
+
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(R.id.mainpage_container, fragment);
+        if(addToBackStack){
+            ft.addToBackStack("FRAGMENT");
+        }
+        ft.commit();
     }
 
     private void showLogoutConfirmDialog(Context context)
@@ -174,23 +213,6 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
                 .show();
     }
 
-    public void navigate (Class fragmentClass){
-        Fragment fragment = null;
-        try {
-            if (fragmentClass != null) {
-                fragment = (Fragment) fragmentClass.newInstance();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        Bundle args =new Bundle();
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        fragment.setArguments(args);
-        ft.replace(R.id.mainpage_container, fragment);
-        ft.commit();
-    }
 
     private Observer<Object> logoutObserver = new Observer<Object>()
     {
@@ -337,5 +359,15 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed(){
+        FragmentManager fm = getFragmentManager();
+        if(fm.getBackStackEntryCount() == 0){
+            showLogoutConfirmDialog(MainActivity.this);
+        }else{
+            fm.popBackStack();
+        }
     }
 }

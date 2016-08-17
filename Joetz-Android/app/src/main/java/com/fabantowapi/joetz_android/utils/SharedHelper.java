@@ -14,6 +14,14 @@ public class SharedHelper {
         return DOMAIN;
     }
 
+    // format date for api call ex. "26-11-1993" to "1993-11-26"
+    public static String formatDateForAPI(String unformattedDate){
+        String[] dateSplit = unformattedDate.split("-");
+        String formattedDate = dateSplit[2] + "-" + dateSplit[1] + "-" + dateSplit[0];
+
+        return formattedDate;
+    }
+
     public static String convertDate(String unformattedDate){
         String formattedDate;
 

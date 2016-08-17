@@ -48,6 +48,11 @@ public class Contactpersoon {
     public String getFirstname() { return firstname; }
     public String getLastname() { return lastname; }
     public String getTelefoonnummer() { return telefoonnummer; }
+    public String getRijksregisternummer() { return rijksregisternummer; }
+    public String getAansluitnummer() { return aansluitnummer; }
+    public boolean isBetalend() { return betalend; }
+    public boolean isOuder() { return ouder; }
+    public Adres getAdres() { return adres; }
 
     public ContentValues getContentValues(){
         ContentValues cv = new ContentValues();

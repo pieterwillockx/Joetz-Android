@@ -74,8 +74,8 @@ public class LoginFragment extends Fragment{
 
     @OnClick(R.id.btnBeQuick)
     public void beQuick(){
-        txtEmail.setText("test@changepassword.com");
-        txtWachtwoord.setText("@Testings123456789");
+        txtEmail.setText("pieter@test.com");
+        txtWachtwoord.setText("@Test123456789");
     }
 
     public void navigate(int fragmentId){

@@ -27,6 +27,8 @@ public class UserTable {
     public static final String COLUMN_ROLE = "role";
     public static final String COLUMN_DATE_JOINED = "date_joined";
     public static final String COLUMN_RIJKSREGISTERNUMMER = "rijksregisternummer";
+    public static final String COLUMN_GEBOORTEDATUM = "geboortedatum";
+    public static final String COLUMN_CODEGERECHTIGDE = "codegerechtigde";
 
     public static final String COLUMN_EMAIL_FULL = TABLE_NAME + "_" + COLUMN_EMAIL;
     public static final String COLUMN_USERNAME_FULL = TABLE_NAME + "_" + COLUMN_USERNAME;
@@ -43,6 +45,8 @@ public class UserTable {
     public static final String COLUMN_ROLE_FULL = TABLE_NAME + "_" + COLUMN_ROLE;
     public static final String COLUMN_DATE_JOINED_FULL = TABLE_NAME + "_" + COLUMN_DATE_JOINED;
     public static final String COLUMN_RIJKSREGISTERNUMMER_FULL = TABLE_NAME + "_" + COLUMN_RIJKSREGISTERNUMMER;
+    public static final String COLUMN_GEBOORTEDATUM_FULL = TABLE_NAME + "_" + COLUMN_GEBOORTEDATUM;
+    public static final String COLUMN_CODEGERECHTIGDE_FULL = TABLE_NAME + "_" + COLUMN_CODEGERECHTIGDE;
 
     public static final Map<String, String> PROJECTION_MAP;
 
@@ -63,6 +67,8 @@ public class UserTable {
         PROJECTION_MAP.put(TABLE_NAME + "." + COLUMN_ROLE, TABLE_NAME + "." + COLUMN_ROLE + " AS " + COLUMN_ROLE_FULL);
         PROJECTION_MAP.put(TABLE_NAME + "." + COLUMN_DATE_JOINED, TABLE_NAME + "." + COLUMN_DATE_JOINED + " AS " + COLUMN_DATE_JOINED_FULL);
         PROJECTION_MAP.put(TABLE_NAME + "." + COLUMN_RIJKSREGISTERNUMMER, TABLE_NAME + "." + COLUMN_RIJKSREGISTERNUMMER + " AS " + COLUMN_RIJKSREGISTERNUMMER_FULL);
+        PROJECTION_MAP.put(TABLE_NAME + "." + COLUMN_GEBOORTEDATUM, TABLE_NAME + "." + COLUMN_GEBOORTEDATUM + " AS " + COLUMN_GEBOORTEDATUM_FULL);
+        PROJECTION_MAP.put(TABLE_NAME + "." + COLUMN_CODEGERECHTIGDE, TABLE_NAME + "." + COLUMN_CODEGERECHTIGDE + " AS " + COLUMN_CODEGERECHTIGDE_FULL);
     }
 
     private static final String CREATE_TABLE = "create table IF NOT EXISTS " + TABLE_NAME + "("
@@ -80,7 +86,9 @@ public class UserTable {
             + COLUMN_CONTACTPERSOON2_EMAIL + " string, "
             + COLUMN_ROLE + " text, "
             + COLUMN_RIJKSREGISTERNUMMER + " text, "
-            + COLUMN_DATE_JOINED + " integer"
+            + COLUMN_DATE_JOINED + " integer, "
+            + COLUMN_GEBOORTEDATUM + " integer, "
+            + COLUMN_CODEGERECHTIGDE + " text"
             + ");";
 
     public static void onCreate(SQLiteDatabase database) { database.execSQL(CREATE_TABLE); }

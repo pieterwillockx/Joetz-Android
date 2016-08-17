@@ -3,6 +3,7 @@ package com.fabantowapi.joetz_android.fragments;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,12 @@ public class ProfielFragment extends Fragment {
     public TextView txtPostalcodeCity;
     @Bind(R.id.profile_val_role)
     public TextView txtRole;
+    @Bind(R.id.profile_val_securitynumber)
+    public TextView txtSecurityNumber;
+    @Bind(R.id.profile_val_birthdate)
+    public TextView txtBirthDate;
+    @Bind(R.id.profile_val_owner_code)
+    public TextView txtOwnerCode;
     @Bind(R.id.profile_val_datejoined)
     public TextView txtDateJoined;
 
@@ -54,6 +61,11 @@ public class ProfielFragment extends Fragment {
     @Bind(R.id.profile_val_contactperson2_telephonenumber)
     public TextView txtContactperson2Telephonenumber;
 
+    @Bind(R.id.profile_btn_edit_contactperson1)
+    public TextView btnEditContactperson1;
+    @Bind(R.id.profile_btn_edit_contactperson2)
+    public TextView btnEditContactperson2;
+
     private MainActivity activity;
     private User currentUser;
 
@@ -65,6 +77,10 @@ public class ProfielFragment extends Fragment {
         currentUser = activity.getCurrentUser();
 
         ButterKnife.bind(this, view);
+
+        btnEditContactperson1.setPaintFlags(btnEditContactperson1.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        btnEditContactperson2.setPaintFlags(btnEditContactperson2.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
         setProfile();
         return view;
     }
@@ -85,8 +101,30 @@ public class ProfielFragment extends Fragment {
 
         txtRole.setText(currentUser.getRole());
 
-        String date = SharedHelper.convertDate(currentUser.getDateJoined());
-        txtDateJoined.setText(date);
+        if(currentUser.getRijksregisternummer() != null){
+            txtSecurityNumber.setText(currentUser.getRijksregisternummer());
+        }
+        else{
+            txtSecurityNumber.setText(R.string.not_provided);
+        }
+
+        if(currentUser.getGeboortedatum() != null){
+            String birthDate = SharedHelper.convertDate(currentUser.getGeboortedatum());
+            txtBirthDate.setText(birthDate);
+        }
+        else{
+            txtBirthDate.setText(R.string.not_provided);
+        }
+
+        if(currentUser.getCodegerechtigde() != null){
+            txtOwnerCode.setText(currentUser.getCodegerechtigde());
+        }
+        else{
+            txtOwnerCode.setText(R.string.not_provided);
+        }
+
+        String dateJoined = SharedHelper.convertDate(currentUser.getDateJoined());
+        txtDateJoined.setText(dateJoined);
 
         if(currentUser.getContactpersoon1() != null){
             txtContactperson1Email.setText(currentUser.getContactpersoon1().getEmail());
@@ -109,6 +147,12 @@ public class ProfielFragment extends Fragment {
 
     @OnClick(R.id.profile_button_edit)
     public void editProfile(){
-
+        activity.navigate(EditUserFragment.class, true);
     }
+
+    @OnClick(R.id.profile_btn_edit_contactperson1)
+    public void setBtnEditContactperson1() { activity.navigateToEditContactPerson(1, true); }
+
+    @OnClick(R.id.profile_btn_edit_contactperson2)
+    public void setBtnEditContactperson2() { activity.navigateToEditContactPerson(2, true); }
 }

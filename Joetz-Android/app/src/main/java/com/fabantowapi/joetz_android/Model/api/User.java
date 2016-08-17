@@ -16,6 +16,9 @@ public class User {
     private String username;
     private String firstname;
     private String lastname;
+    private String rijksregisternummer;
+    private String geboortedatum;
+    private String codegerechtigde;
     private String contactpersoon1Email;
     private String contactpersoon2Email;
     private Contactpersoon contactpersoon1;
@@ -24,11 +27,14 @@ public class User {
     private String dateJoined;
     private Adres adres;
 
-    public User(String email, String username, String firstname, String lastname, String contactpersoon1Email, String contactpersoon2Email, Contactpersoon contactpersoon1, Contactpersoon contactpersoon2, String role, String dateJoined, Adres adres) {
+    public User(String email, String username, String firstname, String lastname, String rijksregisternummer, String geboortedatum, String codegerechtigde, String contactpersoon1Email, String contactpersoon2Email, Contactpersoon contactpersoon1, Contactpersoon contactpersoon2, String role, String dateJoined, Adres adres) {
         this.email = email;
         this.username = username;
         this.firstname = firstname;
         this.lastname = lastname;
+        this.rijksregisternummer = rijksregisternummer;
+        this.geboortedatum = geboortedatum;
+        this.codegerechtigde = codegerechtigde;
         this.contactpersoon1Email = contactpersoon1Email;
         this.contactpersoon2Email = contactpersoon2Email;
         this.contactpersoon1 = contactpersoon1;
@@ -38,14 +44,31 @@ public class User {
         this.adres = adres;
     }
 
-    public void setContactpersoon1(Contactpersoon contactpersoon1) { this.contactpersoon1 = contactpersoon1; }
-    public void setContactpersoon2(Contactpersoon contactpersoon2) { this.contactpersoon2 = contactpersoon2; }
+    public void setFirstname(String firstname) { this.firstname = firstname; }
+    public void setLastname(String lastname) { this.lastname = lastname; }
+    public void setRijksregisternummer(String rijksregisternummer) { this.rijksregisternummer = rijksregisternummer; }
+    public void setGeboortedatum(String geboortedatum) { this.geboortedatum = geboortedatum; }
 
+    public void setCodegerechtigde(String codegerechtigde) { this.codegerechtigde = codegerechtigde; }
+
+    public void setContactpersoon1(Contactpersoon contactpersoon1) {
+        this.contactpersoon1 = contactpersoon1;
+        this.contactpersoon1Email = contactpersoon1.getEmail();
+    }
+    public void setContactpersoon2(Contactpersoon contactpersoon2) {
+        this.contactpersoon2 = contactpersoon2;
+        this.contactpersoon2Email = contactpersoon2.getEmail();
+    }
+
+    public void setAdres(Adres adres){ this.adres = adres; }
     public String getEmail() {
         return email;
     }
     public String getFirstname() { return firstname; }
     public String getLastname() { return lastname; }
+    public String getRijksregisternummer() { return rijksregisternummer; }
+    public String getGeboortedatum() { return geboortedatum; }
+    public String getCodegerechtigde() { return codegerechtigde; }
     public String getUsername() { return username; }
     public Contactpersoon getContactpersoon1() { return contactpersoon1; }
     public Contactpersoon getContactpersoon2() { return contactpersoon2; }
@@ -63,6 +86,9 @@ public class User {
         cv.put(UserTable.COLUMN_USERNAME, this.username);
         cv.put(UserTable.COLUMN_FIRSTNAME, this.firstname);
         cv.put(UserTable.COLUMN_LASTNAME, this.lastname);
+        cv.put(UserTable.COLUMN_RIJKSREGISTERNUMMER, this.rijksregisternummer);
+        cv.put(UserTable.COLUMN_GEBOORTEDATUM, this.geboortedatum);
+        cv.put(UserTable.COLUMN_CODEGERECHTIGDE, this.codegerechtigde);
         cv.put(UserTable.COLUMN_ROLE, this.role);
         cv.put(UserTable.COLUMN_DATE_JOINED, this.dateJoined);
         cv.put(UserTable.COLUMN_NAAMGEBOUW, this.adres.getNaamgebouw());
@@ -72,7 +98,7 @@ public class User {
         cv.put(UserTable.COLUMN_GEMEENTE, this.adres.getGemeente());
         cv.put(UserTable.COLUMN_POSTCODE, this.adres.getPostcode());
         cv.put(UserTable.COLUMN_CONTACTPERSOON1_EMAIL, this.contactpersoon1Email);
-        cv.put(UserTable.COLUMN_CONTACTPERSOON2_EMAIL, this.contactpersoon1Email);
+        cv.put(UserTable.COLUMN_CONTACTPERSOON2_EMAIL, this.contactpersoon2Email);
 
         return cv;
     }
@@ -100,6 +126,9 @@ public class User {
         int busIndex = cursor.getColumnIndex(UserTable.COLUMN_BUS_FULL);
         int gemeenteIndex = cursor.getColumnIndex(UserTable.COLUMN_GEMEENTE_FULL);
         int postcodeIndex = cursor.getColumnIndex(UserTable.COLUMN_POSTCODE_FULL);
+        int rijksregisternummerIndex = cursor.getColumnIndex(UserTable.COLUMN_RIJKSREGISTERNUMMER_FULL);
+        int geboortedatumIndex = cursor.getColumnIndex(UserTable.COLUMN_GEBOORTEDATUM_FULL);
+        int codegerechtigdeIndex = cursor.getColumnIndex(UserTable.COLUMN_CODEGERECHTIGDE_FULL);
 
         cursor.moveToFirst();
 
@@ -117,10 +146,13 @@ public class User {
         String bus = cursor.getString(busIndex);
         String gemeente = cursor.getString(gemeenteIndex);
         int postcode = cursor.getInt(postcodeIndex);
+        String rijksregisternummer = cursor.getString(rijksregisternummerIndex);
+        String geboortedatum = cursor.getString(geboortedatumIndex);
+        String codegerechtigde = cursor.getString(codegerechtigdeIndex);
 
         Adres adres = new Adres(naamgebouw, straat, huisnummer, bus, gemeente, postcode);
 
-        User user = new User(email, username, firstname, lastname, contactpersoon1Email, contactpersoon2Email, null, null, role, dateJoined, adres);
+        User user = new User(email, username, firstname, lastname, rijksregisternummer, geboortedatum, codegerechtigde, contactpersoon1Email, contactpersoon2Email, null, null, role, dateJoined, adres);
 
         return user;
     }
