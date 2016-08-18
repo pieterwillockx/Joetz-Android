@@ -32,11 +32,11 @@
     <string name="historiek_leeg_imagebeschrijving">lege Historiek pagina foto</string>
     <string name="kampen">Kampen</string>
     <string name="activiteiten">Activiteiten</string>
-    <string name="mischien_aanwezig">Mischien aanwezig</string>
+    <string name="mischien_aanwezig">Misschien aanwezig</string>
     <string name="deelnemer">Deelnemer</string>
     <string name="material_drawer_open">Open</string>
     <string name="material_drawer_close">Closed</string>
-    <string name="aanwezig">Aanwezig</string>
+    <string name="aanwezig">Aanwezigen</string>
     <string name="ouders">Ouders</string>
     <string name="save">Opslagen</string>
     <string name="oudWachtwoord">Huidig wachtwoord</string>
@@ -87,4 +87,6 @@
     <string name="parent">Ouder?</string>
     <string name="profile_ownercode">Code gerechtigde</string>
     <string name="owner_code">Code gerechtigde</string>
+    <string name="zet_aanwezig">Zet op aanwezig</string>
+    <string name="add_user_to_activity_progress">Gebruiker toevoegen...</string>
 </resources>

@@ -183,6 +183,7 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
             ft.addToBackStack("FRAGMENT");
         }
         ft.commit();
+        Log.d("BackStack", fragmentManager.getBackStackEntryCount() + "");
     }
 
     public void navigateToEditContactPerson(int contactpersonId, boolean addToBackStack){
@@ -309,10 +310,6 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
     public void onLoadFinished(Loader<Cursor> loader, Cursor data){
         switch(loader.getId()){
             case Constants.LOADER_USERS:
-                //log cursor contents
-                Log.d("MainActivity", "Printing cursor contents...");
-                Log.d("MainActivity", DatabaseUtils.dumpCursorToString(data));
-
                 currentUser = User.constructFromCursor(data);
                 LinearLayout navHeader = (LinearLayout) mLeftDrawer.getHeaderView(0);
 
@@ -341,10 +338,6 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
                 break;
 
             case Constants.LOADER_CONTACTPERSOON1:
-                //log cursor contents
-                Log.d("MainActivity", "Printing cursor contents...");
-                Log.d("MainActivity", DatabaseUtils.dumpCursorToString(data));
-
                 Contactpersoon contactpersoon1 = Contactpersoon.constructFromCursor(data);
                 currentUser.setContactpersoon1(contactpersoon1);
 
@@ -361,10 +354,6 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
                 break;
 
             case Constants.LOADER_CONTACTPERSOON2:
-                //log cursor contents
-                Log.d("MainActivity", "Printing cursor contents...");
-                Log.d("MainActivity", DatabaseUtils.dumpCursorToString(data));
-
                 Contactpersoon contactpersoon2 = Contactpersoon.constructFromCursor(data);
                 currentUser.setContactpersoon2(contactpersoon2);
 
@@ -373,10 +362,6 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
                 break;
 
             case Constants.LOADER_ACTIVITIES:
-                //log cursor contents
-                Log.d("MainActivity", "Printing cursor contents...");
-                Log.d("MainActivity", DatabaseUtils.dumpCursorToString(data));
-
                 activities = Activity.constructListFromCursor(data);
 
                 // init next loader
@@ -385,10 +370,6 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
                 break;
 
             case Constants.LOADER_USER_ACTIVITIES:
-                //log cursor contents
-                Log.d("MainActivity", "Printing cursor contents...");
-                Log.d("MainActivity", DatabaseUtils.dumpCursorToString(data));
-
                 userActivities = UserActivity.constructListFromCursor(data);
 
                 //init next loader
@@ -397,10 +378,6 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
                 break;
 
             case Constants.LOADER_ALL_USERS:
-                //log cursor contents
-                Log.d("MainActivity", "Printing cursor contents...");
-                Log.d("MainActivity", DatabaseUtils.dumpCursorToString(data));
-
                 allUsers = User.constructListFromCursor(data);
 
                 assignUsersToActivities();
@@ -473,13 +450,13 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onBackPressed(){
-        FragmentManager fm = getFragmentManager();
-        if(fm.getBackStackEntryCount() == 0){
-            showLogoutConfirmDialog(MainActivity.this);
-        }else{
-            fm.popBackStack();
-        }
-    }
+    //@Override
+    //public void onBackPressed(){
+    //    FragmentManager fm = getFragmentManager();
+    //    if(fm.getBackStackEntryCount() == 0){
+    //        showLogoutConfirmDialog(MainActivity.this);
+    //    }else{
+    //        fm.popBackStack();
+    //    }
+    //}
 }

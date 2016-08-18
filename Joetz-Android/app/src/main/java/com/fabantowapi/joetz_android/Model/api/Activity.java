@@ -1,5 +1,6 @@
 package com.fabantowapi.joetz_android.model.api;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.fabantowapi.joetz_android.database.ActiviteitTable;
@@ -94,5 +95,19 @@ public class Activity implements Serializable {
         String einde = cursor.getString(eindeIndex);
 
         return new Activity(id, naam, datum, locatie, heleDag, begin, einde, null);
+    }
+
+    public ContentValues getContentValues(){
+        ContentValues cv = new ContentValues();
+
+        cv.put(ActiviteitTable.COLUMN_ID, this.id);
+        cv.put(ActiviteitTable.COLUMN_NAAM, this.naam);
+        cv.put(ActiviteitTable.COLUMN_DATUM, this.datum);
+        cv.put(ActiviteitTable.COLUMN_LOCATIE, this.locatie);
+        cv.put(ActiviteitTable.COLUMN_HELEDAG, this.heleDag);
+        cv.put(ActiviteitTable.COLUMN_BEGIN, this.beginUur);
+        cv.put(ActiviteitTable.COLUMN_EINDE, this.eindUur);
+
+        return cv;
     }
 }

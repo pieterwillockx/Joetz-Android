@@ -3,6 +3,7 @@ package com.fabantowapi.joetz_android.api;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.test.ActivityTestCase;
 
 import rx.Observable;
 
@@ -10,7 +11,10 @@ import com.fabantowapi.joetz_android.contentproviders.ActivityContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.ContactpersoonContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.UserActivityContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.UserContentProvider;
+import com.fabantowapi.joetz_android.database.ActiviteitTable;
+import com.fabantowapi.joetz_android.database.UserActivityTable;
 import com.fabantowapi.joetz_android.database.UserTable;
+import com.fabantowapi.joetz_android.model.api.Activity;
 import com.fabantowapi.joetz_android.model.api.GetActivityResponse;
 import com.fabantowapi.joetz_android.model.api.Adres;
 import com.fabantowapi.joetz_android.model.api.Contactpersoon;
@@ -24,6 +28,7 @@ import com.fabantowapi.joetz_android.model.api.LoginResponse;
 import com.fabantowapi.joetz_android.model.api.LogoutRequest;
 import com.fabantowapi.joetz_android.model.api.RegisterRequest;
 import com.fabantowapi.joetz_android.model.api.User;
+import com.fabantowapi.joetz_android.model.api.UserActivity;
 import com.fabantowapi.joetz_android.utils.CookieHelper;
 import com.fabantowapi.joetz_android.utils.PreferencesHelper;
 import com.fabantowapi.joetz_android.utils.SharedHelper;
@@ -567,7 +572,7 @@ public class ApiHelper {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public static Observable<Object> addUserToActivity(Context context, String activityId, String email){
+    public static Observable<Object> addUserToActivity(Context context, String activityId, String email, Activity currentActivity, User currentUser){
         ApiHelper.resetService();
 
         return ApiHelper.getService(context).addUserToActivity(activityId, email)
@@ -576,7 +581,8 @@ public class ApiHelper {
                     PreferencesHelper.saveApplicationCookie(context, applicationCookie);
 
                     if(response.getStatus() == 200){
-                        return Observable.empty();
+                        currentActivity.addAanwezige(currentUser);
+                        return Observable.just(currentActivity);
                     }
                     else {
                         int status = response.getStatus();
@@ -597,6 +603,24 @@ public class ApiHelper {
                         return Observable.error(new IOException(error));
                     }
                 })
+                .doOnNext(activity -> {
+                    String where = ActiviteitTable.TABLE_NAME + "." + ActiviteitTable.COLUMN_ID + " = ?";
+                    String[] selectionArgs = new String[]{
+                            activity.getId()
+                    };
+
+                    ContentResolver contentResolver = context.getContentResolver();
+                    ContentValues cvActivity = activity.getContentValues();
+
+                    contentResolver.update(ActivityContentProvider.CONTENT_URI, cvActivity, where, selectionArgs);
+
+                    ContentValues cvUserActivity = new ContentValues();
+                    cvUserActivity.put(UserActivityTable.COLUMN_ACTIVITY_ID, activityId);
+                    cvUserActivity.put(UserActivityTable.COLUMN_USER_ID, currentUser.getId());
+
+                    contentResolver.insert(UserActivityContentProvider.CONTENT_URI, cvUserActivity);
+                })
+                .flatMap(activity -> Observable.empty())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

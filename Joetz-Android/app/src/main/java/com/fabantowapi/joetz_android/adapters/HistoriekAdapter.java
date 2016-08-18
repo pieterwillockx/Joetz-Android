@@ -75,9 +75,9 @@ public class HistoriekAdapter  extends RecyclerView.Adapter<HistoriekAdapter.Vie
                 FragmentTransaction ft = fragmentManager.beginTransaction();
                 KampenDetailFragment kampenDetailFragment = new KampenDetailFragment();
                 kampenDetailFragment.setArguments(args);
-
                 ((Activity) context).getIntent().putExtra("kamp", kamp);
                 ft.replace(R.id.mainpage_container, kampenDetailFragment);
+                ft.addToBackStack("FRAGMENT");
                 ft.commit();
 
             }

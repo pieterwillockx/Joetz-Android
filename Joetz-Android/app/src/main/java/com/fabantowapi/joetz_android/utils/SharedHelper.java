@@ -34,6 +34,15 @@ public class SharedHelper {
         return date;
     }
 
+    public static String convertDateToHourString(String unformattedDate){
+        String hour = unformattedDate.split("T")[1].replace("Z", "");
+        String[] hourSplit = hour.split(":");
+
+        String formattedHour = hourSplit[0] + ":" + hourSplit[1];
+
+        return formattedHour;
+    }
+
     public static Date parseDateStringToDate(String date){
         String[] split1 = date.split("T");
 

@@ -78,21 +78,6 @@ public class ActivityListFragment extends Fragment {
 
     }
 
-    public List<Activiteit> testData(){
-
-        //todo haal data op uit api
-        List<Activiteit> activiteiten = new ArrayList<>();
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        currentDate.setText(df.format(calendar.getTime()));
-        Date niew = new Date(1994,5,31);
-        System.out.println("datum" +niew.toString());
-        Date test = calendar.getTime();
-        activiteiten.add(new Activiteit("test activiteit",test,test,"belgie"));
-
-        return activiteiten;
-    }
-
     public void initActiviteitenLijst(){
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");

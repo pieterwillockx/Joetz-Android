@@ -88,6 +88,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
                 activiteitDetailFragment.setArguments(args);
                 ((MainActivity) context).getIntent().putExtra("activity", activity);
                 ft.replace(R.id.mainpage_container, activiteitDetailFragment);
+                ft.addToBackStack("FRAGMENT");
                 ft.commit();
 
             }

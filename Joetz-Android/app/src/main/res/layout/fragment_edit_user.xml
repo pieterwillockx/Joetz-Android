@@ -28,11 +28,6 @@
         android:text="@string/edit_user_avatar"
         android:layout_marginBottom="20dp"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#000000"/>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -133,12 +128,6 @@
                     android:inputType="number"
                     android:id="@+id/edit_user_val_owner_code"/>
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#000000"
-                android:layout_marginBottom="10dp"/>
 
             <TextView
                 android:layout_width="wrap_content"

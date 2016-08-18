@@ -71,11 +71,10 @@ public class ArtikelAdapter extends RecyclerView.Adapter<ArtikelAdapter.ViewHold
                 FragmentTransaction ft = fragmentManager.beginTransaction();
                 ArtikelDetailFragment kampenDetailFragment = new ArtikelDetailFragment();
                 kampenDetailFragment.setArguments(args);
-
                 ((Activity) context).getIntent().putExtra("artikel", artikel);
                 ft.replace(R.id.mainpage_container, kampenDetailFragment);
+                ft.addToBackStack("FRAGMENT");
                 ft.commit();
-
             }
         });
 
