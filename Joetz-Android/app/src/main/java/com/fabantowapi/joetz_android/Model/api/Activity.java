@@ -1,6 +1,5 @@
 package com.fabantowapi.joetz_android.model.api;
 
-import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.fabantowapi.joetz_android.database.ActiviteitTable;
@@ -11,25 +10,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Pieter on 16-8-2016.
+ * Created by Pieter on 18-8-2016.
  */
 public class Activity implements Serializable {
-    @SerializedName("id")
     private String id;
-    @SerializedName("naam")
     private String naam;
-    @SerializedName("datum")
     private String datum;
-    @SerializedName("locatie")
     private String locatie;
-    @SerializedName("heleDag")
     private boolean heleDag;
-    @SerializedName("beginUur")
     private String beginUur;
-    @SerializedName("eindUur")
     private String eindUur;
+    private List<User> aanwezigen;
 
-    public Activity(String id, String naam, String datum, String locatie, boolean heleDag, String beginUur, String eindUur){
+    public Activity(String id, String naam, String datum, String locatie, boolean heleDag, String beginUur, String eindUur, List<User> aanwezigen) {
         this.id = id;
         this.naam = naam;
         this.datum = datum;
@@ -37,6 +30,13 @@ public class Activity implements Serializable {
         this.heleDag = heleDag;
         this.beginUur = beginUur;
         this.eindUur = eindUur;
+
+        if(aanwezigen == null){
+            this.aanwezigen = new ArrayList<>();
+        }
+        else {
+            this.aanwezigen = aanwezigen;
+        }
     }
 
     public String getId() { return id; }
@@ -46,20 +46,18 @@ public class Activity implements Serializable {
     public boolean isHeleDag() { return heleDag; }
     public String getBeginUur() { return beginUur; }
     public String getEindUur() { return eindUur; }
+    public List<User> getAanwezigen() { return aanwezigen; }
 
-    public ContentValues getContentValues(){
-        ContentValues cv = new ContentValues();
+    public void setId(String id) { this.id = id; }
+    public void setNaam(String naam) { this.naam = naam; }
+    public void setDatum(String datum) { this.datum = datum; }
+    public void setLocatie(String locatie) { this.locatie = locatie; }
+    public void setHeleDag(boolean heleDag) { this.heleDag = heleDag; }
+    public void setBeginUur(String beginUur) { this.beginUur = beginUur; }
+    public void setEindUur(String eindUur) { this.eindUur = eindUur; }
+    public void setAanwezigen(List<User> aanwezigen) { this.aanwezigen = aanwezigen; }
 
-        cv.put(ActiviteitTable.COLUMN_ID, this.id);
-        cv.put(ActiviteitTable.COLUMN_NAAM, this.naam);
-        cv.put(ActiviteitTable.COLUMN_DATUM, this.datum);
-        cv.put(ActiviteitTable.COLUMN_LOCATIE, this.locatie);
-        cv.put(ActiviteitTable.COLUMN_HELEDAG, this.heleDag);
-        cv.put(ActiviteitTable.COLUMN_BEGIN, this.beginUur);
-        cv.put(ActiviteitTable.COLUMN_EINDE, this.eindUur);
-
-        return cv;
-    }
+    public void addAanwezige(User user){ this.aanwezigen.add(user); }
 
     public static List<Activity> constructListFromCursor(Cursor cursor){
         List<Activity> activities = new ArrayList<>();
@@ -74,7 +72,7 @@ public class Activity implements Serializable {
         return activities;
     }
 
-    public static Activity constructFromCursor(Cursor cursor){
+    public static Activity constructFromCursor(Cursor cursor) {
         int idIndex = cursor.getColumnIndex(ActiviteitTable.COLUMN_ID_FULL);
         int naamIndex = cursor.getColumnIndex(ActiviteitTable.COLUMN_NAAM_FULL);
         int datumIndex = cursor.getColumnIndex(ActiviteitTable.COLUMN_DATUM_FULL);
@@ -83,7 +81,9 @@ public class Activity implements Serializable {
         int beginIndex = cursor.getColumnIndex(ActiviteitTable.COLUMN_BEGIN_FULL);
         int eindeIndex = cursor.getColumnIndex(ActiviteitTable.COLUMN_EINDE_FULL);
 
-        cursor.moveToFirst();
+        if(cursor.getPosition() == -1){
+            cursor.moveToFirst();
+        }
 
         String id = cursor.getString(idIndex);
         String naam = cursor.getString(naamIndex);
@@ -93,6 +93,6 @@ public class Activity implements Serializable {
         String begin = cursor.getString(beginIndex);
         String einde = cursor.getString(eindeIndex);
 
-        return new Activity(id, naam, datum, locatie, heleDag, begin, einde);
+        return new Activity(id, naam, datum, locatie, heleDag, begin, einde, null);
     }
 }

@@ -8,6 +8,8 @@ import java.util.Date;
  * Created by Pieter on 14-8-2016.
  */
 public class GetUserResponse {
+    @SerializedName("id")
+    private String id;
     @SerializedName("email")
     private String email;
     @SerializedName("username")
@@ -33,6 +35,7 @@ public class GetUserResponse {
     @SerializedName("dateJoined")
     private String dateJoined;
 
+    public String getId() { return id; }
     public String getEmail() { return email; }
     public String getUsername() { return username; }
     public String getFirstname() { return firstname; }
@@ -47,7 +50,7 @@ public class GetUserResponse {
     public String getDateJoined() { return dateJoined; }
 
     public User getUser(){
-        User user = new User(email, username, firstname, lastname, rijksregisternummer, geboortedatum, codegerechtigde, contactpersoon1.getEmail(), contactpersoon2.getEmail(), contactpersoon1, contactpersoon2, role, dateJoined, adres);
+        User user = new User(id, email, username, firstname, lastname, rijksregisternummer, geboortedatum, codegerechtigde, contactpersoon1.getEmail(), contactpersoon2.getEmail(), contactpersoon1, contactpersoon2, role, dateJoined, adres);
         return user;
     }
 }

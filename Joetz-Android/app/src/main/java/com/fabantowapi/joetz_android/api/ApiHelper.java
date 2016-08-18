@@ -8,9 +8,10 @@ import rx.Observable;
 
 import com.fabantowapi.joetz_android.contentproviders.ActivityContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.ContactpersoonContentProvider;
+import com.fabantowapi.joetz_android.contentproviders.UserActivityContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.UserContentProvider;
 import com.fabantowapi.joetz_android.database.UserTable;
-import com.fabantowapi.joetz_android.model.api.Activity;
+import com.fabantowapi.joetz_android.model.api.GetActivityResponse;
 import com.fabantowapi.joetz_android.model.api.Adres;
 import com.fabantowapi.joetz_android.model.api.Contactpersoon;
 import com.fabantowapi.joetz_android.model.api.EditAddressRequest;
@@ -46,7 +47,7 @@ public class ApiHelper {
     private static JoetzApi getService(Context context){
         if(service == null){
             //String domain = SharedHelper.getDomain();
-            String domain = "10.0.3.2:8085";
+            String domain = "37.139.13.237:8085";
 
             RestAdapter restAdapter = new RestAdapter.Builder()
                     .setEndpoint("http://" + domain)
@@ -214,6 +215,64 @@ public class ApiHelper {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    public static Observable<Object> getUsers(Context context){
+        ApiHelper.resetService();
+
+        return ApiHelper.getService(context).getUsers()
+                .flatMap(response -> {
+                    String applicationCookie = CookieHelper.getApplicationCookie(response.getHeaders());
+                    PreferencesHelper.saveApplicationCookie(context, applicationCookie);
+
+                    GetUserResponse[] users;
+
+                    try{
+                        GsonConverter converter = new GsonConverter(new Gson());
+                        users = (GetUserResponse[]) converter.fromBody(response.getBody(), GetUserResponse[].class);
+                    }
+                    catch(ConversionException e){
+                        return Observable.error(e);
+                    }
+
+                    if(users != null && response.getStatus() == 200){
+                        return Observable.just(users);
+                    }
+                    else{
+                        int statusId = response.getStatus();
+                        String error;
+
+                        switch(statusId){
+                            case 400 : error = "Bad Request"; break;
+                            case 401 : error = "Unauthorized"; break;
+                            default : error = "Unknown Error"; break;
+                        }
+
+                        return Observable.error(new IOException(error));
+                    }
+                })
+                .doOnNext(users -> {
+                    ContentResolver contentResolver = context.getContentResolver();
+                    contentResolver.delete(UserContentProvider.CONTENT_URI, null, null);
+                    contentResolver.delete(ContactpersoonContentProvider.CONTENT_URI, null, null);
+                })
+                .flatMap(users -> Observable.from(users))
+                .doOnNext(userResponse -> {
+                    User user = userResponse.getUser();
+                    ContentResolver contentResolver = context.getContentResolver();
+                    ContentValues cvUser = user.getContentValues();
+                    contentResolver.insert(UserContentProvider.CONTENT_URI, cvUser);
+
+                    ContentValues cvContactperson1 = user.getContactpersoon1().getContentValues();
+                    contentResolver.insert(ContactpersoonContentProvider.CONTENT_URI, cvContactperson1);
+
+                    ContentValues cvContactperson2 = user.getContactpersoon2().getContentValues();
+                    contentResolver.insert(ContactpersoonContentProvider.CONTENT_URI, cvContactperson2);
+                })
+                .toList()
+                .flatMap(users -> Observable.empty())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
     public static Observable<Object> getActivities(Context context){
         ApiHelper.resetService();
 
@@ -222,11 +281,11 @@ public class ApiHelper {
                     String applicationCookie = CookieHelper.getApplicationCookie(response.getHeaders());
                     PreferencesHelper.saveApplicationCookie(context, applicationCookie);
 
-                    Activity[] activities;
+                    GetActivityResponse[] activities;
 
                     try{
                         GsonConverter converter = new GsonConverter(new Gson());
-                        activities = (Activity[]) converter.fromBody(response.getBody(), Activity[].class);
+                        activities = (GetActivityResponse[]) converter.fromBody(response.getBody(), GetActivityResponse[].class);
                     }
                     catch(ConversionException e){
                         return Observable.error(e);
@@ -251,12 +310,16 @@ public class ApiHelper {
                 .doOnNext(activityResponses -> {
                     ContentResolver contentResolver = context.getContentResolver();
                     contentResolver.delete(ActivityContentProvider.CONTENT_URI, null, null);
+                    contentResolver.delete(UserActivityContentProvider.CONTENT_URI, null, null);
                 })
                 .flatMap(activityResponses -> Observable.from(activityResponses))
                 .doOnNext(activity -> {
                     ContentResolver contentResolver = context.getContentResolver();
                     ContentValues cvActivity = activity.getContentValues();
                     contentResolver.insert(ActivityContentProvider.CONTENT_URI, cvActivity);
+
+                    ContentValues[] cvUserActivities = activity.getUserActivityContentValues();
+                    contentResolver.bulkInsert(UserActivityContentProvider.CONTENT_URI, cvUserActivities);
                 })
                 .toList()
                 .flatMap(activityResponses -> Observable.empty())
@@ -395,8 +458,10 @@ public class ApiHelper {
                 .doOnNext(contactpersoon -> {
                     ContentResolver contentResolver = context.getContentResolver();
 
-                    ContentValues cv = contactpersoon.getContentValues();
-                    contentResolver.insert(ContactpersoonContentProvider.CONTENT_URI, cv);
+                    if(contactpersoon != null) {
+                        ContentValues cv = contactpersoon.getContentValues();
+                        contentResolver.insert(ContactpersoonContentProvider.CONTENT_URI, cv);
+                    }
                 })
                 .toList()
                 .flatMap(user -> Observable.empty())
@@ -498,6 +563,40 @@ public class ApiHelper {
                     contentResolver.update(UserContentProvider.CONTENT_URI, cvUser, where, selectionArgs);
                 })
                 .flatMap(user -> Observable.empty())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static Observable<Object> addUserToActivity(Context context, String activityId, String email){
+        ApiHelper.resetService();
+
+        return ApiHelper.getService(context).addUserToActivity(activityId, email)
+                .flatMap(response -> {
+                    String applicationCookie = CookieHelper.getApplicationCookie(response.getHeaders());
+                    PreferencesHelper.saveApplicationCookie(context, applicationCookie);
+
+                    if(response.getStatus() == 200){
+                        return Observable.empty();
+                    }
+                    else {
+                        int status = response.getStatus();
+                        String error;
+
+                        switch (status) {
+                            case 400:
+                                error = "Bad Request";
+                                break;
+                            case 401:
+                                error = "Unauthorized";
+                                break;
+                            default:
+                                error = "Unknown Error";
+                                break;
+                        }
+
+                        return Observable.error(new IOException(error));
+                    }
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

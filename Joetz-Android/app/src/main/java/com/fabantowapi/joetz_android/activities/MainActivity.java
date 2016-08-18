@@ -30,7 +30,9 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.api.ApiHelper;
+import com.fabantowapi.joetz_android.contentproviders.ActivityContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.ContactpersoonContentProvider;
+import com.fabantowapi.joetz_android.contentproviders.UserActivityContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.UserContentProvider;
 import com.fabantowapi.joetz_android.database.ContactpersoonTable;
 import com.fabantowapi.joetz_android.database.UserTable;
@@ -41,11 +43,15 @@ import com.fabantowapi.joetz_android.fragments.ForumFragment;
 import com.fabantowapi.joetz_android.fragments.HistoriekListFragment;
 import com.fabantowapi.joetz_android.fragments.KampenListFragment;
 import com.fabantowapi.joetz_android.fragments.ProfielFragment;
+import com.fabantowapi.joetz_android.model.api.Activity;
 import com.fabantowapi.joetz_android.model.api.Contactpersoon;
 import com.fabantowapi.joetz_android.model.api.User;
+import com.fabantowapi.joetz_android.model.api.UserActivity;
 import com.fabantowapi.joetz_android.utils.Constants;
 import com.fabantowapi.joetz_android.utils.Observer;
 import com.fabantowapi.joetz_android.utils.PreferencesHelper;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -62,7 +68,12 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
 
     private String email;
     private User currentUser;
+    private List<Activity> activities;
+    private List<UserActivity> userActivities;
+    private List<User> allUsers;
+
     ActionBarDrawerToggle mDrawerToggle;
+    private MaterialDialog dialogProgress;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -119,9 +130,7 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
         return currentUser;
     }
 
-    public void reloadUser(){
-        this.getLoaderManager().initLoader(Constants.LOADER_USERS, null, this);
-    }
+    public List<Activity> getActivities() { return activities; }
 
     public void navigate(MenuItem item) {
         final int itemId = item.getItemId();
@@ -213,6 +222,15 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
                 .show();
     }
 
+    private void showProgressDialog(Context context)
+    {
+        this.dialogProgress = new MaterialDialog.Builder(context)
+                .content(R.string.get_data_progress)
+                .progress(true, 0)
+                .cancelable(false)
+                .show();
+
+    }
 
     private Observer<Object> logoutObserver = new Observer<Object>()
     {
@@ -267,6 +285,21 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
 
                 return new CursorLoader(this, uri3, null, selection3, selectionArgs3, "");
 
+            case Constants.LOADER_ACTIVITIES:
+                Uri uri4 = ActivityContentProvider.CONTENT_URI;
+
+                return new CursorLoader(this, uri4, null, null, null, "");
+
+            case Constants.LOADER_USER_ACTIVITIES:
+                Uri uri5 = UserActivityContentProvider.CONTENT_URI;
+
+                return new CursorLoader(this, uri5, null, null, null, "");
+
+            case Constants.LOADER_ALL_USERS:
+                Uri uri6 = UserContentProvider.CONTENT_URI;
+
+                return new CursorLoader(this, uri6, null, null, null, "");
+
             default:
                 return null;
         }
@@ -301,6 +334,9 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
                     args1.putString("CONTACTPERSOON2_EMAIL", currentUser.getContactpersoon2Email());
                     MainActivity.this.getLoaderManager().initLoader(Constants.LOADER_CONTACTPERSOON2, args1, MainActivity.this);
                 }
+                else{
+                    MainActivity.this.getLoaderManager().initLoader(Constants.LOADER_ACTIVITIES, null, MainActivity.this);
+                }
 
                 break;
 
@@ -318,6 +354,9 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
                     args2.putString("CONTACTPERSOON2_EMAIL", currentUser.getContactpersoon2Email());
                     MainActivity.this.getLoaderManager().initLoader(Constants.LOADER_CONTACTPERSOON2, args2, MainActivity.this);
                 }
+                else{
+                    MainActivity.this.getLoaderManager().initLoader(Constants.LOADER_ACTIVITIES, null, MainActivity.this);
+                }
 
                 break;
 
@@ -329,6 +368,43 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
                 Contactpersoon contactpersoon2 = Contactpersoon.constructFromCursor(data);
                 currentUser.setContactpersoon2(contactpersoon2);
 
+                MainActivity.this.getLoaderManager().initLoader(Constants.LOADER_ACTIVITIES, null, MainActivity.this);
+
+                break;
+
+            case Constants.LOADER_ACTIVITIES:
+                //log cursor contents
+                Log.d("MainActivity", "Printing cursor contents...");
+                Log.d("MainActivity", DatabaseUtils.dumpCursorToString(data));
+
+                activities = Activity.constructListFromCursor(data);
+
+                // init next loader
+                MainActivity.this.getLoaderManager().initLoader(Constants.LOADER_USER_ACTIVITIES, null, MainActivity.this);
+
+                break;
+
+            case Constants.LOADER_USER_ACTIVITIES:
+                //log cursor contents
+                Log.d("MainActivity", "Printing cursor contents...");
+                Log.d("MainActivity", DatabaseUtils.dumpCursorToString(data));
+
+                userActivities = UserActivity.constructListFromCursor(data);
+
+                //init next loader
+                MainActivity.this.getLoaderManager().initLoader(Constants.LOADER_ALL_USERS, null, MainActivity.this);
+
+                break;
+
+            case Constants.LOADER_ALL_USERS:
+                //log cursor contents
+                Log.d("MainActivity", "Printing cursor contents...");
+                Log.d("MainActivity", DatabaseUtils.dumpCursorToString(data));
+
+                allUsers = User.constructListFromCursor(data);
+
+                assignUsersToActivities();
+
                 break;
         }
     }
@@ -336,6 +412,42 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
     @Override
     public void onLoaderReset(Loader<Cursor> loader){
 
+    }
+
+    private void assignUsersToActivities(){
+        for(UserActivity ua : userActivities){
+            String activityId = ua.getActivityId();
+            String userId = ua.getUserId();
+
+            User user = findUser(userId);
+            Activity activity = findActivity(activityId);
+
+            activity.addAanwezige(user);
+        }
+    }
+
+    private User findUser(String userId){
+        User user = null;
+
+        for(int i = 0; i < allUsers.size(); i++){
+            if(allUsers.get(i).getId().equals(userId)){
+                user = allUsers.get(i);
+            }
+        }
+
+        return user;
+    }
+
+    private Activity findActivity(String activityId){
+        Activity activity = null;
+
+        for(int i = 0; i < activities.size(); i++){
+            if(activities.get(i).getId().equals(activityId)){
+                activity = activities.get(i);
+            }
+        }
+
+        return activity;
     }
 
     @Override

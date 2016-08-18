@@ -3,6 +3,8 @@ package com.fabantowapi.joetz_android.model.api;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import com.fabantowapi.joetz_android.contentproviders.ContactpersoonContentProvider;
+import com.fabantowapi.joetz_android.database.ContactpersoonTable;
 import com.fabantowapi.joetz_android.database.UserTable;
 
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import java.util.List;
  * Created by Pieter on 15-8-2016.
  */
 public class User {
+    private String id;
     private String email;
     private String username;
     private String firstname;
@@ -27,7 +30,8 @@ public class User {
     private String dateJoined;
     private Adres adres;
 
-    public User(String email, String username, String firstname, String lastname, String rijksregisternummer, String geboortedatum, String codegerechtigde, String contactpersoon1Email, String contactpersoon2Email, Contactpersoon contactpersoon1, Contactpersoon contactpersoon2, String role, String dateJoined, Adres adres) {
+    public User(String id, String email, String username, String firstname, String lastname, String rijksregisternummer, String geboortedatum, String codegerechtigde, String contactpersoon1Email, String contactpersoon2Email, Contactpersoon contactpersoon1, Contactpersoon contactpersoon2, String role, String dateJoined, Adres adres) {
+        this.id = id;
         this.email = email;
         this.username = username;
         this.firstname = firstname;
@@ -61,6 +65,8 @@ public class User {
     }
 
     public void setAdres(Adres adres){ this.adres = adres; }
+
+    public String getId() { return id; }
     public String getEmail() {
         return email;
     }
@@ -82,6 +88,7 @@ public class User {
     public ContentValues getContentValues(){
         ContentValues cv = new ContentValues();
 
+        cv.put(UserTable.COLUMN_ID, this.id);
         cv.put(UserTable.COLUMN_EMAIL, this.email);
         cv.put(UserTable.COLUMN_USERNAME, this.username);
         cv.put(UserTable.COLUMN_FIRSTNAME, this.firstname);
@@ -111,7 +118,21 @@ public class User {
         return contactpersonen;
     }
 
+    public static List<User> constructListFromCursor(Cursor cursor){
+        List<User> users = new ArrayList<>();
+
+        if(cursor != null && cursor.moveToFirst()){
+            do{
+                users.add(User.constructFromCursor(cursor));
+            }
+            while(cursor.moveToNext());
+        }
+
+        return users;
+    }
+
     public static User constructFromCursor(Cursor cursor){
+        int idIndex = cursor.getColumnIndex(UserTable.COLUMN_ID_FULL);
         int emailIndex = cursor.getColumnIndex(UserTable.COLUMN_EMAIL_FULL);
         int usernameIndex = cursor.getColumnIndex(UserTable.COLUMN_USERNAME_FULL);
         int firstnameIndex = cursor.getColumnIndex(UserTable.COLUMN_FIRSTNAME_FULL);
@@ -130,8 +151,11 @@ public class User {
         int geboortedatumIndex = cursor.getColumnIndex(UserTable.COLUMN_GEBOORTEDATUM_FULL);
         int codegerechtigdeIndex = cursor.getColumnIndex(UserTable.COLUMN_CODEGERECHTIGDE_FULL);
 
-        cursor.moveToFirst();
+        if(cursor.getPosition() == -1){
+            cursor.moveToFirst();
+        }
 
+        String id = cursor.getString(idIndex);
         String email = cursor.getString(emailIndex);
         String username = cursor.getString(usernameIndex);
         String firstname = cursor.getString(firstnameIndex);
@@ -152,7 +176,14 @@ public class User {
 
         Adres adres = new Adres(naamgebouw, straat, huisnummer, bus, gemeente, postcode);
 
-        User user = new User(email, username, firstname, lastname, rijksregisternummer, geboortedatum, codegerechtigde, contactpersoon1Email, contactpersoon2Email, null, null, role, dateJoined, adres);
+        //String selection = ContactpersoonTable.TABLE_NAME + "." + ContactpersoonTable.COLUMN_EMAIL + " = ?";
+        //String[] selectionArgs = new String[]{
+        //        contactpersoon2Email
+        //};
+        //
+        //Cursor contactpersoon1Cursor = ContactpersoonContentProvider.query(ContactpersoonContentProvider.CONTENT_URI, null, selection, selectionArgs, "");
+
+        User user = new User(id, email, username, firstname, lastname, rijksregisternummer, geboortedatum, codegerechtigde, contactpersoon1Email, contactpersoon2Email, null, null, role, dateJoined, adres);
 
         return user;
     }
@@ -160,8 +191,18 @@ public class User {
     @Override
     public String toString(){
         String out = "User " + this.firstname + " " + this.lastname + " with email " + this.email + ":\n";
-        out += "Contactpersoon 1: " + contactpersoon1.getEmail() + "\n";
-        out += "Contactpersoon 2: " + contactpersoon2.getEmail() + "\n";
+        if(this.contactpersoon1 != null) {
+            out += "Contactpersoon 1: " + contactpersoon1.getEmail() + "\n";
+        }
+        else{
+            out += "Contactpersoon 1: Niet opgegeven\n";
+        }
+        if(this.contactpersoon2 != null){
+            out += "Contactpersoon 2: " + contactpersoon2.getEmail() + "\n";
+        }
+        else{
+            out += "Contactpersoon 1: Niet opgegeven\n";
+        }
 
         return out;
     }

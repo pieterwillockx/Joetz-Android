@@ -36,6 +36,9 @@ public interface JoetzApi {
     @GET("/activiteit")
     Observable<Response> getActivities();
 
+    @GET("/user")
+    Observable<Response> getUsers();
+
     @PUT("/user/{email}/profile")
     Observable<Response> editUser(@Path("email") String email, @Body EditUserRequest request);
 
@@ -50,4 +53,7 @@ public interface JoetzApi {
 
     @PUT("/user/{email}/details")
     Observable<Response> editUserDetails(@Path("email") String email, @Body EditUserDetailsRequest request);
+
+    @POST("/activiteit/{activityId}/aanwezigen/{email}")
+    Observable<Response> addUserToActivity(@Path("activityId") String activityId, @Path("email") String email);
 }

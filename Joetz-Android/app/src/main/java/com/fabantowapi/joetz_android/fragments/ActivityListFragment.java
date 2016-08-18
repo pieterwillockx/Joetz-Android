@@ -1,7 +1,6 @@
 package com.fabantowapi.joetz_android.fragments;
 
 import android.app.Fragment;
-import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
@@ -14,21 +13,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.fabantowapi.joetz_android.R;
+import com.fabantowapi.joetz_android.activities.MainActivity;
 import com.fabantowapi.joetz_android.adapters.itemdecorations.VerticalSpaceItemDecoration;
 import com.fabantowapi.joetz_android.contentproviders.ActivityContentProvider;
-import com.fabantowapi.joetz_android.contentproviders.ContactpersoonContentProvider;
+import com.fabantowapi.joetz_android.contentproviders.UserActivityContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.UserContentProvider;
-import com.fabantowapi.joetz_android.database.ActiviteitTable;
-import com.fabantowapi.joetz_android.database.ContactpersoonTable;
-import com.fabantowapi.joetz_android.database.UserTable;
 import com.fabantowapi.joetz_android.model.Activiteit;
 import com.fabantowapi.joetz_android.adapters.ActivityAdapter;
 import com.fabantowapi.joetz_android.model.api.Activity;
-import com.fabantowapi.joetz_android.model.api.Contactpersoon;
-import com.fabantowapi.joetz_android.model.api.User;
+import com.fabantowapi.joetz_android.model.api.GetActivityResponse;
+import com.fabantowapi.joetz_android.model.api.UserActivity;
 import com.fabantowapi.joetz_android.utils.Constants;
 
 import java.text.SimpleDateFormat;
@@ -42,7 +38,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Anton Rooseleer on 10-8-2016.
  */
-public class ActivityListFragment extends Fragment implements android.app.LoaderManager.LoaderCallbacks<Cursor> {
+public class ActivityListFragment extends Fragment {
 
     @Bind(R.id.activity_list_currentDate)
     TextView currentDate;
@@ -51,7 +47,10 @@ public class ActivityListFragment extends Fragment implements android.app.Loader
     private ActivityAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    List<Activity> activityList;
+    private MainActivity mainActivity;
+
+    List<Activity> activities;
+    List<UserActivity> userActivities;
 
     private static final int VERTICAL_ITEM_SPACE = 10;
     private static final int PADDING_LEFT_RIGHT = 20;
@@ -63,6 +62,8 @@ public class ActivityListFragment extends Fragment implements android.app.Loader
         ButterKnife.bind(this, view);
         initActiviteitenLijst();
 
+        mainActivity = (MainActivity) getActivity();
+
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -70,7 +71,9 @@ public class ActivityListFragment extends Fragment implements android.app.Loader
 
         mAdapter = new ActivityAdapter(getActivity());
         mRecyclerView.setAdapter(mAdapter);
-        this.getActivity().getLoaderManager().initLoader(Constants.LOADER_ACTIVITIES, null, this);
+
+        mAdapter.setActivities(mainActivity.getActivities());
+
         return view;
 
     }
@@ -94,61 +97,6 @@ public class ActivityListFragment extends Fragment implements android.app.Loader
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         currentDate.setText(df.format(calendar.getTime()));
-
-    }
-
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        switch (id) {
-            case Constants.LOADER_ACTIVITIES:
-                Uri uri1 = ActivityContentProvider.CONTENT_URI;
-
-                return new CursorLoader(this.getActivity(), uri1, null, null, null, "");
-
-            default:
-                return null;
-        }
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data){
-        switch(loader.getId()){
-            case Constants.LOADER_ACTIVITIES:
-                //log cursor contents
-                Log.d("ActivityListFragment", "Printing cursor contents...");
-                Log.d("ActivityListFragment", DatabaseUtils.dumpCursorToString(data));
-
-                activityList = Activity.constructListFromCursor(data);
-                this.mAdapter.setActivities(activityList);
-
-                //currentUser = User.constructFromCursor(data);
-                //LinearLayout navHeader = (LinearLayout) mLeftDrawer.getHeaderView(0);
-//
-                //TextView navHeaderEmail = (TextView) navHeader.findViewById(R.id.nav_header_email);
-                //TextView navHeaderFullName = (TextView) navHeader.findViewById(R.id.nav_header_fullname);
-//
-                //navHeaderEmail.setText(currentUser.getEmail());
-                //navHeaderFullName.setText(currentUser.getFirstname() + " " + currentUser.getLastname());
-//
-//
-                //// init next loader if user has contactpersons
-                //if(currentUser.getContactpersoon1Email() != null) {
-                //    Bundle args1 = new Bundle();
-                //    args1.putString("CONTACTPERSOON1_EMAIL", currentUser.getContactpersoon1Email());
-                //    MainActivity.this.getLoaderManager().initLoader(Constants.LOADER_CONTACTPERSOON1, args1, MainActivity.this);
-                //}
-                //else if(currentUser.getContactpersoon2Email() != null){
-                //    Bundle args1 = new Bundle();
-                //    args1.putString("CONTACTPERSOON2_EMAIL", currentUser.getContactpersoon2Email());
-                //    MainActivity.this.getLoaderManager().initLoader(Constants.LOADER_CONTACTPERSOON2, args1, MainActivity.this);
-                //}
-
-                break;
-        }
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader){
 
     }
 }

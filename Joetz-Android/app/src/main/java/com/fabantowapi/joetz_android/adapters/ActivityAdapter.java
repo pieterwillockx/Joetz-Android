@@ -2,6 +2,7 @@ package com.fabantowapi.joetz_android.adapters;
 
 import com.fabantowapi.joetz_android.activities.MainActivity;
 import com.fabantowapi.joetz_android.model.api.Activity;
+import com.fabantowapi.joetz_android.model.api.GetActivityResponse;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -13,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.fragments.ActiviteitDetailFragment;
-import com.fabantowapi.joetz_android.model.Activiteit;
 import com.fabantowapi.joetz_android.utils.SharedHelper;
 
 import java.text.SimpleDateFormat;

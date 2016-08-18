@@ -39,6 +39,8 @@ public class LoginFragment extends Fragment{
     @Bind(R.id.txtWachtwoord)
     EditText txtWachtwoord;
 
+    MaterialDialog dialogProgress;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
@@ -55,6 +57,9 @@ public class LoginFragment extends Fragment{
         String password = txtWachtwoord.getText().toString();
 
         if(email != "" && password != ""){
+            showProgressDialog(this.getActivity());
+            dialogProgress.setContent(R.string.login_progress);
+
             ApiHelper.logIn(LoginFragment.this.getActivity(), email, password, true).subscribe(this.loginObserver);
         }
         else {
@@ -107,6 +112,15 @@ public class LoginFragment extends Fragment{
                 .show();
     }
 
+    private void showProgressDialog(Context context)
+    {
+        this.dialogProgress = new MaterialDialog.Builder(context)
+                .progress(false, 100)
+                .cancelable(false)
+                .show();
+
+    }
+
     private Observer<Object> loginObserver = new Observer<Object>()
     {
         @Override
@@ -115,6 +129,9 @@ public class LoginFragment extends Fragment{
             if(LoginFragment.this.getActivity() != null)
             {
                 String email = txtEmail.getText().toString();
+
+                dialogProgress.setContent(R.string.get_user_progress);
+                dialogProgress.setProgress(33);
                 ApiHelper.getUser(LoginFragment.this.getActivity(), email).subscribe(LoginFragment.this.getUserObserver);
             }
         }
@@ -124,6 +141,7 @@ public class LoginFragment extends Fragment{
         {
             if(LoginFragment.this.getActivity() != null)
             {
+                LoginFragment.this.dialogProgress.dismiss();
                 LoginFragment.this.showLoginErrorDialog(LoginFragment.this.getActivity(), "Error while logging in: " + e.getMessage());
             }
         }
@@ -135,7 +153,10 @@ public class LoginFragment extends Fragment{
         {
             if(LoginFragment.this.getActivity() != null)
             {
-                ApiHelper.getActivities(LoginFragment.this.getActivity()).subscribe(LoginFragment.this.startUpCallsObserver);
+                dialogProgress.setContent(R.string.get_activities_progress);
+                dialogProgress.setProgress(66);
+
+                ApiHelper.getActivities(LoginFragment.this.getActivity()).subscribe(LoginFragment.this.getActivitiesObserver);
             }
         }
 
@@ -144,18 +165,43 @@ public class LoginFragment extends Fragment{
         {
             if(LoginFragment.this.getActivity() != null)
             {
+                LoginFragment.this.dialogProgress.dismiss();
                 LoginFragment.this.showLoginErrorDialog(LoginFragment.this.getActivity(), "Error while getting user: " + e.getMessage());
             }
         }
     };
 
-    public Observer<Object> startUpCallsObserver = new Observer<Object>(){
+    public Observer<Object> getActivitiesObserver = new Observer<Object>(){
+        @Override
+        public void onCompleted(){
+            if(LoginFragment.this.getActivity() != null){
+                dialogProgress.setContent(R.string.get_all_users_progress);
+                dialogProgress.setProgress(100);
+
+                ApiHelper.getUsers(LoginFragment.this.getActivity()).subscribe(LoginFragment.this.getUsersObserver);
+            }
+        }
+
+        @Override
+        public void onError(Throwable e)
+        {
+            if(LoginFragment.this.getActivity() != null)
+            {
+                LoginFragment.this.dialogProgress.dismiss();
+                LoginFragment.this.showLoginErrorDialog(LoginFragment.this.getActivity(), "Error while getting activities: " + e.getMessage());
+            }
+        }
+    };
+
+    public Observer<Object> getUsersObserver = new Observer<Object>(){
         @Override
         public void onCompleted(){
             if(LoginFragment.this.getActivity() != null){
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 String email = txtEmail.getText().toString();
                 intent.putExtra("EMAIL", email);
+
+                LoginFragment.this.dialogProgress.dismiss();
 
                 getActivity().startActivity(intent);
             }
@@ -166,7 +212,8 @@ public class LoginFragment extends Fragment{
         {
             if(LoginFragment.this.getActivity() != null)
             {
-                LoginFragment.this.showLoginErrorDialog(LoginFragment.this.getActivity(), "Error while getting data: " + e.getMessage());
+                LoginFragment.this.dialogProgress.dismiss();
+                LoginFragment.this.showLoginErrorDialog(LoginFragment.this.getActivity(), "Error while getting all users: " + e.getMessage());
             }
         }
     };

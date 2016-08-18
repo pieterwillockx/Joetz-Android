@@ -10,26 +10,26 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
+import com.fabantowapi.joetz_android.database.ContactpersoonTable;
 import com.fabantowapi.joetz_android.database.DatabaseHelper;
-import com.fabantowapi.joetz_android.database.UserTable;
-import com.fabantowapi.joetz_android.model.api.User;
+import com.fabantowapi.joetz_android.database.UserActivityTable;
 
 /**
- * Created by Pieter on 15-8-2016.
+ * Created by Pieter on 17-8-2016.
  */
-public class UserContentProvider extends ContentProvider{
+public class UserActivityContentProvider extends ContentProvider {
+
     private DatabaseHelper databaseHelper;
 
-    private static final String PROVIDER_NAME = "com.fabantowapi.joetz_android.contentproviders.UserContentProvider";
+    private static final String PROVIDER_NAME = "com.fabantowapi.joetz_android.contentproviders.UserActivityContentProvider";
     public static final Uri CONTENT_URI = Uri.parse("content://" + PROVIDER_NAME + "/");
-    private static final int USERS = 1;
+    private static final int USER_ACTIVITY = 1;
     private static final UriMatcher URI_MATCHER;
 
     static{
         URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
-        URI_MATCHER.addURI(PROVIDER_NAME, null, USERS);
+        URI_MATCHER.addURI(PROVIDER_NAME, null, USER_ACTIVITY);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class UserContentProvider extends ContentProvider{
     @Override
     public String getType(Uri uri){
         switch(URI_MATCHER.match(uri)){
-            case USERS:
+            case USER_ACTIVITY:
                 return "vnd.android.cursor.dir/" + PROVIDER_NAME;
         }
 
@@ -53,11 +53,11 @@ public class UserContentProvider extends ContentProvider{
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder){
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-        queryBuilder.setTables(UserTable.TABLE_NAME);
-        queryBuilder.setProjectionMap(UserTable.PROJECTION_MAP);
+        queryBuilder.setTables(UserActivityTable.TABLE_NAME);
+        queryBuilder.setProjectionMap(UserActivityTable.PROJECTION_MAP);
 
         switch(URI_MATCHER.match(uri)){
-            case USERS:
+            case USER_ACTIVITY:
                 break;
 
             default:
@@ -76,22 +76,17 @@ public class UserContentProvider extends ContentProvider{
         long rowId;
 
         switch(URI_MATCHER.match(uri)){
-            case USERS:
+            case USER_ACTIVITY:
                 SQLiteDatabase db = this.databaseHelper.getWritableDatabase();
-                rowId = db.replace(UserTable.TABLE_NAME, null, values);
+                rowId = db.replace(UserActivityTable.TABLE_NAME, null, values);
                 break;
 
             default:
-                throw new IllegalArgumentException("Unknow URI: " + uri);
+                throw new IllegalArgumentException("Unknown URI: " + uri);
         }
 
         if(rowId > 0){
             this.getContext().getContentResolver().notifyChange(CONTENT_URI, null);
-
-            // log database
-            Log.d("UserContentProvider", "Printing DB after insert...");
-            printDatabase();
-
             return Uri.withAppendedPath(CONTENT_URI, String.valueOf(rowId));
         }
 
@@ -103,9 +98,9 @@ public class UserContentProvider extends ContentProvider{
         int rowsDeleted;
 
         switch(URI_MATCHER.match(uri)){
-            case USERS:
+            case USER_ACTIVITY:
                 SQLiteDatabase db = this.databaseHelper.getWritableDatabase();
-                rowsDeleted = db.delete(UserTable.TABLE_NAME, selection, selectionArgs);
+                rowsDeleted = db.delete(UserActivityTable.TABLE_NAME, selection, selectionArgs);
                 break;
 
             default:
@@ -114,10 +109,6 @@ public class UserContentProvider extends ContentProvider{
 
         if(rowsDeleted > 0){
             this.getContext().getContentResolver().notifyChange(CONTENT_URI, null);
-
-            // log database
-            Log.d("UserContentProvider", "Printing DB after delete...");
-            printDatabase();
         }
 
         return rowsDeleted;
@@ -128,9 +119,9 @@ public class UserContentProvider extends ContentProvider{
         int rowsUpdated;
 
         switch(URI_MATCHER.match(uri)){
-            case USERS:
+            case USER_ACTIVITY:
                 SQLiteDatabase db = this.databaseHelper.getWritableDatabase();
-                rowsUpdated = db.update(UserTable.TABLE_NAME, values, selection, selectionArgs);
+                rowsUpdated = db.update(UserActivityTable.TABLE_NAME, values, selection, selectionArgs);
                 break;
 
             default:
@@ -139,10 +130,6 @@ public class UserContentProvider extends ContentProvider{
 
         if(rowsUpdated > 0){
             this.getContext().getContentResolver().notifyChange(CONTENT_URI, null);
-
-            // log database
-            Log.d("UserContentProvider", "Printing DB after update...");
-            printDatabase();
         }
 
         return rowsUpdated;
@@ -153,9 +140,9 @@ public class UserContentProvider extends ContentProvider{
         int rowsInserted = 0;
 
         switch(URI_MATCHER.match(uri)){
-            case USERS:
+            case USER_ACTIVITY:
                 SQLiteDatabase db = this.databaseHelper.getWritableDatabase();
-                DatabaseUtils.InsertHelper inserter = new DatabaseUtils.InsertHelper(db, UserTable.TABLE_NAME);
+                DatabaseUtils.InsertHelper inserter = new DatabaseUtils.InsertHelper(db, UserActivityTable.TABLE_NAME);
 
                 db.beginTransaction();
                 try{
@@ -163,26 +150,9 @@ public class UserContentProvider extends ContentProvider{
                         for(ContentValues cv : values){
                             if(cv != null){
                                 inserter.prepareForInsert();
-                                inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_ID), cv.getAsString(UserTable.COLUMN_ID));
-                                inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_EMAIL), cv.getAsString(UserTable.COLUMN_EMAIL));
-                                inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_USERNAME), cv.getAsString(UserTable.COLUMN_USERNAME));
-                                inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_FIRSTNAME), cv.getAsString(UserTable.COLUMN_FIRSTNAME));
-                                inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_LASTNAME), cv.getAsString(UserTable.COLUMN_LASTNAME));
-                                inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_NAAMGEBOUW), cv.getAsString(UserTable.COLUMN_NAAMGEBOUW));
-                                inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_STRAAT), cv.getAsString(UserTable.COLUMN_STRAAT));
-                                inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_HUISNUMMER), cv.getAsInteger(UserTable.COLUMN_HUISNUMMER));
-                                inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_BUS), cv.getAsString(UserTable.COLUMN_BUS));
-                                inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_GEMEENTE), cv.getAsString(UserTable.COLUMN_GEMEENTE));
-                                inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_POSTCODE), cv.getAsInteger(UserTable.COLUMN_POSTCODE));
-                                inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_EMAIL), cv.getAsString(UserTable.COLUMN_EMAIL));
-                                inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_CONTACTPERSOON1_EMAIL), cv.getAsInteger(UserTable.COLUMN_CONTACTPERSOON1_EMAIL));
-                                inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_CONTACTPERSOON2_EMAIL), cv.getAsInteger(UserTable.COLUMN_CONTACTPERSOON2_EMAIL));
-                                inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_ROLE), cv.getAsString(UserTable.COLUMN_ROLE));
-                                inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_DATE_JOINED), cv.getAsString(UserTable.COLUMN_DATE_JOINED));
-                                inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_RIJKSREGISTERNUMMER), cv.getAsString(UserTable.COLUMN_RIJKSREGISTERNUMMER));
-                                inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_GEBOORTEDATUM), cv.getAsString(UserTable.COLUMN_GEBOORTEDATUM));
-                                inserter.bind(inserter.getColumnIndex(UserTable.COLUMN_CODEGERECHTIGDE), cv.getAsString(UserTable.COLUMN_CODEGERECHTIGDE));
-
+                                inserter.bind(inserter.getColumnIndex(UserActivityTable.COLUMN_ID), cv.getAsString(UserActivityTable.COLUMN_ID));
+                                inserter.bind(inserter.getColumnIndex(UserActivityTable.COLUMN_USER_ID), cv.getAsString(UserActivityTable.COLUMN_USER_ID));
+                                inserter.bind(inserter.getColumnIndex(UserActivityTable.COLUMN_ACTIVITY_ID), cv.getAsString(UserActivityTable.COLUMN_ACTIVITY_ID));
                                 long rowId = inserter.execute();
 
                                 if(rowId != -1){
@@ -212,10 +182,5 @@ public class UserContentProvider extends ContentProvider{
         }
 
         return rowsInserted;
-    }
-
-    public void printDatabase(){
-        SQLiteDatabase db = this.databaseHelper.getReadableDatabase();
-        Log.d("UserContentProvider", this.databaseHelper.getTableAsString(db, UserTable.TABLE_NAME));
     }
 }

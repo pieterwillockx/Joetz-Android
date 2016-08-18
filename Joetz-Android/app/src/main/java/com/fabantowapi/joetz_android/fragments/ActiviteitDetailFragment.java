@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.fabantowapi.joetz_android.R;
-import com.fabantowapi.joetz_android.model.Activiteit;
 import com.fabantowapi.joetz_android.model.api.Activity;
+import com.fabantowapi.joetz_android.model.api.GetActivityResponse;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

@@ -91,7 +91,9 @@ public class Contactpersoon {
         int gemeenteIndex = cursor.getColumnIndex(ContactpersoonTable.COLUMN_GEMEENTE_FULL);
         int postcodeIndex = cursor.getColumnIndex(ContactpersoonTable.COLUMN_POSTCODE_FULL);
 
-        cursor.moveToFirst();
+        if(cursor.getPosition() == -1){
+            cursor.moveToFirst();
+        }
 
         String email = cursor.getString(emailIndex);
         String firstname = cursor.getString(firstnameIndex);
