@@ -9,6 +9,7 @@ import com.fabantowapi.joetz_android.model.api.EditAddressRequest;
 import com.fabantowapi.joetz_android.model.api.EditContactPersonRequest;
 import com.fabantowapi.joetz_android.model.api.EditUserDetailsRequest;
 import com.fabantowapi.joetz_android.model.api.EditUserRequest;
+import com.fabantowapi.joetz_android.model.api.EditUserRoleRequest;
 import com.fabantowapi.joetz_android.model.api.LoginRequest;
 import com.fabantowapi.joetz_android.model.api.LogoutRequest;
 import com.fabantowapi.joetz_android.model.api.RegisterRequest;
@@ -62,4 +63,7 @@ public interface JoetzApi {
 
     @POST("/kamp/{campId}/medewerkers/{email}")
     Observable<Response> addContributorToCamp(@Path("campId") String campId, @Path("email") String email);
+
+    @PUT("/user/{email}/role")
+    Observable<Response> editUserRole(@Path("email") String email, @Body EditUserRoleRequest request);
 }

@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by Pieter on 18-8-2016.
  */
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
+public class UserMugshotAdapter extends RecyclerView.Adapter<UserMugshotAdapter.ViewHolder> {
 
     List<User> users;
     public Context context;
@@ -30,7 +30,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         }
     }
 
-    public UserAdapter(Context context) {
+    public UserMugshotAdapter(Context context) {
         this.context = context;
     }
 
@@ -40,7 +40,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     }
 
     @Override
-    public UserAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public UserMugshotAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_activity_detail_person_item, parent, false);
         ViewHolder vh =  new ViewHolder(view);
 
@@ -48,7 +48,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(UserAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(UserMugshotAdapter.ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         final User user = users.get(position);

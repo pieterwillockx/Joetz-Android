@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,7 +17,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.activities.MainActivity;
-import com.fabantowapi.joetz_android.adapters.UserAdapter;
+import com.fabantowapi.joetz_android.adapters.UserMugshotAdapter;
 import com.fabantowapi.joetz_android.api.ApiHelper;
 import com.fabantowapi.joetz_android.model.api.Adres;
 import com.fabantowapi.joetz_android.model.api.Camp;
@@ -35,7 +34,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by Anton Rooseleer on 3-8-2016.
@@ -69,8 +67,8 @@ public class KampenDetailFragment extends Fragment {
 
     RecyclerView.LayoutManager mLayoutManagerAanwezigen;
     RecyclerView.LayoutManager mLayoutManagerMedewerkers;
-    UserAdapter mAdapterAanwezigen;
-    UserAdapter mAdapterMedewerkers;
+    UserMugshotAdapter mAdapterAanwezigen;
+    UserMugshotAdapter mAdapterMedewerkers;
 
     private Camp camp;
 
@@ -92,7 +90,7 @@ public class KampenDetailFragment extends Fragment {
 
         activity = (MainActivity) getActivity();
 
-        activity.showActionBarMenu();
+        activity.showActionBarAddPerson();
 
         Intent i = getActivity().getIntent();
         camp =(Camp) i.getSerializableExtra("kamp");
@@ -103,8 +101,8 @@ public class KampenDetailFragment extends Fragment {
         mRecyclerViewAanwezigen.setLayoutManager(mLayoutManagerAanwezigen);
         mRecyclerViewMedewerkers.setLayoutManager(mLayoutManagerMedewerkers);
 
-        mAdapterAanwezigen = new UserAdapter(this.getActivity());
-        mAdapterMedewerkers = new UserAdapter(this.getActivity());
+        mAdapterAanwezigen = new UserMugshotAdapter(this.getActivity());
+        mAdapterMedewerkers = new UserMugshotAdapter(this.getActivity());
 
         mRecyclerViewAanwezigen.setAdapter(mAdapterAanwezigen);
         mRecyclerViewMedewerkers.setAdapter(mAdapterMedewerkers);

@@ -10,14 +10,13 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.activities.MainActivity;
-import com.fabantowapi.joetz_android.adapters.UserAdapter;
+import com.fabantowapi.joetz_android.adapters.UserMugshotAdapter;
 import com.fabantowapi.joetz_android.api.ApiHelper;
 import com.fabantowapi.joetz_android.model.api.Activity;
 import com.fabantowapi.joetz_android.model.api.User;
@@ -32,7 +31,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by Anton Rooseleer on 3-8-2016.
@@ -52,7 +50,7 @@ public class ActiviteitDetailFragment extends Fragment {
     public RecyclerView mRecyclerView;
 
     RecyclerView.LayoutManager mLayoutManager;
-    UserAdapter mAdapter;
+    UserMugshotAdapter mAdapter;
 
     private Activity activity;
     private List<User> attendees;
@@ -74,7 +72,7 @@ public class ActiviteitDetailFragment extends Fragment {
 
         mainActivity = (MainActivity) getActivity();
 
-        mainActivity.showActionBarMenu();
+        mainActivity.showActionBarAddPerson();
 
         Intent i = getActivity().getIntent();
         activity =(Activity) i.getSerializableExtra("activity");
@@ -82,7 +80,7 @@ public class ActiviteitDetailFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new UserAdapter(this.getActivity());
+        mAdapter = new UserMugshotAdapter(this.getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
         attendees = activity.getAanwezigen();

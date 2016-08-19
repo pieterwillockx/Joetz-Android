@@ -23,9 +23,14 @@
             android:title="@string/nav_drawer_activiteit" />
 
         <item
-            android:id="@+id/nav_forum"
-            android:icon="@drawable/ic_forum_black_24dp"
-            android:title="@string/nav_drawer_forum" />
+            android:id="@+id/nav_contibutors"
+            android:icon="@drawable/ic_group_black_24dp"
+            android:title="@string/nav_drawer_contributors" />
+
+        <item
+            android:id="@+id/nav_all_users"
+            android:icon="@drawable/ic_group_black_24dp"
+            android:title="@string/nav_drawer_all_users" />
 
         <item
             android:id="@+id/nav_logout"

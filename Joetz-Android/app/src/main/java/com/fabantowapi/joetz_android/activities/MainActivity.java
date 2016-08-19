@@ -40,10 +40,11 @@ import com.fabantowapi.joetz_android.database.UserTable;
 import com.fabantowapi.joetz_android.fragments.ActivityListFragment;
 import com.fabantowapi.joetz_android.fragments.ArtikelListFragment;
 import com.fabantowapi.joetz_android.fragments.EditContactPersonFragment;
-import com.fabantowapi.joetz_android.fragments.ForumFragment;
+import com.fabantowapi.joetz_android.fragments.ContributorsListFragment;
 import com.fabantowapi.joetz_android.fragments.HistoriekListFragment;
 import com.fabantowapi.joetz_android.fragments.KampenListFragment;
 import com.fabantowapi.joetz_android.fragments.ProfielFragment;
+import com.fabantowapi.joetz_android.fragments.UserListFragment;
 import com.fabantowapi.joetz_android.model.api.Activity;
 import com.fabantowapi.joetz_android.model.api.Camp;
 import com.fabantowapi.joetz_android.model.api.Contactpersoon;
@@ -54,6 +55,7 @@ import com.fabantowapi.joetz_android.utils.Constants;
 import com.fabantowapi.joetz_android.utils.Observer;
 import com.fabantowapi.joetz_android.utils.PreferencesHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -137,6 +139,20 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
         return currentUser;
     }
 
+    public List<User> getAllUsers() { return allUsers; }
+
+    public List<User> getAllContributors() {
+        List<User> contributors = new ArrayList<>();
+
+        for(User user : allUsers){
+            if(user.getRole().equals("monitor") || user.getRole().equals("beheerder")){
+                contributors.add(user);
+            }
+        }
+
+        return contributors;
+    }
+
     public List<Activity> getActivities() { return activities; }
 
     public List<Camp> getCamps() { return camps; }
@@ -149,8 +165,11 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
             case R.id.nav_historiek:
                 fragmentClass = HistoriekListFragment.class;
                 break;
-            case R.id.nav_forum:
-                fragmentClass = ForumFragment.class;
+            case R.id.nav_contibutors:
+                fragmentClass = ContributorsListFragment.class;
+                break;
+            case R.id.nav_all_users:
+                fragmentClass = UserListFragment.class;
                 break;
             case R.id.nav_activiteiten:
                 fragmentClass = ActivityListFragment.class;
@@ -501,8 +520,13 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-    public void showActionBarMenu(){
-        this.mActionBarState = Constants.ACTIONBAR_SHOW_MENU;
+    public void showActionBarAddPerson(){
+        this.mActionBarState = Constants.ACTIONBAR_SHOW_ADD_PERSON;
+        invalidateOptionsMenu();
+    }
+
+    public void showActionBarEditPerson(){
+        this.mActionBarState = Constants.ACTIONBAR_SHOW_EDIT_PERSON;
         invalidateOptionsMenu();
     }
 
@@ -516,10 +540,15 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.action_bar_menu, menu);
 
-        if(mActionBarState == Constants.ACTIONBAR_HIDE_MENU){
-            for(int i = 0; i < menu.size(); i++){
-                menu.getItem(i).setVisible(false);
-            }
+        for(int i = 0; i < menu.size(); i++){
+            menu.getItem(i).setVisible(false);
+        }
+
+        if(mActionBarState == Constants.ACTIONBAR_SHOW_EDIT_PERSON){
+            menu.findItem(R.id.action_edit).setVisible(true);
+        }
+        if(mActionBarState == Constants.ACTIONBAR_SHOW_ADD_PERSON){
+            menu.findItem(R.id.action_add_person).setVisible(true);
         }
 
         return true;

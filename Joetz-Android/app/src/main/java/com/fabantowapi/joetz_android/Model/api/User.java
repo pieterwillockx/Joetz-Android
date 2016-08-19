@@ -7,13 +7,14 @@ import com.fabantowapi.joetz_android.contentproviders.ContactpersoonContentProvi
 import com.fabantowapi.joetz_android.database.ContactpersoonTable;
 import com.fabantowapi.joetz_android.database.UserTable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Pieter on 15-8-2016.
  */
-public class User {
+public class User implements Serializable{
     private String id;
     private String email;
     private String username;
@@ -52,7 +53,6 @@ public class User {
     public void setLastname(String lastname) { this.lastname = lastname; }
     public void setRijksregisternummer(String rijksregisternummer) { this.rijksregisternummer = rijksregisternummer; }
     public void setGeboortedatum(String geboortedatum) { this.geboortedatum = geboortedatum; }
-
     public void setCodegerechtigde(String codegerechtigde) { this.codegerechtigde = codegerechtigde; }
 
     public void setContactpersoon1(Contactpersoon contactpersoon1) {
@@ -65,6 +65,7 @@ public class User {
     }
 
     public void setAdres(Adres adres){ this.adres = adres; }
+    public void setRole(String role){ this.role = role; }
 
     public String getId() { return id; }
     public String getEmail() {

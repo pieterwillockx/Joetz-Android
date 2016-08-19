@@ -47,6 +47,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
         }
     }
+
     public ActivityAdapter(Context context) {
         this.context = context;
     }
@@ -64,6 +65,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
         return vh;
     }
+
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
@@ -116,6 +118,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
             }
         });
     }
+
     @Override
     public int getItemCount() {
         return this.activities != null ? this.activities.size() : 0;

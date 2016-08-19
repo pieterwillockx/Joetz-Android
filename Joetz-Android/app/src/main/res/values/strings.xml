@@ -17,7 +17,8 @@
     <string name="geheimeVraag">Geef het antwoord op je geheime vraag :</string>
     <string name="nav_drawer_historiek">Historiek</string>
     <string name="nav_drawer_activiteit">Activiteiten</string>
-    <string name="nav_drawer_forum">Forum</string>
+    <string name="nav_drawer_contributors">Medewerkers</string>
+    <string name="nav_drawer_all_users">Leden</string>
     <string name="nav_drawer_kampen">Kampen</string>
     <string name="nav_drawer_home">Home</string>
     <string name="nav_drawer_profiel">Profiel</string>
@@ -55,6 +56,7 @@
     <string name="get_activities_progress">Activiteiten ophalen...</string>
     <string name="get_all_users_progress">Alle gebruikers ophalen...</string>
     <string name="get_camps_progress">Kampen ophalen...</string>
+    <string name="edit_user_role_progress">Rol bewerken...</string>
     <string name="be_quick">BE QUICK!!!</string>
     <string name="profile_email">E-mailadres</string>
     <string name="profile_username">Gebruikersnaam</string>
@@ -95,7 +97,16 @@
     <string name="camp_detail_participants">Deelnemers</string>
     <string name="camp_detail_contact">Contact</string>
     <string name="medewerkers">Medewerkers</string>
+    <string name="users">Gebruikers</string>
     <string name="action_add_person">Inschrijven</string>
+    <string name="action_edit">Bewerken</string>
     <string name="dialog_add_user">Bent u zeker dat je je op aanwezig wilt zetten?</string>
     <string name="dialog_user_already_in_list">Je staat reeds op aanwezig.</string>
+    <string name="dialog_choose_role">Kies een rol</string>
+
+    <array name="dialog_roles">
+        <item>Lid</item>
+        <item>Monitor</item>
+        <item>Beheerder</item>
+    </array>
 </resources>

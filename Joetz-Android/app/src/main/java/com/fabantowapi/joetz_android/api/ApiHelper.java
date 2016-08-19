@@ -19,6 +19,7 @@ import com.fabantowapi.joetz_android.database.UserActivityTable;
 import com.fabantowapi.joetz_android.database.UserTable;
 import com.fabantowapi.joetz_android.model.api.Activity;
 import com.fabantowapi.joetz_android.model.api.Camp;
+import com.fabantowapi.joetz_android.model.api.EditUserRoleRequest;
 import com.fabantowapi.joetz_android.model.api.GetActivityResponse;
 import com.fabantowapi.joetz_android.model.api.Adres;
 import com.fabantowapi.joetz_android.model.api.Contactpersoon;
@@ -577,6 +578,48 @@ public class ApiHelper {
                     contentResolver.insert(ContactpersoonContentProvider.CONTENT_URI, cv);
                 })
                 .toList()
+                .flatMap(user -> Observable.empty())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static Observable<Object> editUserRole(Context context, String userEmail, String role, User currentUser){
+        ApiHelper.resetService();
+
+        return ApiHelper.getService(context).editUserRole(userEmail, new EditUserRoleRequest(role))
+                .flatMap(response -> {
+                    String applicationCookie = CookieHelper.getApplicationCookie(response.getHeaders());
+                    PreferencesHelper.saveApplicationCookie(context, applicationCookie);
+
+                    if(response.getStatus() == 200){
+                        currentUser.setRole(role);
+
+                        return Observable.just(currentUser);
+                    }
+                    else{
+                        int status = response.getStatus();
+                        String error;
+
+                        switch(status){
+                            case 400 : error = "Bad Request"; break;
+                            case 401 : error = "Unauthorized"; break;
+                            default : error = "Unknown Error"; break;
+                        }
+
+                        return Observable.error(new IOException(error));
+                    }
+                })
+                .doOnNext(user -> {
+                    String where = UserTable.TABLE_NAME + "." + UserTable.COLUMN_EMAIL + " = ?";
+                    String[] selectionArgs = new String[]{
+                            user.getEmail()
+                    };
+
+                    ContentResolver contentResolver = context.getContentResolver();
+                    ContentValues cvUser = user.getContentValues();
+
+                    contentResolver.update(UserContentProvider.CONTENT_URI, cvUser, where, selectionArgs);
+                })
                 .flatMap(user -> Observable.empty())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
