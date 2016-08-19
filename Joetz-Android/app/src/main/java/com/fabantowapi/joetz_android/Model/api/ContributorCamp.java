@@ -30,16 +30,16 @@ public class ContributorCamp {
     public void setCampId(String campId) { this.campId = campId; }
 
     public static List<ContributorCamp> constructListFromCursor(Cursor cursor){
-        List<ContributorCamp> userActivities = new ArrayList<>();
+        List<ContributorCamp> contributorCamps = new ArrayList<>();
 
         if(cursor != null && cursor.moveToFirst()){
             do{
-                userActivities.add(ContributorCamp.constructFromCursor(cursor));
+                contributorCamps.add(ContributorCamp.constructFromCursor(cursor));
             }
             while(cursor.moveToNext());
         }
 
-        return userActivities;
+        return contributorCamps;
     }
 
     public static ContributorCamp constructFromCursor(Cursor cursor){

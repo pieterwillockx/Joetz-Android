@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.fabantowapi.joetz_android.R;
+import com.fabantowapi.joetz_android.activities.MainActivity;
 import com.fabantowapi.joetz_android.adapters.HistoriekAdapter;
 import com.fabantowapi.joetz_android.adapters.itemdecorations.VerticalSpaceItemDecoration;
 import com.fabantowapi.joetz_android.model.Kamp;
@@ -29,6 +30,8 @@ public class HistoriekListFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private List<Kamp> kampen = null;
 
+    private MainActivity activity;
+
     private static final int VERTICAL_ITEM_SPACE = 10;
     private static final int PADDING_LEFT_RIGHT = 20;
 
@@ -36,6 +39,10 @@ public class HistoriekListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_historiek_list, container, false);
         ButterKnife.bind(this, view);
+
+        activity = (MainActivity) getActivity();
+
+        activity.hideActionBarMenu();;
 
         kampen = getkampen();
 

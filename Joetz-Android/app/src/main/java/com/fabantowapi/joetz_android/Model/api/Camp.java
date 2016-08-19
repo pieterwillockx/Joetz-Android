@@ -1,5 +1,6 @@
 package com.fabantowapi.joetz_android.model.api;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.fabantowapi.joetz_android.database.CampTable;
@@ -92,6 +93,33 @@ public class Camp implements Serializable {
         }
 
         return camps;
+    }
+
+    public ContentValues getContentValues(){
+        ContentValues cv = new ContentValues();
+
+        cv.put(CampTable.COLUMN_ID, this.id);
+        cv.put(CampTable.COLUMN_NAAM, this.naam);
+        cv.put(CampTable.COLUMN_OMSCHIRIJVING, this.omschrijving);
+        cv.put(CampTable.COLUMN_STARTDATUM, this.startDatum);
+        cv.put(CampTable.COLUMN_EINDDATUM, this.eindDatum);
+        cv.put(CampTable.COLUMN_AANTALNACHTEN, this.aantalNachten);
+        cv.put(CampTable.COLUMN_AANTALDAGEN, this.aantalDagen);
+        cv.put(CampTable.COLUMN_VERVOER, this.vervoer);
+        cv.put(CampTable.COLUMN_PRIJS, this.prijs);
+        cv.put(CampTable.COLUMN_MAXLEEFTIJD, this.maxLeeftijd);
+        cv.put(CampTable.COLUMN_MINLEEFTIJD, this.minLeeftijd);
+        cv.put(CampTable.COLUMN_MAXDEELNEMERS, this.maxDeelnemers);
+        cv.put(CampTable.COLUMN_CONTACT, this.contact);
+        cv.put(CampTable.COLUMN_SFEERFOTO, this.sfeerfoto);
+        cv.put(CampTable.COLUMN_NAAMGEBOUW, this.adres.getNaamgebouw());
+        cv.put(CampTable.COLUMN_STRAAT, this.adres.getStraat());
+        cv.put(CampTable.COLUMN_HUISNUMMER, this.adres.getHuisnummer());
+        cv.put(CampTable.COLUMN_BUS, this.adres.getBus());
+        cv.put(CampTable.COLUMN_GEMEENTE, this.adres.getGemeente());
+        cv.put(CampTable.COLUMN_POSTCODE, this.adres.getPostcode());
+
+        return cv;
     }
 
     public static Camp constructFromCursor(Cursor cursor){

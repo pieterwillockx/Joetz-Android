@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.fabantowapi.joetz_android.R;
+import com.fabantowapi.joetz_android.activities.MainActivity;
 import com.fabantowapi.joetz_android.model.Artikel;
 import com.fabantowapi.joetz_android.adapters.ArtikelAdapter;
 
@@ -28,10 +29,16 @@ public class ArtikelListFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
+    private MainActivity activity;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_artikel_ljst, container, false);
         ButterKnife.bind(this, view);
+
+        activity = (MainActivity) getActivity();
+
+        activity.hideActionBarMenu();;
 
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());

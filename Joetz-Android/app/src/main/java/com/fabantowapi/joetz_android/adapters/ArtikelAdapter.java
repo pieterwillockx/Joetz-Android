@@ -61,7 +61,7 @@ public class ArtikelAdapter extends RecyclerView.Adapter<ArtikelAdapter.ViewHold
         final Artikel artikel = artikels[position];
         holder.artikelTitel.setText(artikels[position].getArtikelTitel());
         holder.artikelImage.setImageDrawable(context.getResources().getDrawable(R.drawable.offline_image));
-        new ImageDownloadTask(holder.artikelImage).execute(artikel.getArtikelImageUrl());
+        new ImageDownloadTask(holder.artikelImage, context).execute(artikel.getArtikelImageUrl());
 
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override

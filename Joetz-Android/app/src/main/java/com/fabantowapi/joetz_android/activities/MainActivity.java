@@ -18,6 +18,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -74,10 +75,12 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
     private List<UserActivity> userActivities;
     private List<User> allUsers;
     private List<Camp> camps;
-    private List<ContributorCamp> ContributorCamps;
+    private List<ContributorCamp> contributorCamps;
 
     ActionBarDrawerToggle mDrawerToggle;
     private MaterialDialog dialogProgress;
+
+    private int mActionBarState = Constants.ACTIONBAR_HIDE_MENU;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -409,7 +412,7 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
                 break;
 
             case Constants.LOADER_CONTRIBUTOR_CAMPS:
-                ContributorCamps = ContributorCamp.constructListFromCursor(data);
+                contributorCamps = ContributorCamp.constructListFromCursor(data);
 
                 // last load, assign users to activities and camps, contributors to camps
                 assignUsersToActivities();
@@ -437,7 +440,7 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
     }
 
     private void assignContributorsToCamps(){
-        for(ContributorCamp uc : ContributorCamps){
+        for(ContributorCamp uc : contributorCamps){
             String campId = uc.getCampId();
             String userId = uc.getUserId();
 
@@ -496,6 +499,30 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
     {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    public void showActionBarMenu(){
+        this.mActionBarState = Constants.ACTIONBAR_SHOW_MENU;
+        invalidateOptionsMenu();
+    }
+
+    public void hideActionBarMenu(){
+        this.mActionBarState = Constants.ACTIONBAR_HIDE_MENU;
+        invalidateOptionsMenu();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.action_bar_menu, menu);
+
+        if(mActionBarState == Constants.ACTIONBAR_HIDE_MENU){
+            for(int i = 0; i < menu.size(); i++){
+                menu.getItem(i).setVisible(false);
+            }
+        }
+
+        return true;
     }
 
     @Override

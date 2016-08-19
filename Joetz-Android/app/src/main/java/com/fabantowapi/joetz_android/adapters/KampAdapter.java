@@ -16,8 +16,15 @@ import android.widget.TextView;;
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.fragments.KampenDetailFragment;
 import com.fabantowapi.joetz_android.model.Kamp;
+import com.fabantowapi.joetz_android.model.api.Adres;
 import com.fabantowapi.joetz_android.model.api.Camp;
+import com.fabantowapi.joetz_android.tasks.ImageDownloadTask;
+import com.fabantowapi.joetz_android.utils.SharedHelper;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -31,17 +38,19 @@ public class KampAdapter extends RecyclerView.Adapter<KampAdapter.ViewHolder>{
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView txtKampTitel;
-        public ImageView imgKamp;
+        public TextView txtNaam;
+        public ImageView imgSfeerfoto;
+        public TextView txtPrijs;
         public TextView txtLocatie;
         public TextView txtDatum;
 
         public ViewHolder(View  itemView) {
             super(itemView);
-            txtKampTitel = (TextView) itemView.findViewById(R.id.kampenLijst_titel);
-            imgKamp = (ImageView) itemView.findViewById(R.id.kampenLijst_image);
-            txtLocatie = (TextView) itemView.findViewById(R.id.kampenLijst_locatie);
-            txtDatum =(TextView) itemView.findViewById(R.id.kampenLijstDatum);
+            txtNaam = (TextView) itemView.findViewById(R.id.kampLijst_naam);
+            imgSfeerfoto = (ImageView) itemView.findViewById(R.id.kampLijst_image);
+            txtPrijs = (TextView) itemView.findViewById(R.id.kampLijst_prijs);
+            txtLocatie = (TextView) itemView.findViewById(R.id.kampLijst_locatie);
+            txtDatum =(TextView) itemView.findViewById(R.id.kampLijst_datum);
 
         }
     }
@@ -70,11 +79,40 @@ public class KampAdapter extends RecyclerView.Adapter<KampAdapter.ViewHolder>{
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
         final Camp camp = camps.get(position);
-        holder.txtKampTitel.setText(camps.get(position).getNaam());
-        holder.txtDatum.setText("Placeholder Datum");
-        holder.txtLocatie.setText("Placeholder Locatie");
-        holder.imgKamp.setImageDrawable(context.getResources().getDrawable(R.drawable.offline_image));
+        holder.txtNaam.setText(camp.getNaam());
+        holder.txtPrijs.setText(camp.getPrijs() + " euro");
+
+        Date begin = SharedHelper.parseDateStringToDate(camp.getStartDatum());
+        Date end = SharedHelper.parseDateStringToDate(camp.getEindDatum());
+
+        Calendar beginCalendar = Calendar.getInstance();
+        beginCalendar.setTime(begin);
+
+        Calendar endCalendar = Calendar.getInstance();
+        endCalendar.setTime(end);
+
+        if(SharedHelper.compareDates(begin, end)){
+            String beginHour = beginCalendar.get(Calendar.HOUR_OF_DAY) + ":" + beginCalendar.get(Calendar.MINUTE);
+            String endHour = endCalendar.get(Calendar.HOUR_OF_DAY) + ":" + endCalendar.get(Calendar.MINUTE);
+
+            holder.txtDatum.setText(dateFormat.format(begin));
+        }
+        else{
+            String beginDate = dateFormat.format(begin);
+            String endDate = dateFormat.format(end);
+
+            holder.txtDatum.setText("Van " + beginDate + " tot " + endDate);
+        }
+
+        Adres adres = camp.getAdres();
+
+        holder.txtLocatie.setText(adres.getStraat() + " " + adres.getHuisnummer() + adres.getBus() + ", " + adres.getPostcode() + " " + adres.getGemeente());
+
+        holder.imgSfeerfoto.setImageDrawable(context.getResources().getDrawable(R.drawable.offline_image));
+        new ImageDownloadTask(holder.imgSfeerfoto, context).execute(camp.getSfeerfoto());
 
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override

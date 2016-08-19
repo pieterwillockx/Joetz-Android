@@ -62,6 +62,9 @@ public class EditUserFragment extends Fragment {
 
         ButterKnife.bind(this, view);
         activity = (MainActivity) getActivity();
+
+        activity.hideActionBarMenu();;
+
         fillUserInfo();
 
         Intent i = getActivity().getIntent();

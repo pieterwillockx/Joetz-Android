@@ -95,4 +95,7 @@
     <string name="camp_detail_participants">Deelnemers</string>
     <string name="camp_detail_contact">Contact</string>
     <string name="medewerkers">Medewerkers</string>
+    <string name="action_add_person">Inschrijven</string>
+    <string name="dialog_add_user">Bent u zeker dat je je op aanwezig wilt zetten?</string>
+    <string name="dialog_user_already_in_list">Je staat reeds op aanwezig.</string>
 </resources>

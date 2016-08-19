@@ -1,22 +1,30 @@
 package com.fabantowapi.joetz_android.fragments;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.activities.MainActivity;
 import com.fabantowapi.joetz_android.adapters.UserAdapter;
+import com.fabantowapi.joetz_android.api.ApiHelper;
 import com.fabantowapi.joetz_android.model.api.Adres;
 import com.fabantowapi.joetz_android.model.api.Camp;
 import com.fabantowapi.joetz_android.model.api.User;
 import com.fabantowapi.joetz_android.tasks.ImageDownloadTask;
+import com.fabantowapi.joetz_android.utils.Observer;
 import com.fabantowapi.joetz_android.utils.SharedHelper;
 
 import java.text.DateFormat;
@@ -71,12 +79,20 @@ public class KampenDetailFragment extends Fragment {
 
     private MainActivity activity;
 
+    private MaterialDialog dialogProgress;
+    private MaterialDialog dialogAddContributor;
+    private MaterialDialog dialogContributorAlreadyInList;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_kampen_detail, container, false);
         ButterKnife.bind(this, view);
 
+        setHasOptionsMenu(true);
+
         activity = (MainActivity) getActivity();
+
+        activity.showActionBarMenu();
 
         Intent i = getActivity().getIntent();
         camp =(Camp) i.getSerializableExtra("kamp");
@@ -110,7 +126,7 @@ public class KampenDetailFragment extends Fragment {
 
         // image
         imgSfeerfoto.setImageDrawable(KampenDetailFragment.this.getActivity().getResources().getDrawable(R.drawable.offline_image));
-        new ImageDownloadTask(imgSfeerfoto).execute(camp.getSfeerfoto());
+        new ImageDownloadTask(imgSfeerfoto, getActivity()).execute(camp.getSfeerfoto());
 
         txtPrice.setText(camp.getPrijs() + " euro");
 
@@ -137,7 +153,7 @@ public class KampenDetailFragment extends Fragment {
         }
 
         Adres adres = camp.getAdres();
-        txtLocatie.setText(adres.getStraat() + " " + adres.getHuisnummer() + ", " + adres.getPostcode() + " " + adres.getGemeente());
+        txtLocatie.setText(adres.getStraat() + " " + adres.getHuisnummer() + adres.getBus() + ", " + adres.getPostcode() + " " + adres.getGemeente());
 
         txtOmschrijving.setText(camp.getOmschrijving());
 
@@ -151,9 +167,91 @@ public class KampenDetailFragment extends Fragment {
         txtMaxDeelnemers.setText(camp.getMaxDeelnemers() + "");
     }
 
-    @OnClick(R.id.kampenDetail_inschrvijven)
-    public void schrijfIn(){
-        // todo schrijf in voor kamp logica
+    private boolean isCurrentUserInContributorList(){
+        boolean isInList = false;
 
+        for(User u : medewerkers){
+            if(u.getId().equals(activity.getCurrentUser().getId())){
+                isInList = true;
+            }
+        }
+
+        return isInList;
     }
+
+    public void showProgressDialog(Context context){
+        this.dialogProgress = new MaterialDialog.Builder(context)
+                .content(R.string.add_user_to_activity_progress)
+                .progress(true, 0)
+                .cancelable(false)
+                .show();
+    }
+
+    public void showAddContributorDialog(Context context){
+        this.dialogAddContributor = new MaterialDialog.Builder(context)
+                .content(R.string.dialog_add_user)
+                .positiveText(R.string.dialog_yes)
+                .negativeText(R.string.dialog_no)
+                .onPositive((dialog, which) -> {
+                    showProgressDialog(KampenDetailFragment.this.getActivity());
+                    ApiHelper.addContributorToCamp(this.getActivity(), camp.getId(), activity.getCurrentUser().getEmail(), camp, activity.getCurrentUser()).subscribe(addContributorToCampObserver);
+                })
+                .show();
+    }
+
+    public void showContributorAlreadyInListDialog(Context context){
+        this.dialogContributorAlreadyInList = new MaterialDialog.Builder(context)
+                .content(R.string.dialog_user_already_in_list)
+                .positiveText(R.string.dialog_positive)
+                .show();
+    }
+
+    public void addContributor(){
+        if(isCurrentUserInContributorList()){
+            showContributorAlreadyInListDialog(KampenDetailFragment.this.getActivity());
+        }
+        else{
+            showAddContributorDialog(KampenDetailFragment.this.getActivity());
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_add_person:
+                // User chose the "Settings" item, show the app settings UI...
+                addContributor();
+
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+    Observer<Object> addContributorToCampObserver = new Observer<Object>(){
+        @Override
+        public void onCompleted()
+        {
+            if(KampenDetailFragment.this != null)
+            {
+                mAdapterMedewerkers.notifyDataSetChanged();
+                Toast.makeText(KampenDetailFragment.this.getActivity(), "Medewerker toegevoegd!", Toast.LENGTH_SHORT).show();
+                dialogProgress.dismiss();
+            }
+        }
+
+        @Override
+        public void onError(Throwable e)
+        {
+            if(KampenDetailFragment.this != null)
+            {
+                Toast.makeText(KampenDetailFragment.this.getActivity(), "Fout bij toevoegen van medewerker", Toast.LENGTH_SHORT).show();
+                dialogProgress.dismiss();
+            }
+        }
+    };
 }

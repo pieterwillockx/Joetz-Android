@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.fabantowapi.joetz_android.R;
+import com.fabantowapi.joetz_android.activities.MainActivity;
 import com.fabantowapi.joetz_android.model.Artikel;
 import com.fabantowapi.joetz_android.tasks.ImageDownloadTask;
 import butterknife.Bind;
@@ -29,10 +30,17 @@ public class ArtikelDetailFragment extends Fragment {
     public ImageView artikelImg;
 
     private Artikel artikel;
+
+    private MainActivity activity;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_artikel_detail, container, false);
         ButterKnife.bind(this, view);
+
+        activity = (MainActivity) getActivity();
+
+        activity.hideActionBarMenu();;
+
         Intent i = getActivity().getIntent();
         artikel = (Artikel) i.getSerializableExtra("artikel");
         laadArtikel();
@@ -45,7 +53,7 @@ public class ArtikelDetailFragment extends Fragment {
         txtArtikelInhoud.setText(artikel.getArtikelInhoud());
         artikelImg.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.offline_image));
 
-        new ImageDownloadTask(artikelImg).execute(artikel.getArtikelImageUrl());
+        new ImageDownloadTask(artikelImg, getActivity()).execute(artikel.getArtikelImageUrl());
 
     }
 

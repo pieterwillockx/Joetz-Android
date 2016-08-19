@@ -39,6 +39,8 @@ public class KampenListFragment extends Fragment {
 
         mainActivity = (MainActivity) getActivity();
 
+        mainActivity.hideActionBarMenu();;
+
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);

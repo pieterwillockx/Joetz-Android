@@ -59,4 +59,7 @@ public interface JoetzApi {
 
     @POST("/activiteit/{activityId}/aanwezigen/{email}")
     Observable<Response> addUserToActivity(@Path("activityId") String activityId, @Path("email") String email);
+
+    @POST("/kamp/{campId}/medewerkers/{email}")
+    Observable<Response> addContributorToCamp(@Path("campId") String campId, @Path("email") String email);
 }

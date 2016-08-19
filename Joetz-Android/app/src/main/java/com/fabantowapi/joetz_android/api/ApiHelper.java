@@ -13,9 +13,12 @@ import com.fabantowapi.joetz_android.contentproviders.UserActivityContentProvide
 import com.fabantowapi.joetz_android.contentproviders.ContributorCampContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.UserContentProvider;
 import com.fabantowapi.joetz_android.database.ActiviteitTable;
+import com.fabantowapi.joetz_android.database.CampTable;
+import com.fabantowapi.joetz_android.database.ContributorCampTable;
 import com.fabantowapi.joetz_android.database.UserActivityTable;
 import com.fabantowapi.joetz_android.database.UserTable;
 import com.fabantowapi.joetz_android.model.api.Activity;
+import com.fabantowapi.joetz_android.model.api.Camp;
 import com.fabantowapi.joetz_android.model.api.GetActivityResponse;
 import com.fabantowapi.joetz_android.model.api.Adres;
 import com.fabantowapi.joetz_android.model.api.Contactpersoon;
@@ -370,6 +373,7 @@ public class ApiHelper {
                 .doOnNext(campResponses -> {
                     ContentResolver contentResolver = context.getContentResolver();
                     contentResolver.delete(CampContentProvider.CONTENT_URI, null, null);
+                    contentResolver.delete(ContributorCampContentProvider.CONTENT_URI, null, null);
                 })
                 .flatMap(campResponses -> Observable.from(campResponses))
                 .doOnNext(camp -> {
@@ -675,6 +679,59 @@ public class ApiHelper {
                     contentResolver.insert(UserActivityContentProvider.CONTENT_URI, cvUserActivity);
                 })
                 .flatMap(activity -> Observable.empty())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static Observable<Object> addContributorToCamp(Context context, String campId, String email, Camp currentCamp, User currentUser){
+        ApiHelper.resetService();
+
+        return ApiHelper.getService(context).addContributorToCamp(campId, email)
+                .flatMap(response -> {
+                    String applicationCookie = CookieHelper.getApplicationCookie(response.getHeaders());
+                    PreferencesHelper.saveApplicationCookie(context, applicationCookie);
+
+                    if(response.getStatus() == 200){
+                        currentCamp.addMedewerker(currentUser);
+                        return Observable.just(currentCamp);
+                    }
+                    else {
+                        int status = response.getStatus();
+                        String error;
+
+                        switch (status) {
+                            case 400:
+                                error = "Bad Request";
+                                break;
+                            case 401:
+                                error = "Unauthorized";
+                                break;
+                            default:
+                                error = "Unknown Error";
+                                break;
+                        }
+
+                        return Observable.error(new IOException(error));
+                    }
+                })
+                .doOnNext(camp -> {
+                    String where = CampTable.TABLE_NAME + "." + CampTable.COLUMN_ID + " = ?";
+                    String[] selectionArgs = new String[]{
+                            camp.getId()
+                    };
+
+                    ContentResolver contentResolver = context.getContentResolver();
+                    ContentValues cvCamp = camp.getContentValues();
+
+                    contentResolver.update(CampContentProvider.CONTENT_URI, cvCamp, where, selectionArgs);
+
+                    ContentValues cvContributorCamp = new ContentValues();
+                    cvContributorCamp.put(ContributorCampTable.COLUMN_CAMP_ID, campId);
+                    cvContributorCamp.put(ContributorCampTable.COLUMN_CONTRIBUTOR_ID, currentUser.getId());
+
+                    contentResolver.insert(ContributorCampContentProvider.CONTENT_URI, cvContributorCamp);
+                })
+                .flatMap(camp -> Observable.empty())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

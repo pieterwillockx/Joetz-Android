@@ -69,6 +69,8 @@ public class EditContactPersonFragment extends Fragment {
         ButterKnife.bind(this, view);
         activity = (MainActivity) getActivity();
 
+        activity.hideActionBarMenu();;
+
         Intent i = getActivity().getIntent();
         contactPersonId = i.getIntExtra("CONTACTPERSON_ID", 0);
 

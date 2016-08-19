@@ -73,7 +73,10 @@ public class ProfielFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profiel, container, false);
 
-        activity = (MainActivity) ProfielFragment.this.getActivity();
+        activity = (MainActivity) getActivity();
+
+        activity.hideActionBarMenu();;
+        
         currentUser = activity.getCurrentUser();
 
         ButterKnife.bind(this, view);
