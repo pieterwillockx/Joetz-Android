@@ -16,14 +16,17 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.activities.MainActivity;
-import com.fabantowapi.joetz_android.adapters.ActivityDetailAdapter;
-import com.fabantowapi.joetz_android.adapters.itemdecorations.HorizontalSpaceItemDecoration;
+import com.fabantowapi.joetz_android.adapters.UserAdapter;
 import com.fabantowapi.joetz_android.api.ApiHelper;
 import com.fabantowapi.joetz_android.model.api.Activity;
 import com.fabantowapi.joetz_android.model.api.User;
 import com.fabantowapi.joetz_android.utils.Observer;
 import com.fabantowapi.joetz_android.utils.SharedHelper;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -37,23 +40,23 @@ public class ActiviteitDetailFragment extends Fragment {
 
 
     @Bind(R.id.activiteitDetail_naam)
-    public TextView txtNaam;
+    public TextView txtName;
     @Bind(R.id.activiteitDetail_uur)
-    public TextView txtUur;
+    public TextView txtHour;
     @Bind(R.id.activiteitDetail_datum)
-    public TextView txtDatum;
+    public TextView txtDate;
     @Bind(R.id.activiteitDetail_locatie)
-    public TextView txtLocatie;
+    public TextView txtLocation;
     @Bind(R.id.activiteitDetail_aanwezig_btn)
     public Button btnAddUserToActivity;
     @Bind(R.id.activiteitDetail_recyclerView_aanwezig)
     public RecyclerView mRecyclerView;
 
     RecyclerView.LayoutManager mLayoutManager;
-    ActivityDetailAdapter mAdapter;
+    UserAdapter mAdapter;
 
-    private Activity activiteit;
-    private List<User> aanwezigen;
+    private Activity activity;
+    private List<User> attendees;
 
     private MainActivity mainActivity;
 
@@ -69,31 +72,54 @@ public class ActiviteitDetailFragment extends Fragment {
         mainActivity = (MainActivity) getActivity();
 
         Intent i = getActivity().getIntent();
-        activiteit =(Activity) i.getSerializableExtra("activity");
+        activity =(Activity) i.getSerializableExtra("activity");
 
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new ActivityDetailAdapter(this.getActivity());
+        mAdapter = new UserAdapter(this.getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
-        aanwezigen = activiteit.getAanwezigen();
-        mAdapter.setUsers(aanwezigen);
+        attendees = activity.getAanwezigen();
+        mAdapter.setUsers(attendees);
 
-        setDetails(activiteit);
+        setDetails();
 
         return view;
     }
 
-    private void setDetails(Activity activiteit){
-        txtNaam.setText(activiteit.getNaam());
+    private void setDetails(){
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
-        String hourString = SharedHelper.convertDateToHourString(activiteit.getBeginUur()) + " - " + SharedHelper.convertDateToHourString(activiteit.getEindUur());
-        txtUur.setText(hourString);
+        txtName.setText(activity.getNaam());
 
-        txtDatum.setText(SharedHelper.convertDate(activiteit.getDatum()));
+        Date begin = SharedHelper.parseDateStringToDate(activity.getBeginUur());
+        Date end = SharedHelper.parseDateStringToDate(activity.getEindUur());
 
-        txtLocatie.setText(activiteit.getLocatie());
+        Calendar beginCalendar = Calendar.getInstance();
+        beginCalendar.setTime(begin);
+
+        Calendar endCalendar = Calendar.getInstance();
+        endCalendar.setTime(end);
+
+        if(SharedHelper.compareDates(begin, end)){
+            String beginHour = beginCalendar.get(Calendar.HOUR_OF_DAY) + ":" + beginCalendar.get(Calendar.MINUTE);
+            String endHour = endCalendar.get(Calendar.HOUR_OF_DAY) + ":" + endCalendar.get(Calendar.MINUTE);
+
+            txtHour.setText(beginHour + " - " + endHour);
+
+            txtDate.setText(dateFormat.format(begin));
+        }
+        else{
+            txtHour.setText("n.v.t.");
+
+            String beginDate = dateFormat.format(begin);
+            String endDate = dateFormat.format(end);
+
+            txtDate.setText("Van " + beginDate + " tot " + endDate);
+        }
+
+        txtLocation.setText(activity.getLocatie());
 
         if(isCurrentUserInList()){
             disableButton();
@@ -103,7 +129,7 @@ public class ActiviteitDetailFragment extends Fragment {
     private boolean isCurrentUserInList(){
         boolean isInList = false;
 
-        for(User u : aanwezigen){
+        for(User u : attendees){
             if(u.getId().equals(mainActivity.getCurrentUser().getId())){
                 isInList = true;
             }
@@ -129,7 +155,7 @@ public class ActiviteitDetailFragment extends Fragment {
     @OnClick(R.id.activiteitDetail_aanwezig_btn)
     public void gebruikerAanwezig(){
         showProgressDialog(ActiviteitDetailFragment.this.getActivity());
-        ApiHelper.addUserToActivity(this.getActivity(), activiteit.getId(), mainActivity.getCurrentUser().getEmail(), activiteit, mainActivity.getCurrentUser()).subscribe(addUserToActivityObserver);
+        ApiHelper.addUserToActivity(this.getActivity(), activity.getId(), mainActivity.getCurrentUser().getEmail(), activity, mainActivity.getCurrentUser()).subscribe(addUserToActivityObserver);
     }
 
     Observer<Object> addUserToActivityObserver = new Observer<Object>(){

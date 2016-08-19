@@ -131,7 +131,7 @@ public class LoginFragment extends Fragment{
                 String email = txtEmail.getText().toString();
 
                 dialogProgress.setContent(R.string.get_user_progress);
-                dialogProgress.setProgress(33);
+                dialogProgress.setProgress(25);
                 ApiHelper.getUser(LoginFragment.this.getActivity(), email).subscribe(LoginFragment.this.getUserObserver);
             }
         }
@@ -154,7 +154,7 @@ public class LoginFragment extends Fragment{
             if(LoginFragment.this.getActivity() != null)
             {
                 dialogProgress.setContent(R.string.get_activities_progress);
-                dialogProgress.setProgress(66);
+                dialogProgress.setProgress(50);
 
                 ApiHelper.getActivities(LoginFragment.this.getActivity()).subscribe(LoginFragment.this.getActivitiesObserver);
             }
@@ -176,7 +176,7 @@ public class LoginFragment extends Fragment{
         public void onCompleted(){
             if(LoginFragment.this.getActivity() != null){
                 dialogProgress.setContent(R.string.get_all_users_progress);
-                dialogProgress.setProgress(100);
+                dialogProgress.setProgress(75);
 
                 ApiHelper.getUsers(LoginFragment.this.getActivity()).subscribe(LoginFragment.this.getUsersObserver);
             }
@@ -194,6 +194,28 @@ public class LoginFragment extends Fragment{
     };
 
     public Observer<Object> getUsersObserver = new Observer<Object>(){
+        @Override
+        public void onCompleted(){
+            if(LoginFragment.this.getActivity() != null){
+                dialogProgress.setContent(R.string.get_camps_progress);
+                dialogProgress.setProgress(100);
+
+                ApiHelper.getCamps(LoginFragment.this.getActivity()).subscribe(LoginFragment.this.getCampsObserver);
+            }
+        }
+
+        @Override
+        public void onError(Throwable e)
+        {
+            if(LoginFragment.this.getActivity() != null)
+            {
+                LoginFragment.this.dialogProgress.dismiss();
+                LoginFragment.this.showLoginErrorDialog(LoginFragment.this.getActivity(), "Error while getting all users: " + e.getMessage());
+            }
+        }
+    };
+
+    public Observer<Object> getCampsObserver = new Observer<Object>(){
         @Override
         public void onCompleted(){
             if(LoginFragment.this.getActivity() != null){

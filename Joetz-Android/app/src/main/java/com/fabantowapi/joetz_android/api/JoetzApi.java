@@ -39,6 +39,9 @@ public interface JoetzApi {
     @GET("/user")
     Observable<Response> getUsers();
 
+    @GET("/kamp")
+    Observable<Response> getCamps();
+
     @PUT("/user/{email}/profile")
     Observable<Response> editUser(@Path("email") String email, @Body EditUserRequest request);
 

@@ -10,4 +10,6 @@ public class Constants {
     public static final int LOADER_ACTIVITIES = 4;
     public static final int LOADER_USER_ACTIVITIES = 5;
     public static final int LOADER_ALL_USERS = 6;
+    public static final int LOADER_CAMPS = 7;
+    public static final int LOADER_CONTRIBUTOR_CAMPS = 8;
 }

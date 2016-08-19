@@ -3,13 +3,14 @@ package com.fabantowapi.joetz_android.api;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.test.ActivityTestCase;
 
 import rx.Observable;
 
 import com.fabantowapi.joetz_android.contentproviders.ActivityContentProvider;
+import com.fabantowapi.joetz_android.contentproviders.CampContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.ContactpersoonContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.UserActivityContentProvider;
+import com.fabantowapi.joetz_android.contentproviders.ContributorCampContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.UserContentProvider;
 import com.fabantowapi.joetz_android.database.ActiviteitTable;
 import com.fabantowapi.joetz_android.database.UserActivityTable;
@@ -22,13 +23,13 @@ import com.fabantowapi.joetz_android.model.api.EditAddressRequest;
 import com.fabantowapi.joetz_android.model.api.EditContactPersonRequest;
 import com.fabantowapi.joetz_android.model.api.EditUserDetailsRequest;
 import com.fabantowapi.joetz_android.model.api.EditUserRequest;
+import com.fabantowapi.joetz_android.model.api.GetCampResponse;
 import com.fabantowapi.joetz_android.model.api.GetUserResponse;
 import com.fabantowapi.joetz_android.model.api.LoginRequest;
 import com.fabantowapi.joetz_android.model.api.LoginResponse;
 import com.fabantowapi.joetz_android.model.api.LogoutRequest;
 import com.fabantowapi.joetz_android.model.api.RegisterRequest;
 import com.fabantowapi.joetz_android.model.api.User;
-import com.fabantowapi.joetz_android.model.api.UserActivity;
 import com.fabantowapi.joetz_android.utils.CookieHelper;
 import com.fabantowapi.joetz_android.utils.PreferencesHelper;
 import com.fabantowapi.joetz_android.utils.SharedHelper;
@@ -328,6 +329,59 @@ public class ApiHelper {
                 })
                 .toList()
                 .flatMap(activityResponses -> Observable.empty())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static Observable<Object> getCamps(Context context){
+        ApiHelper.resetService();
+
+        return ApiHelper.getService(context).getCamps()
+                .flatMap(response -> {
+                    String applicationCookie = CookieHelper.getApplicationCookie(response.getHeaders());
+                    PreferencesHelper.saveApplicationCookie(context, applicationCookie);
+
+                    GetCampResponse[] camps;
+
+                    try{
+                        GsonConverter converter = new GsonConverter(new Gson());
+                        camps = (GetCampResponse[]) converter.fromBody(response.getBody(), GetCampResponse[].class);
+                    }
+                    catch(ConversionException e){
+                        return Observable.error(e);
+                    }
+
+                    if(camps != null && response.getStatus() == 200){
+                        return Observable.just(camps);
+                    }
+                    else{
+                        int statusId = response.getStatus();
+                        String error;
+
+                        switch(statusId){
+                            case 400 : error = "Bad Request"; break;
+                            case 401 : error = "Unauthorized"; break;
+                            default : error = "Unknown Error"; break;
+                        }
+
+                        return Observable.error(new IOException(error));
+                    }
+                })
+                .doOnNext(campResponses -> {
+                    ContentResolver contentResolver = context.getContentResolver();
+                    contentResolver.delete(CampContentProvider.CONTENT_URI, null, null);
+                })
+                .flatMap(campResponses -> Observable.from(campResponses))
+                .doOnNext(camp -> {
+                    ContentResolver contentResolver = context.getContentResolver();
+                    ContentValues cvCamp = camp.getContentValues();
+                    contentResolver.insert(CampContentProvider.CONTENT_URI, cvCamp);
+
+                    ContentValues[] cvContributorCamp = camp.getContributorCampContentValues();
+                    contentResolver.bulkInsert(ContributorCampContentProvider.CONTENT_URI, cvContributorCamp);
+                })
+                .toList()
+                .flatMap(campResponses -> Observable.empty())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

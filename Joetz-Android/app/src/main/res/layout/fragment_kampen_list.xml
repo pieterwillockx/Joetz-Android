@@ -8,8 +8,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/kampen"
-        android:textColor="@color/colorPrimaryDark"
+        android:text="@string/camps"
+        android:textColor="@color/colorPrimary"
         android:id="@+id/txtArtikelLijst"
         android:layout_alignParentTop="true"
         android:padding="15dp" />

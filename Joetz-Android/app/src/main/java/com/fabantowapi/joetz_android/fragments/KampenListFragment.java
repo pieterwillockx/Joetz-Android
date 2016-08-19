@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.fabantowapi.joetz_android.R;
+import com.fabantowapi.joetz_android.activities.MainActivity;
 import com.fabantowapi.joetz_android.adapters.itemdecorations.VerticalSpaceItemDecoration;
 import com.fabantowapi.joetz_android.model.Kamp;
 import com.fabantowapi.joetz_android.adapters.KampAdapter;
@@ -23,8 +24,10 @@ public class KampenListFragment extends Fragment {
 
     @Bind(R.id.kampen_recycler_view)
     public RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private KampAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+
+    private MainActivity mainActivity;
 
     private static final int VERTICAL_ITEM_SPACE = 10;
     private static final int PADDING_LEFT_RIGHT = 20;
@@ -34,23 +37,18 @@ public class KampenListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_kampen_list, container, false);
         ButterKnife.bind(this, view);
 
+        mainActivity = (MainActivity) getActivity();
+
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_ITEM_SPACE, PADDING_LEFT_RIGHT));
 
-        mAdapter = new KampAdapter(testData().toArray(new Kamp[testData().size()]),getActivity());
+        mAdapter = new KampAdapter(getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
-        return view;
-    }
+        mAdapter.setCamps(mainActivity.getCamps());
 
-    public List<Kamp> testData(){
-        //todo heel echte kampen op
-       List<Kamp> testData = new ArrayList<>();
-        testData.add(new Kamp("Smurf's up","test omschrijving",null,null,4,4,"auto","goede",20.0,30.0,5,10,10,5,10,"mij",null,null,null));
-        testData.add(new Kamp("Boekenwurmen En Speelvogels","test omschrijving",null,null,4,4,"auto","goede",20.0,30.0,5,10,10,5,10,"mij",null,null,null));
-        testData.add(new Kamp("Sierkus Hatsjoe","test omschrijving",null,null,4,4,"auto","goede",20.0,30.0,5,10,10,5,10,"mij",null,null,null));
-        return testData;
+        return view;
     }
 }

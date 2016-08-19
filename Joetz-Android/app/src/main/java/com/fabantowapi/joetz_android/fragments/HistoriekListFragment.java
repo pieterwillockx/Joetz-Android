@@ -55,7 +55,7 @@ public class HistoriekListFragment extends Fragment {
     }
 
     public List<Kamp> getkampen(){
-       // todo haal kampen op
+       // todo haal camps op
 
         List<Kamp> testData = new ArrayList<>();
         testData.add(new Kamp("Smurf's up", "test omschrijving", null, null, 4, 4, "auto", "goede", 20.0, 30.0, 5, 10, 10, 5, 10, "mij", null, null, null));

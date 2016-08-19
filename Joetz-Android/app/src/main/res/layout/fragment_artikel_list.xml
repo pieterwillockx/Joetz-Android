@@ -10,7 +10,7 @@
         android:layout_centerHorizontal="true"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/nieuwtjes"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorPrimary"
         android:id="@+id/txtArtikelLijst"
         android:layout_alignParentTop="true"
         android:padding="15dp" />

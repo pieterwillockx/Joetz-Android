@@ -2,7 +2,7 @@ package com.fabantowapi.joetz_android.adapters;
 
 import com.fabantowapi.joetz_android.activities.MainActivity;
 import com.fabantowapi.joetz_android.model.api.Activity;
-import com.fabantowapi.joetz_android.model.api.GetActivityResponse;
+
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -17,6 +17,7 @@ import com.fabantowapi.joetz_android.fragments.ActiviteitDetailFragment;
 import com.fabantowapi.joetz_android.utils.SharedHelper;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -28,19 +29,21 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
     public List<Activity> activities;
     public Context context;
     public Date currentDate;
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
+        public TextView txtHour;
         public TextView txtDate;
-        public TextView txtDuratie;
-        public TextView txtNaam;
+        public TextView txtLocation;
+        public TextView txtName;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            txtDate = (TextView) itemView.findViewById(R.id.activityLijst_Datum);
-            txtDuratie = (TextView) itemView.findViewById(R.id.activityLijst_Duratie);
-            txtNaam =(TextView) itemView.findViewById(R.id.activityLijst_Naam);
+            txtHour = (TextView) itemView.findViewById(R.id.activityLijst_uur);
+            txtDate = (TextView) itemView.findViewById(R.id.activityLijst_datum);
+            txtLocation = (TextView) itemView.findViewById(R.id.activityLijst_locatie);
+            txtName =(TextView) itemView.findViewById(R.id.activityLijst_naam);
 
         }
     }
@@ -67,16 +70,35 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
         // - replace the contents of the view with that element
         final Activity activity = activities.get(position);
 
-        Date beginDate = SharedHelper.parseDateStringToDate(activity.getBeginUur());
-        Date endDate = SharedHelper.parseDateStringToDate(activity.getEindUur());
-        if(beginDate != currentDate ){
-            currentDate = beginDate;
+        holder.txtName.setText(activity.getNaam());
 
-            holder.txtDate.setText(dateFormat.format(beginDate));
+        Date begin = SharedHelper.parseDateStringToDate(activity.getBeginUur());
+        Date end = SharedHelper.parseDateStringToDate(activity.getEindUur());
+
+        Calendar beginCalendar = Calendar.getInstance();
+        beginCalendar.setTime(begin);
+
+        Calendar endCalendar = Calendar.getInstance();
+        endCalendar.setTime(end);
+
+        if(SharedHelper.compareDates(begin, end)){
+            String beginHour = beginCalendar.get(Calendar.HOUR_OF_DAY) + ":" + beginCalendar.get(Calendar.MINUTE);
+            String endHour = endCalendar.get(Calendar.HOUR_OF_DAY) + ":" + (endCalendar.get(Calendar.MINUTE) == 0 ? "00" : endCalendar.get(Calendar.MINUTE));
+
+            holder.txtHour.setText(beginHour + " - " + endHour);
+
+            holder.txtDate.setText(dateFormat.format(begin));
         }
-       holder.txtDuratie.setText("Van " + dateFormat.format(beginDate) + "\ntot " + dateFormat.format(endDate));
+        else{
+            holder.txtHour.setText("n.v.t.");
 
-        holder.txtNaam.setText(activities.get(position).getNaam());
+            String beginDate = dateFormat.format(begin);
+            String endDate = dateFormat.format(end);
+
+            holder.txtDate.setText("van " + beginDate + " tot " + endDate);
+        }
+
+        holder.txtLocation.setText(activity.getLocatie());
 
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override

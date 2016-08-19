@@ -14,14 +14,12 @@ public class ActiviteitTable {
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_NAAM = "naam";
     public static final String COLUMN_DATUM = "datum";
-    //public static final String COLUMN_MEDEWERKER_ID = "medewerker_id ";
     public static final String COLUMN_LOCATIE = "locatie";
     public static final String COLUMN_HELEDAG = "heleDag";
     public static final String COLUMN_BEGIN = "begin";
     public static final String COLUMN_EINDE = "einde";
 
     public static final String COLUMN_ID_FULL = TABLE_NAME + "_" + COLUMN_ID;
-    //public static final String COLUMN_MEDEWERKER_ID_FULL = TABLE_NAME + "_" + COLUMN_MEDEWERKER_ID;
     public static final String COLUMN_NAAM_FULL = TABLE_NAME + "_" + COLUMN_NAAM;
     public static final String COLUMN_DATUM_FULL = TABLE_NAME + "_" + COLUMN_DATUM;
     public static final String COLUMN_LOCATIE_FULL = TABLE_NAME + "_" + COLUMN_LOCATIE;
@@ -36,7 +34,6 @@ public class ActiviteitTable {
         PROJECTION_MAP.put(TABLE_NAME + "." + COLUMN_ID, TABLE_NAME + "." + COLUMN_ID + " AS " + COLUMN_ID_FULL);
         PROJECTION_MAP.put(TABLE_NAME + "." + COLUMN_NAAM, TABLE_NAME + "." + COLUMN_NAAM + " AS " + COLUMN_NAAM_FULL);
         PROJECTION_MAP.put(TABLE_NAME + "." + COLUMN_DATUM, TABLE_NAME + "." + COLUMN_DATUM + " AS " + COLUMN_DATUM_FULL);
-        //PROJECTION_MAP.put(TABLE_NAME + "." + COLUMN_MEDEWERKER_ID, TABLE_NAME + "." + COLUMN_MEDEWERKER_ID + " AS " + COLUMN_MEDEWERKER_ID_FULL);
         PROJECTION_MAP.put(TABLE_NAME + "." + COLUMN_LOCATIE, TABLE_NAME + "." + COLUMN_LOCATIE + " AS " + COLUMN_LOCATIE_FULL);
         PROJECTION_MAP.put(TABLE_NAME + "." + COLUMN_HELEDAG, TABLE_NAME + "." + COLUMN_HELEDAG + " AS " + COLUMN_HELEDAG_FULL);
         PROJECTION_MAP.put(TABLE_NAME + "." + COLUMN_BEGIN, TABLE_NAME + "." + COLUMN_BEGIN + " AS " + COLUMN_BEGIN_FULL);
@@ -47,7 +44,6 @@ public class ActiviteitTable {
             + COLUMN_ID + " text primary key, "
             + COLUMN_NAAM + " text, "
             + COLUMN_DATUM + " text, "
-            //+ COLUMN_MEDEWERKER_ID + "integer, "
             + COLUMN_LOCATIE + " text, "
             + COLUMN_HELEDAG + " integer default 0, "
             + COLUMN_BEGIN + " text, "

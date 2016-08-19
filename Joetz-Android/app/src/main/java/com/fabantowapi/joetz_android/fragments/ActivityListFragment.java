@@ -40,10 +40,9 @@ import butterknife.ButterKnife;
  */
 public class ActivityListFragment extends Fragment {
 
-    @Bind(R.id.activity_list_currentDate)
-    TextView currentDate;
     @Bind(R.id.activity_recycler_view)
     public RecyclerView mRecyclerView;
+
     private ActivityAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
@@ -60,7 +59,6 @@ public class ActivityListFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_activity_list, container, false);
         ButterKnife.bind(this, view);
-        initActiviteitenLijst();
 
         mainActivity = (MainActivity) getActivity();
 
@@ -75,13 +73,6 @@ public class ActivityListFragment extends Fragment {
         mAdapter.setActivities(mainActivity.getActivities());
 
         return view;
-
-    }
-
-    public void initActiviteitenLijst(){
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        currentDate.setText(df.format(calendar.getTime()));
 
     }
 }

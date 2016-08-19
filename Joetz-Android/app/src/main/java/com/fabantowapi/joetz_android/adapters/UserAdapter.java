@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.fabantowapi.joetz_android.R;
-import com.fabantowapi.joetz_android.model.api.Activity;
 import com.fabantowapi.joetz_android.model.api.User;
 
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.List;
 /**
  * Created by Pieter on 18-8-2016.
  */
-public class ActivityDetailAdapter extends RecyclerView.Adapter<ActivityDetailAdapter.ViewHolder> {
+public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     List<User> users;
     public Context context;
@@ -31,7 +30,7 @@ public class ActivityDetailAdapter extends RecyclerView.Adapter<ActivityDetailAd
         }
     }
 
-    public ActivityDetailAdapter(Context context) {
+    public UserAdapter(Context context) {
         this.context = context;
     }
 
@@ -41,7 +40,7 @@ public class ActivityDetailAdapter extends RecyclerView.Adapter<ActivityDetailAd
     }
 
     @Override
-    public ActivityDetailAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public UserAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_activity_detail_person_item, parent, false);
         ViewHolder vh =  new ViewHolder(view);
 
@@ -49,7 +48,7 @@ public class ActivityDetailAdapter extends RecyclerView.Adapter<ActivityDetailAd
     }
 
     @Override
-    public void onBindViewHolder(ActivityDetailAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(UserAdapter.ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         final User user = users.get(position);

@@ -16,6 +16,9 @@ import android.widget.TextView;;
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.fragments.KampenDetailFragment;
 import com.fabantowapi.joetz_android.model.Kamp;
+import com.fabantowapi.joetz_android.model.api.Camp;
+
+import java.util.List;
 
 
 /**
@@ -23,7 +26,7 @@ import com.fabantowapi.joetz_android.model.Kamp;
  */
 public class KampAdapter extends RecyclerView.Adapter<KampAdapter.ViewHolder>{
 
-    public Kamp[] kampen;
+    public List<Camp> camps;
     public Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -42,10 +45,14 @@ public class KampAdapter extends RecyclerView.Adapter<KampAdapter.ViewHolder>{
 
         }
     }
-    public KampAdapter(Kamp[] kampen,Context context) {
-        this.kampen = kampen;
+    public KampAdapter(Context context) {
         this.context = context;
 
+    }
+
+    public void setCamps(List<Camp> camps){
+        this.camps = camps;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -58,12 +65,13 @@ public class KampAdapter extends RecyclerView.Adapter<KampAdapter.ViewHolder>{
 
         return vh;
     }
+
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        final Kamp kamp = kampen[position];
-        holder.txtKampTitel.setText(kampen[position].getNaam());
+        final Camp camp = camps.get(position);
+        holder.txtKampTitel.setText(camps.get(position).getNaam());
         holder.txtDatum.setText("Placeholder Datum");
         holder.txtLocatie.setText("Placeholder Locatie");
         holder.imgKamp.setImageDrawable(context.getResources().getDrawable(R.drawable.offline_image));
@@ -76,7 +84,7 @@ public class KampAdapter extends RecyclerView.Adapter<KampAdapter.ViewHolder>{
                 FragmentTransaction ft = fragmentManager.beginTransaction();
                 KampenDetailFragment kampenDetailFragment = new KampenDetailFragment();
                 kampenDetailFragment.setArguments(args);
-                ((Activity) context).getIntent().putExtra("kamp", kamp);
+                ((Activity) context).getIntent().putExtra("kamp", camp);
                 ft.replace(R.id.mainpage_container, kampenDetailFragment);
                 ft.addToBackStack("FRAGMENT");
                 ft.commit();
@@ -87,7 +95,7 @@ public class KampAdapter extends RecyclerView.Adapter<KampAdapter.ViewHolder>{
     }
     @Override
     public int getItemCount() {
-        return kampen.length;
+        return camps.size();
 
     }
 
