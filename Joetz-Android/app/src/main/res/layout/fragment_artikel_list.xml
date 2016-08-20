@@ -11,14 +11,14 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/nieuwtjes"
         android:textColor="@color/colorPrimary"
-        android:id="@+id/txtArtikelLijst"
+        android:id="@+id/txtKampLijst"
         android:layout_alignParentTop="true"
         android:padding="15dp" />
 
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@id/txtArtikelLijst"
+        android:layout_below="@id/txtKampLijst"
         android:fillViewport="true"
         android:id="@+id/svArtikelList">
 

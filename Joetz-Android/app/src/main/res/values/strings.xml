@@ -57,6 +57,7 @@
     <string name="get_all_users_progress">Alle gebruikers ophalen...</string>
     <string name="get_camps_progress">Kampen ophalen...</string>
     <string name="edit_user_role_progress">Rol bewerken...</string>
+    <string name="add_contributor_progress">Medewerkers toevoegen...</string>
     <string name="be_quick">BE QUICK!!!</string>
     <string name="profile_email">E-mailadres</string>
     <string name="profile_username">Gebruikersnaam</string>
@@ -103,6 +104,36 @@
     <string name="dialog_add_user">Bent u zeker dat je je op aanwezig wilt zetten?</string>
     <string name="dialog_user_already_in_list">Je staat reeds op aanwezig.</string>
     <string name="dialog_choose_role">Kies een rol</string>
+    <string name="dialog_create_activity">Activiteit aanmaken...</string>
+    <string name="dialog_create_camp">Kamp aanmaken...</string>
+    <string name="create_activity">Activiteit aanmaken</string>
+    <string name="create_activity_name">Naam</string>
+    <string name="create_activity_date">Datum</string>
+    <string name="create_activity_location">Locatie</string>
+    <string name="create_activity_whole_day">De hele dag?</string>
+    <string name="create_activity_begin">Beginuur</string>
+    <string name="create_activity_end">Einduur</string>
+    <string name="confirm">Bevestig</string>
+    <string name="create_camp">Kamp aanmaken</string>
+    <string name="create_camp_name">Naam</string>
+    <string name="create_camp_begin">Startdatum</string>
+    <string name="create_camp_end">Einddatum</string>
+    <string name="create_camp_transport">Vervoerswijze</string>
+    <string name="create_camp_price">Prijs</string>
+    <string name="create_camp_min_age">Minimumleeftijd</string>
+    <string name="create_camp_max_age">Maximumleeftijd</string>
+    <string name="create_camp_max_participants">Maximum aantal deelnemers</string>
+    <string name="create_camp_contact">Contact</string>
+    <string name="create_camp_image">URL sfeerfoto</string>
+    <string name="create_camp_address">Adres</string>
+    <string name="create_camp_building_name">Naam gebouw</string>
+    <string name="create_camp_street">Straat</string>
+    <string name="create_camp_number">Huisnummer</string>
+    <string name="create_camp_extra_field">Bus</string>
+    <string name="create_camp_city">Gemeente</string>
+    <string name="create_camp_postal_code">Postcode</string>
+    <string name="create_camp_description">Omschrijving</string>
+    <string name="add_contributor">Medewerkers toevoegen</string>
 
     <array name="dialog_roles">
         <item>Lid</item>

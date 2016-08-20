@@ -135,6 +135,15 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
         }
     }
 
+    public void handleUserPermissions(){
+        // if user is not an admin, hide user lists
+        if(!userHasAdminPermissions()){
+            Menu menu = mLeftDrawer.getMenu();
+            menu.findItem(R.id.nav_contibutors).setVisible(false);
+            menu.findItem(R.id.nav_all_users).setVisible(false);
+        }
+    }
+
     public User getCurrentUser(){
         return currentUser;
     }
@@ -156,6 +165,8 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
     public List<Activity> getActivities() { return activities; }
 
     public List<Camp> getCamps() { return camps; }
+
+    public boolean userHasAdminPermissions(){ return currentUser.getRole().equals("beheerder"); }
 
     public void navigate(MenuItem item) {
         final int itemId = item.getItemId();
@@ -357,6 +368,8 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
                 navHeaderEmail.setText(currentUser.getEmail());
                 navHeaderFullName.setText(currentUser.getFirstname() + " " + currentUser.getLastname());
 
+                // hide some drawer items if user is not admin
+                handleUserPermissions();
 
                 // init next loader if user has contactpersons
                 if(currentUser.getContactpersoon1Email() != null) {
@@ -530,6 +543,11 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
         invalidateOptionsMenu();
     }
 
+    public void showActionBarAddContributors(){
+        this.mActionBarState = Constants.ACTIONBAR_SHOW_ADD_CONTRIBUTORS;
+        invalidateOptionsMenu();
+    }
+
     public void hideActionBarMenu(){
         this.mActionBarState = Constants.ACTIONBAR_HIDE_MENU;
         invalidateOptionsMenu();
@@ -549,6 +567,9 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
         }
         if(mActionBarState == Constants.ACTIONBAR_SHOW_ADD_PERSON){
             menu.findItem(R.id.action_add_person).setVisible(true);
+        }
+        if(mActionBarState == Constants.ACTIONBAR_SHOW_ADD_CONTRIBUTORS){
+            menu.findItem(R.id.action_add_contributors).setVisible(true);
         }
 
         return true;

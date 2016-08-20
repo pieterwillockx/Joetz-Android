@@ -16,4 +16,5 @@ public class Constants {
     public static final int ACTIONBAR_HIDE_MENU = 9;
     public static final int ACTIONBAR_SHOW_ADD_PERSON = 10;
     public static final int ACTIONBAR_SHOW_EDIT_PERSON = 11;
+    public static final int ACTIONBAR_SHOW_ADD_CONTRIBUTORS = 12;
 }

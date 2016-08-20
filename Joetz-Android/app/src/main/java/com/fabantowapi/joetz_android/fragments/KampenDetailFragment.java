@@ -1,6 +1,8 @@
 package com.fabantowapi.joetz_android.fragments;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -204,6 +206,10 @@ public class KampenDetailFragment extends Fragment {
                 .show();
     }
 
+    public void addParticipant(){
+        Toast.makeText(KampenDetailFragment.this.getActivity(), "Inschrijven voor kamp coming soon!", Toast.LENGTH_SHORT).show();
+    }
+
     public void addContributor(){
         if(isCurrentUserInContributorList()){
             showContributorAlreadyInListDialog(KampenDetailFragment.this.getActivity());
@@ -218,7 +224,18 @@ public class KampenDetailFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.action_add_person:
                 // User chose the "Settings" item, show the app settings UI...
-                addContributor();
+                String role = activity.getCurrentUser().getRole();
+                if(role.equals("lid")){
+                    addParticipant();
+                }else if(role.equals("monitor") || role.equals("beheerder")){
+                    FragmentManager fragmentManager = KampenDetailFragment.this.getActivity().getFragmentManager();
+                    FragmentTransaction ft = fragmentManager.beginTransaction();
+                    AddContributorsListFragment addContributorsListFragment = new AddContributorsListFragment();
+                    activity.getIntent().putExtra("CAMP", camp);
+                    ft.replace(R.id.mainpage_container, addContributorsListFragment);
+                    ft.addToBackStack("FRAGMENT");
+                    ft.commit();
+                }
 
                 return true;
 

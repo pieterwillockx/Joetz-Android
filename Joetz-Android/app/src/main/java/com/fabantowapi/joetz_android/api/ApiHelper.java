@@ -19,6 +19,8 @@ import com.fabantowapi.joetz_android.database.UserActivityTable;
 import com.fabantowapi.joetz_android.database.UserTable;
 import com.fabantowapi.joetz_android.model.api.Activity;
 import com.fabantowapi.joetz_android.model.api.Camp;
+import com.fabantowapi.joetz_android.model.api.CreateActivityRequest;
+import com.fabantowapi.joetz_android.model.api.CreateCampRequest;
 import com.fabantowapi.joetz_android.model.api.EditUserRoleRequest;
 import com.fabantowapi.joetz_android.model.api.GetActivityResponse;
 import com.fabantowapi.joetz_android.model.api.Adres;
@@ -40,6 +42,7 @@ import com.fabantowapi.joetz_android.utils.SharedHelper;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.Date;
 
 import retrofit.RestAdapter;
 import retrofit.converter.ConversionException;
@@ -775,6 +778,119 @@ public class ApiHelper {
                     contentResolver.insert(ContributorCampContentProvider.CONTENT_URI, cvContributorCamp);
                 })
                 .flatMap(camp -> Observable.empty())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static Observable<Object> createActivity(Context context, String name, Date date, String location, boolean entireDay, Date begin, Date end){
+        ApiHelper.resetService();
+
+        String dateString = SharedHelper.parseDateToDateString(date);
+        String beginString = SharedHelper.parseDateToDateString(begin);
+        String endString = SharedHelper.parseDateToDateString(end);
+
+        return ApiHelper.getService(context).createActivity(new CreateActivityRequest(name, dateString, location, entireDay, beginString, endString))
+                .flatMap(response -> {
+                    String applicationCookie = CookieHelper.getApplicationCookie(response.getHeaders());
+                    PreferencesHelper.saveApplicationCookie(context, applicationCookie);
+
+                    String newActivityId;
+
+                    try{
+                        GsonConverter converter = new GsonConverter(new Gson());
+                        newActivityId = (String) converter.fromBody(response.getBody(), String.class);
+                    }
+                    catch(ConversionException e){
+                        return Observable.error(e);
+                    }
+
+                    if(response.getStatus() == 200){
+                        return Observable.just(newActivityId);
+                    }
+                    else {
+                        int status = response.getStatus();
+                        String error;
+
+                        switch (status) {
+                            case 400:
+                                error = "Bad Request";
+                                break;
+                            case 401:
+                                error = "Unauthorized";
+                                break;
+                            default:
+                                error = "Unknown Error";
+                                break;
+                        }
+
+                        return Observable.error(new IOException(error));
+                    }
+                })
+                .doOnNext(newActivityId -> {
+                    Activity activity = new Activity(newActivityId, name, dateString, location, entireDay, beginString, endString, null);
+                    ContentResolver contentResolver = context.getContentResolver();
+                    ContentValues cvActivity = activity.getContentValues();
+
+                    contentResolver.insert(ActivityContentProvider.CONTENT_URI, cvActivity);
+                })
+                .flatMap(response -> Observable.empty())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static Observable<Object> createCamp(Context context, String name, String description, Date begin, Date end, int amountOfDays, int amountOfNights, String transport, int price, int maxAge, int minAge, int maxParticipants, String contact, String photo, String buildingName, String street, int number, String extraField, String city, int postalCode){
+        ApiHelper.resetService();
+
+        String beginString = SharedHelper.parseDateToDateString(begin);
+        String endString = SharedHelper.parseDateToDateString(end);
+
+        return ApiHelper.getService(context).createCamp(new CreateCampRequest(name, description, beginString, endString, amountOfDays, amountOfNights, transport, price, maxAge, minAge, maxParticipants, contact, photo, buildingName, street, number, extraField, city, postalCode))
+                .flatMap(response -> {
+                    String applicationCookie = CookieHelper.getApplicationCookie(response.getHeaders());
+                    PreferencesHelper.saveApplicationCookie(context, applicationCookie);
+
+                    String newCampId;
+
+                    try{
+                        GsonConverter converter = new GsonConverter(new Gson());
+                        newCampId = (String) converter.fromBody(response.getBody(), String.class);
+                    }
+                    catch(ConversionException e){
+                        return Observable.error(e);
+                    }
+
+                    if(response.getStatus() == 200){
+                        return Observable.just(newCampId);
+                    }
+                    else {
+                        int status = response.getStatus();
+                        String error;
+
+                        switch (status) {
+                            case 400:
+                                error = "Bad Request";
+                                break;
+                            case 401:
+                                error = "Unauthorized";
+                                break;
+                            default:
+                                error = "Unknown Error";
+                                break;
+                        }
+
+                        return Observable.error(new IOException(error));
+                    }
+                })
+                .doOnNext(newCampId -> {
+                    Adres adres = new Adres(buildingName, street, number, extraField, city, postalCode);
+                    Camp camp = new Camp(newCampId, name, description, beginString, endString, amountOfDays, amountOfNights, transport, price, maxAge, minAge, maxParticipants, contact, photo, null, null, adres);
+
+                    ContentResolver contentResolver = context.getContentResolver();
+                    ContentValues cvCamp = camp.getContentValues();
+
+                    contentResolver.insert(CampContentProvider.CONTENT_URI, cvCamp);
+                })
+                .flatMap(response -> Observable.empty())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
