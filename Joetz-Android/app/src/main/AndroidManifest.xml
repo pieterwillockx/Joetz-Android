@@ -51,6 +51,11 @@
             android:authorities="com.fabantowapi.joetz_android.contentproviders.ContributorCampContentProvider"
             android:exported="false"/>
 
+        <provider
+            android:name=".contentproviders.UserCampContentProvider"
+            android:authorities="com.fabantowapi.joetz_android.contentproviders.UserCampContentProvider"
+            android:exported="false"/>
+
     </application>
 
 </manifest>

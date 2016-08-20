@@ -11,13 +11,16 @@ import com.fabantowapi.joetz_android.contentproviders.CampContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.ContactpersoonContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.UserActivityContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.ContributorCampContentProvider;
+import com.fabantowapi.joetz_android.contentproviders.UserCampContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.UserContentProvider;
 import com.fabantowapi.joetz_android.database.ActiviteitTable;
 import com.fabantowapi.joetz_android.database.CampTable;
 import com.fabantowapi.joetz_android.database.ContributorCampTable;
 import com.fabantowapi.joetz_android.database.UserActivityTable;
+import com.fabantowapi.joetz_android.database.UserCampTable;
 import com.fabantowapi.joetz_android.database.UserTable;
 import com.fabantowapi.joetz_android.model.api.Activity;
+import com.fabantowapi.joetz_android.model.api.AddUserToCampRequest;
 import com.fabantowapi.joetz_android.model.api.Camp;
 import com.fabantowapi.joetz_android.model.api.CreateActivityRequest;
 import com.fabantowapi.joetz_android.model.api.CreateCampRequest;
@@ -782,6 +785,59 @@ public class ApiHelper {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    public static Observable<Object> addUserToCamp(Context context, String campId, String userId, String extraInfo, Camp currentCamp, User currentUser){
+        ApiHelper.resetService();
+
+        return ApiHelper.getService(context).addUserToCamp(new AddUserToCampRequest(extraInfo, false, false, userId, campId))
+                .flatMap(response -> {
+                    String applicationCookie = CookieHelper.getApplicationCookie(response.getHeaders());
+                    PreferencesHelper.saveApplicationCookie(context, applicationCookie);
+
+                    if(response.getStatus() == 200){
+                        currentCamp.addAanwezige(currentUser);
+                        return Observable.just(currentCamp);
+                    }
+                    else {
+                        int status = response.getStatus();
+                        String error;
+
+                        switch (status) {
+                            case 400:
+                                error = "Bad Request";
+                                break;
+                            case 401:
+                                error = "Unauthorized";
+                                break;
+                            default:
+                                error = "Unknown Error";
+                                break;
+                        }
+
+                        return Observable.error(new IOException(error));
+                    }
+                })
+                .doOnNext(camp -> {
+                    String where = CampTable.TABLE_NAME + "." + CampTable.COLUMN_ID + " = ?";
+                    String[] selectionArgs = new String[]{
+                            camp.getId()
+                    };
+
+                    ContentResolver contentResolver = context.getContentResolver();
+                    ContentValues cvCamp = camp.getContentValues();
+
+                    contentResolver.update(CampContentProvider.CONTENT_URI, cvCamp, where, selectionArgs);
+
+                    ContentValues cvUserCamp = new ContentValues();
+                    cvUserCamp.put(UserCampTable.COLUMN_CAMP_ID, campId);
+                    cvUserCamp.put(UserCampTable.COLUMN_USER_ID, currentUser.getId());
+
+                    contentResolver.insert(UserCampContentProvider.CONTENT_URI, cvUserCamp);
+                })
+                .flatMap(camp -> Observable.empty())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
     public static Observable<Object> createActivity(Context context, String name, Date date, String location, boolean entireDay, Date begin, Date end){
         ApiHelper.resetService();
 
@@ -883,7 +939,7 @@ public class ApiHelper {
                 })
                 .doOnNext(newCampId -> {
                     Adres adres = new Adres(buildingName, street, number, extraField, city, postalCode);
-                    Camp camp = new Camp(newCampId, name, description, beginString, endString, amountOfDays, amountOfNights, transport, price, maxAge, minAge, maxParticipants, contact, photo, null, null, adres);
+                    Camp camp = new Camp(newCampId, name, description, beginString, endString, amountOfDays, amountOfNights, transport, price, maxAge, minAge, maxParticipants, contact, photo, null, null, null, adres);
 
                     ContentResolver contentResolver = context.getContentResolver();
                     ContentValues cvCamp = camp.getContentValues();

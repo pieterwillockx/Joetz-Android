@@ -29,9 +29,10 @@ public class Camp implements Serializable {
     private String sfeerfoto;
     private String[] fotos;
     private List<User> medewerkers;
+    private List<User> aanwezigen;
     private Adres adres;
 
-    public Camp(String id, String naam, String omschrijving, String startDatum, String eindDatum, int aantalDagen, int aantalNachten, String vervoer, int prijs, int maxLeeftijd, int minLeeftijd, int maxDeelnemers, String contact, String sfeerfoto, String[] fotos, List<User> medewerkers, Adres adres) {
+    public Camp(String id, String naam, String omschrijving, String startDatum, String eindDatum, int aantalDagen, int aantalNachten, String vervoer, int prijs, int maxLeeftijd, int minLeeftijd, int maxDeelnemers, String contact, String sfeerfoto, String[] fotos, List<User> medewerkers, List<User> aanwezigen, Adres adres) {
         this.id = id;
         this.naam = naam;
         this.omschrijving = omschrijving;
@@ -55,6 +56,13 @@ public class Camp implements Serializable {
             this.medewerkers = medewerkers;
         }
 
+        if(aanwezigen == null){
+            this.aanwezigen = new ArrayList<>();
+        }
+        else{
+            this.aanwezigen = aanwezigen;
+        }
+
         this.adres = adres;
     }
 
@@ -76,11 +84,11 @@ public class Camp implements Serializable {
     public String getSfeerfoto() { return sfeerfoto; }
     public String[] getFotos() { return fotos; }
     public List<User> getMedewerkers() { return medewerkers; }
+    public List<User> getAanwezigen() { return aanwezigen; }
     public Adres getAdres() { return adres; }
 
-    public void addMedewerker(User medewerker){
-        this.medewerkers.add(medewerker);
-    }
+    public void addMedewerker(User medewerker){ this.medewerkers.add(medewerker); }
+    public void addAanwezige(User aanwezige) { this.aanwezigen.add(aanwezige); }
 
     public static List<Camp> constructListFromCursor(Cursor cursor){
         List<Camp> camps = new ArrayList<>();
@@ -172,6 +180,6 @@ public class Camp implements Serializable {
 
         Adres adres = new Adres(naamgebouw, straat, huisnummer, bus, gemeente, postcode);
 
-        return new Camp(id, naam, omschrijving, startDatum, eindDatum, aantalDagen, aantalNachten, vervoer, prijs, maxLeeftijd, minLeeftijd, maxDeelnemers, contact, sfeerfoto, null, null, adres);
+        return new Camp(id, naam, omschrijving, startDatum, eindDatum, aantalDagen, aantalNachten, vervoer, prijs, maxLeeftijd, minLeeftijd, maxDeelnemers, contact, sfeerfoto, null, null, null, adres);
     }
 }

@@ -81,7 +81,9 @@ public class KampenDetailFragment extends Fragment {
 
     private MaterialDialog dialogProgress;
     private MaterialDialog dialogAddContributor;
+    private MaterialDialog dialogAddAttendant;
     private MaterialDialog dialogContributorAlreadyInList;
+    private MaterialDialog dialogAttendantAlreadyInList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -110,10 +112,10 @@ public class KampenDetailFragment extends Fragment {
         mRecyclerViewMedewerkers.setAdapter(mAdapterMedewerkers);
 
         medewerkers = camp.getMedewerkers();
-        //aanwezigen = camp.getAanwezigen();
+        aanwezigen = camp.getAanwezigen();
 
         mAdapterMedewerkers.setUsers(medewerkers);
-        //mAdapterAanwezigen.setUsers(aanwezigen);
+        mAdapterAanwezigen.setUsers(aanwezigen);
 
         setDetails();
 
@@ -179,6 +181,18 @@ public class KampenDetailFragment extends Fragment {
         return isInList;
     }
 
+    private boolean isCurrentUserInAttendantsList(){
+        boolean isInList = false;
+
+        for(User u : aanwezigen){
+            if(u.getId().equals(activity.getCurrentUser().getId())){
+                isInList = true;
+            }
+        }
+
+        return isInList;
+    }
+
     public void showProgressDialog(Context context){
         this.dialogProgress = new MaterialDialog.Builder(context)
                 .content(R.string.add_user_to_activity_progress)
@@ -199,6 +213,18 @@ public class KampenDetailFragment extends Fragment {
                 .show();
     }
 
+    public void showAddAttendantDialog(Context context){
+        this.dialogAddAttendant = new MaterialDialog.Builder(context)
+                .content(R.string.dialog_add_user)
+                .positiveText(R.string.dialog_yes)
+                .negativeText(R.string.dialog_no)
+                .onPositive((dialog, which) -> {
+                    showProgressDialog(KampenDetailFragment.this.getActivity());
+                    ApiHelper.addUserToCamp(this.getActivity(), camp.getId(), activity.getCurrentUser().getId(), camp.getNaam(), camp, activity.getCurrentUser()).subscribe(addUserToCampObserver);
+                })
+                .show();
+    }
+
     public void showContributorAlreadyInListDialog(Context context){
         this.dialogContributorAlreadyInList = new MaterialDialog.Builder(context)
                 .content(R.string.dialog_user_already_in_list)
@@ -206,8 +232,20 @@ public class KampenDetailFragment extends Fragment {
                 .show();
     }
 
+    public void showAttendantAlreadyInListDialog(Context context){
+        this.dialogAttendantAlreadyInList = new MaterialDialog.Builder(context)
+                .content(R.string.dialog_user_already_in_list)
+                .positiveText(R.string.dialog_positive)
+                .show();
+    }
+
     public void addParticipant(){
-        Toast.makeText(KampenDetailFragment.this.getActivity(), "Inschrijven voor kamp coming soon!", Toast.LENGTH_SHORT).show();
+        if(isCurrentUserInAttendantsList()){
+            showAttendantAlreadyInListDialog(KampenDetailFragment.this.getActivity());
+        }
+        else{
+            showAddAttendantDialog(KampenDetailFragment.this.getActivity());
+        }
     }
 
     public void addContributor(){
@@ -265,6 +303,29 @@ public class KampenDetailFragment extends Fragment {
             if(KampenDetailFragment.this != null)
             {
                 Toast.makeText(KampenDetailFragment.this.getActivity(), "Fout bij toevoegen van medewerker", Toast.LENGTH_SHORT).show();
+                dialogProgress.dismiss();
+            }
+        }
+    };
+
+    Observer<Object> addUserToCampObserver = new Observer<Object>(){
+        @Override
+        public void onCompleted()
+        {
+            if(KampenDetailFragment.this != null)
+            {
+                mAdapterAanwezigen.notifyDataSetChanged();
+                Toast.makeText(KampenDetailFragment.this.getActivity(), "Aanwezige toegevoegd!", Toast.LENGTH_SHORT).show();
+                dialogProgress.dismiss();
+            }
+        }
+
+        @Override
+        public void onError(Throwable e)
+        {
+            if(KampenDetailFragment.this != null)
+            {
+                Toast.makeText(KampenDetailFragment.this.getActivity(), "Fout bij toevoegen van aanwezige", Toast.LENGTH_SHORT).show();
                 dialogProgress.dismiss();
             }
         }

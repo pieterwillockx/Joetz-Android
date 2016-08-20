@@ -34,6 +34,7 @@ import com.fabantowapi.joetz_android.contentproviders.CampContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.ContactpersoonContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.ContributorCampContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.UserActivityContentProvider;
+import com.fabantowapi.joetz_android.contentproviders.UserCampContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.UserContentProvider;
 import com.fabantowapi.joetz_android.database.ContactpersoonTable;
 import com.fabantowapi.joetz_android.database.UserTable;
@@ -51,6 +52,7 @@ import com.fabantowapi.joetz_android.model.api.Contactpersoon;
 import com.fabantowapi.joetz_android.model.api.User;
 import com.fabantowapi.joetz_android.model.api.UserActivity;
 import com.fabantowapi.joetz_android.model.api.ContributorCamp;
+import com.fabantowapi.joetz_android.model.api.UserCamp;
 import com.fabantowapi.joetz_android.utils.Constants;
 import com.fabantowapi.joetz_android.utils.Observer;
 import com.fabantowapi.joetz_android.utils.PreferencesHelper;
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
     private List<User> allUsers;
     private List<Camp> camps;
     private List<ContributorCamp> contributorCamps;
+    private List<UserCamp> userCamps;
 
     ActionBarDrawerToggle mDrawerToggle;
     private MaterialDialog dialogProgress;
@@ -350,6 +353,11 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
 
                 return new CursorLoader(this, uri8, null, null, null, "");
 
+            case Constants.LOADER_USER_CAMPS:
+                Uri uri9 = UserCampContentProvider.CONTENT_URI;
+
+                return new CursorLoader(this, uri9, null, null, null, "");
+
             default:
                 return null;
         }
@@ -446,9 +454,18 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
             case Constants.LOADER_CONTRIBUTOR_CAMPS:
                 contributorCamps = ContributorCamp.constructListFromCursor(data);
 
+                // init next loader
+                MainActivity.this.getLoaderManager().initLoader(Constants.LOADER_USER_CAMPS, null, MainActivity.this);
+
+                break;
+
+            case Constants.LOADER_USER_CAMPS:
+                userCamps = UserCamp.constructListFromCursor(data);
+
                 // last load, assign users to activities and camps, contributors to camps
                 assignUsersToActivities();
                 assignContributorsToCamps();
+                assignUsersToCamps();
 
                 break;
         }
@@ -480,6 +497,18 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
             Camp camp = findCamp(campId);
 
             camp.addMedewerker(user);
+        }
+    }
+
+    private void assignUsersToCamps(){
+        for(UserCamp uc : userCamps){
+            String campId = uc.getCampId();
+            String userId = uc.getUserId();
+
+            User user = findUser(userId);
+            Camp camp = findCamp(campId);
+
+            camp.addAanwezige(user);
         }
     }
 

@@ -12,9 +12,10 @@ public class Constants {
     public static final int LOADER_ALL_USERS = 6;
     public static final int LOADER_CAMPS = 7;
     public static final int LOADER_CONTRIBUTOR_CAMPS = 8;
+    public static final int LOADER_USER_CAMPS = 9;
 
-    public static final int ACTIONBAR_HIDE_MENU = 9;
-    public static final int ACTIONBAR_SHOW_ADD_PERSON = 10;
-    public static final int ACTIONBAR_SHOW_EDIT_PERSON = 11;
-    public static final int ACTIONBAR_SHOW_ADD_CONTRIBUTORS = 12;
+    public static final int ACTIONBAR_HIDE_MENU = 10;
+    public static final int ACTIONBAR_SHOW_ADD_PERSON = 11;
+    public static final int ACTIONBAR_SHOW_EDIT_PERSON = 12;
+    public static final int ACTIONBAR_SHOW_ADD_CONTRIBUTORS = 13;
 }

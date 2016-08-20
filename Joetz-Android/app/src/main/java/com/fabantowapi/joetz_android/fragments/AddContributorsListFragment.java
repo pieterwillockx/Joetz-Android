@@ -1,7 +1,5 @@
 package com.fabantowapi.joetz_android.fragments;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,10 +16,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.activities.MainActivity;
 import com.fabantowapi.joetz_android.adapters.AddContributorAdapter;
-import com.fabantowapi.joetz_android.adapters.UserListItemAdapter;
 import com.fabantowapi.joetz_android.adapters.itemdecorations.VerticalSpaceItemDecoration;
 import com.fabantowapi.joetz_android.api.ApiHelper;
-import com.fabantowapi.joetz_android.model.api.Activity;
 import com.fabantowapi.joetz_android.model.api.Camp;
 import com.fabantowapi.joetz_android.model.api.User;
 import com.fabantowapi.joetz_android.utils.Observer;

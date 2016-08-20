@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.fabantowapi.joetz_android.model.api.UserCamp;
+
 /**
  * Created by Pieter on 14-8-2016.
  */
@@ -25,6 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         UserActivityTable.onCreate(db);
         CampTable.onCreate(db);
         ContributorCampTable.onCreate(db);
+        UserCampTable.onCreate(db);
     }
 
     @Override

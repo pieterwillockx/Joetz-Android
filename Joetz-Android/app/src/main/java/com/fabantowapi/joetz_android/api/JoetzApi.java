@@ -5,6 +5,7 @@ import retrofit.http.PUT;
 import retrofit.http.Path;
 import rx.Observable;
 
+import com.fabantowapi.joetz_android.model.api.AddUserToCampRequest;
 import com.fabantowapi.joetz_android.model.api.CreateActivityRequest;
 import com.fabantowapi.joetz_android.model.api.CreateCampRequest;
 import com.fabantowapi.joetz_android.model.api.EditAddressRequest;
@@ -65,6 +66,9 @@ public interface JoetzApi {
 
     @POST("/kamp/{campId}/medewerkers/{email}")
     Observable<Response> addContributorToCamp(@Path("campId") String campId, @Path("email") String email);
+
+    @POST("/inschrijving")
+    Observable<Response> addUserToCamp(@Body AddUserToCampRequest request);
 
     @PUT("/user/{email}/role")
     Observable<Response> editUserRole(@Path("email") String email, @Body EditUserRoleRequest request);
