@@ -14,6 +14,8 @@ import com.fabantowapi.joetz_android.activities.MainActivity;
 import com.fabantowapi.joetz_android.adapters.HistoriekAdapter;
 import com.fabantowapi.joetz_android.adapters.itemdecorations.VerticalSpaceItemDecoration;
 import com.fabantowapi.joetz_android.model.Kamp;
+import com.fabantowapi.joetz_android.model.api.Camp;
+
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.Bind;
@@ -26,11 +28,11 @@ public class HistoriekListFragment extends Fragment {
     @Bind(R.id.historiek_recycler_view)
     public RecyclerView mRecyclerView;
 
-    private RecyclerView.Adapter mAdapter;
+    private HistoriekAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<Kamp> kampen = null;
 
-    private MainActivity activity;
+    private MainActivity mainActivity;
 
     private static final int VERTICAL_ITEM_SPACE = 10;
     private static final int PADDING_LEFT_RIGHT = 20;
@@ -40,9 +42,9 @@ public class HistoriekListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_historiek_list, container, false);
         ButterKnife.bind(this, view);
 
-        activity = (MainActivity) getActivity();
+        mainActivity = (MainActivity) getActivity();
 
-        activity.hideActionBarMenu();;
+        mainActivity.hideActionBarMenu();;
 
         kampen = getkampen();
 
@@ -54,9 +56,15 @@ public class HistoriekListFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_ITEM_SPACE, PADDING_LEFT_RIGHT));
 
-        mAdapter = new HistoriekAdapter(getkampen().toArray(new Kamp[getkampen().size()]),getActivity());
+        mAdapter = new HistoriekAdapter(getActivity());
         mRecyclerView.setAdapter(mAdapter);
+        List<Camp> camps = mainActivity.getSubscribedCamps();
 
+        if(camps == null){
+            geenKampen();
+        }else{
+            mAdapter.setKampen(mainActivity.getSubscribedCamps());
+        }
 
         return view;
     }

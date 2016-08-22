@@ -3,6 +3,7 @@ package com.fabantowapi.joetz_android.fragments;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +51,7 @@ public class ArtikelDetailFragment extends Fragment {
     public void laadArtikel(){
 
         txtTitel.setText(artikel.getArtikelTitel());
-        txtArtikelInhoud.setText(artikel.getArtikelInhoud());
+        txtArtikelInhoud.setText(Html.fromHtml(artikel.getArtikelInhoud()));
         artikelImg.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.offline_image));
 
         new ImageDownloadTask(artikelImg, getActivity()).execute(artikel.getArtikelImageUrl());

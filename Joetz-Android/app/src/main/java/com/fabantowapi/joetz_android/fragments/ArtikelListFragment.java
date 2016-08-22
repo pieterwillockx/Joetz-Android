@@ -26,25 +26,28 @@ public class ArtikelListFragment extends Fragment {
 
     @Bind(R.id.artikel_recycler_view)
     public RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private ArtikelAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    private MainActivity activity;
+    private MainActivity mainActivity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_artikel_ljst, container, false);
         ButterKnife.bind(this, view);
 
-        activity = (MainActivity) getActivity();
+        mainActivity = (MainActivity) getActivity();
 
-        activity.hideActionBarMenu();;
+        mainActivity.hideActionBarMenu();;
 
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new ArtikelAdapter(getActivity(),downloadArtikels().toArray(new Artikel[downloadArtikels().size()]));
+
+        mAdapter = new ArtikelAdapter(getActivity());
         mRecyclerView.setAdapter(mAdapter);
+
+      mAdapter.setArtikels(mainActivity.getArticles());
 
         return view;
     }

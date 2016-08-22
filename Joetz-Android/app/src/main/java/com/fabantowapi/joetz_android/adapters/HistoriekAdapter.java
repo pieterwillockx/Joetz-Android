@@ -14,13 +14,16 @@ import android.widget.TextView;
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.fragments.KampenDetailFragment;
 import com.fabantowapi.joetz_android.model.Kamp;
+import com.fabantowapi.joetz_android.model.api.Camp;
+
+import java.util.List;
 
 /**
  * Created by Anton Rooseleer on 9-8-2016.
  */
 public class HistoriekAdapter  extends RecyclerView.Adapter<HistoriekAdapter.ViewHolder>{
 
-    public Kamp[] kampen;
+    public List<Camp> camps;
     public Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -39,12 +42,15 @@ public class HistoriekAdapter  extends RecyclerView.Adapter<HistoriekAdapter.Vie
 
         }
     }
-    public HistoriekAdapter(Kamp[] kampen,Context context) {
-        this.kampen = kampen;
+    public HistoriekAdapter(Context context) {
+
         this.context = context;
 
     }
 
+    public void setKampen(List<Camp> camps){
+        this.camps = camps;
+    }
     @Override
     public HistoriekAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,  int viewType) {
 
@@ -52,7 +58,6 @@ public class HistoriekAdapter  extends RecyclerView.Adapter<HistoriekAdapter.Vie
         System.out.println("View type " + viewType);
         View view = LayoutInflater.from(parent.getContext()) .inflate(R.layout.fragment_historiek_item, parent, false);
 
-        // TextView test =(TextView)view.findViewById(R.id.test);
         ViewHolder vh =  new ViewHolder(view);
 
         return vh;
@@ -61,8 +66,8 @@ public class HistoriekAdapter  extends RecyclerView.Adapter<HistoriekAdapter.Vie
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        final Kamp kamp = kampen[position];
-        holder.txtHistoriekTitel.setText(kampen[position].getNaam());
+        final Camp kamp = camps.get(position);
+        holder.txtHistoriekTitel.setText(camps.get(position).getNaam());
         holder.imgHistoriek.setImageDrawable(context.getResources().getDrawable(R.drawable.offline_image));
         holder.txtDatum.setText("Placeholder Datum");
         holder.txtLocatie.setText("Placeholder Locatie");
@@ -86,7 +91,7 @@ public class HistoriekAdapter  extends RecyclerView.Adapter<HistoriekAdapter.Vie
     }
     @Override
     public int getItemCount() {
-        return kampen.length;
+        return camps.size();
 
     }
 

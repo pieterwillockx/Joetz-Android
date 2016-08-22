@@ -28,6 +28,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         CampTable.onCreate(db);
         ContributorCampTable.onCreate(db);
         UserCampTable.onCreate(db);
+        ArticleTable.onCreate(db);
     }
 
     @Override

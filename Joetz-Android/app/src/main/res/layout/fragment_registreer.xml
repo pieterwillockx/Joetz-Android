@@ -5,11 +5,21 @@
     android:layout_height="match_parent"
     android:padding="10dp">
 
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_gravity="center"
+        android:textColor="@color/colorPrimary"
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
         android:text="@string/registreer"
@@ -116,5 +126,9 @@
         android:background="@color/colorPrimary"
         android:textColor="#ffffff"
         android:id="@+id/be_quick_register"/>
+
+</LinearLayout>
+</ScrollView>
+
 
 </LinearLayout>

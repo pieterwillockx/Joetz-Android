@@ -13,6 +13,7 @@ public class Constants {
     public static final int LOADER_CAMPS = 7;
     public static final int LOADER_CONTRIBUTOR_CAMPS = 8;
     public static final int LOADER_USER_CAMPS = 9;
+    public static final int LOADER_ARTICLES = 10;
 
     public static final int ACTIONBAR_HIDE_MENU = 10;
     public static final int ACTIONBAR_SHOW_ADD_PERSON = 11;

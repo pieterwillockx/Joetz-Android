@@ -7,6 +7,7 @@ import android.content.Context;
 import rx.Observable;
 
 import com.fabantowapi.joetz_android.contentproviders.ActivityContentProvider;
+import com.fabantowapi.joetz_android.contentproviders.ArticleContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.CampContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.ContactpersoonContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.UserActivityContentProvider;
@@ -32,6 +33,7 @@ import com.fabantowapi.joetz_android.model.api.EditAddressRequest;
 import com.fabantowapi.joetz_android.model.api.EditContactPersonRequest;
 import com.fabantowapi.joetz_android.model.api.EditUserDetailsRequest;
 import com.fabantowapi.joetz_android.model.api.EditUserRequest;
+import com.fabantowapi.joetz_android.model.api.GetArticleResponse;
 import com.fabantowapi.joetz_android.model.api.GetCampResponse;
 import com.fabantowapi.joetz_android.model.api.GetUserResponse;
 import com.fabantowapi.joetz_android.model.api.LoginRequest;
@@ -343,6 +345,59 @@ public class ApiHelper {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    public static Observable<Object> getArticles(Context context){
+        ApiHelper.resetService();
+
+        return ApiHelper.getService(context).getArticles()
+                .flatMap(response -> {
+                    String applicationCookie = CookieHelper.getApplicationCookie(response.getHeaders());
+                    PreferencesHelper.saveApplicationCookie(context, applicationCookie);
+
+                    GetArticleResponse[] articles;
+
+                    try{
+                        GsonConverter converter = new GsonConverter(new Gson());
+                        articles = (GetArticleResponse[]) converter.fromBody(response.getBody(), GetArticleResponse[].class);
+                    }
+                    catch(ConversionException e){
+                        return Observable.error(e);
+                    }
+
+                    if(articles != null && response.getStatus() == 200){
+                        return Observable.just(articles);
+                    }
+                    else{
+                        int statusId = response.getStatus();
+                        String error;
+
+                        switch(statusId){
+                            case 400 : error = "Bad Request"; break;
+                            case 401 : error = "Unauthorized"; break;
+                            default : error = "Unknown Error"; break;
+                        }
+
+                        return Observable.error(new IOException(error));
+                    }
+                })
+                .doOnNext(articleResponses -> {
+                    ContentResolver contentResolver = context.getContentResolver();
+                    contentResolver.delete(ArticleContentProvider.CONTENT_URI, null, null);
+
+                })
+                .flatMap(articleResponses -> Observable.from(articleResponses))
+                .doOnNext(article -> {
+                    ContentResolver contentResolver = context.getContentResolver();
+                    ContentValues cvArticle = article.getContentValues();
+                    contentResolver.insert(ArticleContentProvider.CONTENT_URI, cvArticle);
+
+                   // ContentValues[] cvContributorCamp = camp.getContributorCampContentValues();
+                    //contentResolver.bulkInsert(ContributorCampContentProvider.CONTENT_URI, cvContributorCamp);
+                })
+                .toList()
+                .flatMap(articleResponses -> Observable.empty())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
     public static Observable<Object> getCamps(Context context){
         ApiHelper.resetService();
 

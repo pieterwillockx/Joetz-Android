@@ -8,6 +8,8 @@ import android.database.Cursor;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.content.CursorLoader;
@@ -30,6 +32,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.api.ApiHelper;
 import com.fabantowapi.joetz_android.contentproviders.ActivityContentProvider;
+import com.fabantowapi.joetz_android.contentproviders.ArticleContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.CampContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.ContactpersoonContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.ContributorCampContentProvider;
@@ -46,6 +49,7 @@ import com.fabantowapi.joetz_android.fragments.HistoriekListFragment;
 import com.fabantowapi.joetz_android.fragments.KampenListFragment;
 import com.fabantowapi.joetz_android.fragments.ProfielFragment;
 import com.fabantowapi.joetz_android.fragments.UserListFragment;
+import com.fabantowapi.joetz_android.model.Artikel;
 import com.fabantowapi.joetz_android.model.api.Activity;
 import com.fabantowapi.joetz_android.model.api.Camp;
 import com.fabantowapi.joetz_android.model.api.Contactpersoon;
@@ -81,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
     private List<Camp> camps;
     private List<ContributorCamp> contributorCamps;
     private List<UserCamp> userCamps;
+    private List<Artikel> articles;
 
     ActionBarDrawerToggle mDrawerToggle;
     private MaterialDialog dialogProgress;
@@ -95,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
         ButterKnife.bind(this);
         initializeDrawer();
         this.getLoaderManager().initLoader(Constants.LOADER_USERS, null, this);
-        navigate(ArtikelListFragment.class, false);
+
     }
 
     public void initializeDrawer(){
@@ -168,6 +173,24 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
     public List<Activity> getActivities() { return activities; }
 
     public List<Camp> getCamps() { return camps; }
+
+    public List<Camp> getSubscribedCamps(){
+        User currentUser = getCurrentUser();
+        List<Camp> result = new ArrayList<>();
+        for(Camp c : getCamps()){
+            System.out.println("Testen sub" + c.getId());
+            for(User u: c.getAanwezigen()){
+                System.out.println("Testen u" + u.getId());
+
+                if(u.getId() == currentUser.getId()){
+                    System.out.println("hoera?");
+                    result.add(c);
+                }
+            }
+        }
+        return  result;
+    }
+    public List<Artikel> getArticles(){return articles;}
 
     public boolean userHasAdminPermissions(){ return currentUser.getRole().equals("beheerder"); }
 
@@ -357,7 +380,10 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
                 Uri uri9 = UserCampContentProvider.CONTENT_URI;
 
                 return new CursorLoader(this, uri9, null, null, null, "");
+            case Constants.LOADER_ARTICLES:
 
+                Uri uri10 = ArticleContentProvider.CONTENT_URI;
+                return new CursorLoader(this, uri10, null, null, null, "");
             default:
                 return null;
         }
@@ -466,6 +492,21 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
                 assignUsersToActivities();
                 assignContributorsToCamps();
                 assignUsersToCamps();
+
+                MainActivity.this.getLoaderManager().initLoader(Constants.LOADER_ARTICLES,null,MainActivity.this);
+                break;
+
+            case Constants.LOADER_ARTICLES:
+                articles = Artikel.constructListFromCursor(data);
+
+                final int WHAT = 1;
+                Handler handler = new Handler(){
+                    @Override
+                    public void handleMessage(Message msg) {
+                        if(msg.what == WHAT)  navigate(ArtikelListFragment.class, false);;
+                    }
+                };
+                handler.sendEmptyMessage(WHAT);
 
                 break;
         }

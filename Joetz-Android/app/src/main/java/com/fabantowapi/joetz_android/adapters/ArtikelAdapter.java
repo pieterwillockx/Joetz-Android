@@ -17,12 +17,14 @@ import com.fabantowapi.joetz_android.fragments.ArtikelDetailFragment;
 import com.fabantowapi.joetz_android.model.Artikel;
 import com.fabantowapi.joetz_android.tasks.ImageDownloadTask;
 
+import java.util.List;
+
 /**
  * Created by a_176_000 on 30-7-2016.
  */
 public class ArtikelAdapter extends RecyclerView.Adapter<ArtikelAdapter.ViewHolder> {
 
-    public  Artikel[] artikels;
+    public List<Artikel> artikels;
     public Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -39,11 +41,16 @@ public class ArtikelAdapter extends RecyclerView.Adapter<ArtikelAdapter.ViewHold
         }
     }
 
-    public ArtikelAdapter (Context context, Artikel[] artikels){
+    public ArtikelAdapter (Context context){
         this.context = context;
-        this.artikels =artikels;
 
     }
+
+    public void setArtikels(List<Artikel> artikels) {
+        this.artikels = artikels;
+        notifyDataSetChanged();
+    }
+
     @Override
     public ArtikelAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -58,8 +65,8 @@ public class ArtikelAdapter extends RecyclerView.Adapter<ArtikelAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        final Artikel artikel = artikels[position];
-        holder.artikelTitel.setText(artikels[position].getArtikelTitel());
+        final Artikel artikel = artikels.get(position);
+        holder.artikelTitel.setText(artikels.get(position).getArtikelTitel());
         holder.artikelImage.setImageDrawable(context.getResources().getDrawable(R.drawable.offline_image));
         new ImageDownloadTask(holder.artikelImage, context).execute(artikel.getArtikelImageUrl());
 
@@ -82,7 +89,7 @@ public class ArtikelAdapter extends RecyclerView.Adapter<ArtikelAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return artikels.length;
+        return artikels.size();
 
     }
 
