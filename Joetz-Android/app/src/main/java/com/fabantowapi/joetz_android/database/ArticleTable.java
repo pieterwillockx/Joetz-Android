@@ -35,7 +35,7 @@ public class ArticleTable {
             + COLUMN_ID + " text primary key, "
             + COLUMN_TITEL + " text, "
             + COLUMN_TEKST + " text, "
-            + COLUMN_FOTO_URL + " text "
+            + COLUMN_FOTO_URL + " text"
             + ");";
 
     public static void onCreate(SQLiteDatabase database) { database.execSQL(CREATE_TABLE); }

@@ -382,16 +382,12 @@ public class ApiHelper {
                 .doOnNext(articleResponses -> {
                     ContentResolver contentResolver = context.getContentResolver();
                     contentResolver.delete(ArticleContentProvider.CONTENT_URI, null, null);
-
                 })
                 .flatMap(articleResponses -> Observable.from(articleResponses))
                 .doOnNext(article -> {
                     ContentResolver contentResolver = context.getContentResolver();
                     ContentValues cvArticle = article.getContentValues();
                     contentResolver.insert(ArticleContentProvider.CONTENT_URI, cvArticle);
-
-                   // ContentValues[] cvContributorCamp = camp.getContributorCampContentValues();
-                    //contentResolver.bulkInsert(ContributorCampContentProvider.CONTENT_URI, cvContributorCamp);
                 })
                 .toList()
                 .flatMap(articleResponses -> Observable.empty())

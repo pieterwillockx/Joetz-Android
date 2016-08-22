@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
         ButterKnife.bind(this);
         initializeDrawer();
         this.getLoaderManager().initLoader(Constants.LOADER_USERS, null, this);
-
+        navigate(ArtikelListFragment.class, false);
     }
 
     public void initializeDrawer(){
@@ -380,10 +380,7 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
                 Uri uri9 = UserCampContentProvider.CONTENT_URI;
 
                 return new CursorLoader(this, uri9, null, null, null, "");
-            case Constants.LOADER_ARTICLES:
 
-                Uri uri10 = ArticleContentProvider.CONTENT_URI;
-                return new CursorLoader(this, uri10, null, null, null, "");
             default:
                 return null;
         }
@@ -492,21 +489,6 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
                 assignUsersToActivities();
                 assignContributorsToCamps();
                 assignUsersToCamps();
-
-                MainActivity.this.getLoaderManager().initLoader(Constants.LOADER_ARTICLES,null,MainActivity.this);
-                break;
-
-            case Constants.LOADER_ARTICLES:
-                articles = Artikel.constructListFromCursor(data);
-
-                final int WHAT = 1;
-                Handler handler = new Handler(){
-                    @Override
-                    public void handleMessage(Message msg) {
-                        if(msg.what == WHAT)  navigate(ArtikelListFragment.class, false);;
-                    }
-                };
-                handler.sendEmptyMessage(WHAT);
 
                 break;
         }

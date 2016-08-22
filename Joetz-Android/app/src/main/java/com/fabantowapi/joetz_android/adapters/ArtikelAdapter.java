@@ -88,9 +88,6 @@ public class ArtikelAdapter extends RecyclerView.Adapter<ArtikelAdapter.ViewHold
     }
 
     @Override
-    public int getItemCount() {
-        return artikels.size();
-
-    }
+    public int getItemCount() { return this.artikels != null ? this.artikels.size() : 0; }
 
 }
