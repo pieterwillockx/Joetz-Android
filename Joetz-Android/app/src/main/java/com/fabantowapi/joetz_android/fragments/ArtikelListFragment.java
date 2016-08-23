@@ -15,8 +15,6 @@ import android.view.ViewGroup;
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.activities.MainActivity;
 import com.fabantowapi.joetz_android.contentproviders.ArticleContentProvider;
-import com.fabantowapi.joetz_android.contentproviders.UserContentProvider;
-import com.fabantowapi.joetz_android.database.UserTable;
 import com.fabantowapi.joetz_android.model.Artikel;
 import com.fabantowapi.joetz_android.adapters.ArtikelAdapter;
 import com.fabantowapi.joetz_android.utils.Constants;
@@ -41,7 +39,7 @@ public class ArtikelListFragment extends Fragment implements android.app.LoaderM
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_artikel_ljst, container, false);
+        View view = inflater.inflate(R.layout.fragment_artikel_list, container, false);
         ButterKnife.bind(this, view);
 
         mainActivity = (MainActivity) getActivity();
