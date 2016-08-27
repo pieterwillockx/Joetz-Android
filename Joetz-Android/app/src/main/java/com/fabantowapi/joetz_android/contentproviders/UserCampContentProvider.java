@@ -12,10 +12,7 @@ import android.net.Uri;
 import android.support.annotation.Nullable;
 
 import com.fabantowapi.joetz_android.database.DatabaseHelper;
-import com.fabantowapi.joetz_android.database.UserActivityTable;
-import com.fabantowapi.joetz_android.database.ContributorCampTable;
 import com.fabantowapi.joetz_android.database.UserCampTable;
-import com.fabantowapi.joetz_android.model.api.ContributorCamp;
 
 
 public class UserCampContentProvider extends ContentProvider {

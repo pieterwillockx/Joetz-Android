@@ -6,8 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.fabantowapi.joetz_android.model.api.UserCamp;
-
 /**
  * Created by Pieter on 14-8-2016.
  */

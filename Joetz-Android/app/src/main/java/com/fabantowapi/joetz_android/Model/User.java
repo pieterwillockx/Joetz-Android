@@ -1,10 +1,8 @@
-package com.fabantowapi.joetz_android.model.api;
+package com.fabantowapi.joetz_android.model;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import com.fabantowapi.joetz_android.contentproviders.ContactpersoonContentProvider;
-import com.fabantowapi.joetz_android.database.ContactpersoonTable;
 import com.fabantowapi.joetz_android.database.UserTable;
 
 import java.io.Serializable;
@@ -177,14 +175,7 @@ public class User implements Serializable{
 
         Adres adres = new Adres(naamgebouw, straat, huisnummer, bus, gemeente, postcode);
 
-        //String selection = ContactpersoonTable.TABLE_NAME + "." + ContactpersoonTable.COLUMN_EMAIL + " = ?";
-        //String[] selectionArgs = new String[]{
-        //        contactpersoon2Email
-        //};
-        //
-        //Cursor contactpersoon1Cursor = ContactpersoonContentProvider.query(ContactpersoonContentProvider.CONTENT_URI, null, selection, selectionArgs, "");
-
-        User user = new User(id, email, username, firstname, lastname, rijksregisternummer, geboortedatum, codegerechtigde, contactpersoon1Email, contactpersoon2Email, null, null, role, dateJoined, adres);
+            User user = new User(id, email, username, firstname, lastname, rijksregisternummer, geboortedatum, codegerechtigde, contactpersoon1Email, contactpersoon2Email, null, null, role, dateJoined, adres);
 
         return user;
     }

@@ -14,7 +14,6 @@ import android.util.Log;
 
 import com.fabantowapi.joetz_android.database.DatabaseHelper;
 import com.fabantowapi.joetz_android.database.UserTable;
-import com.fabantowapi.joetz_android.model.api.User;
 
 /**
  * Created by Pieter on 15-8-2016.

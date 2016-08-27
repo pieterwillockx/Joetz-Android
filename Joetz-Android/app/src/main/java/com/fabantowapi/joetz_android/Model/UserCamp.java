@@ -1,8 +1,7 @@
-package com.fabantowapi.joetz_android.model.api;
+package com.fabantowapi.joetz_android.model;
 
 import android.database.Cursor;
 
-import com.fabantowapi.joetz_android.database.ContributorCampTable;
 import com.fabantowapi.joetz_android.database.UserCampTable;
 
 import java.util.ArrayList;
@@ -27,8 +26,6 @@ public class UserCamp {
     public String getCampId() { return campId; }
 
     public void setId(int id) { this.id = id; }
-    public void setUserId(String userId) { this.userId = userId; }
-    public void setCampId(String campId) { this.campId = campId; }
 
     public static List<UserCamp> constructListFromCursor(Cursor cursor){
         List<UserCamp> userCamps = new ArrayList<>();
@@ -51,9 +48,6 @@ public class UserCamp {
         if(cursor.getPosition() == -1){
             cursor.moveToFirst();
         }
-        System.out.println("In cursor");
-
-        System.out.println(cursor.getColumnCount() +"id" +idIndex + "useridIndex" + userIdIndex);
 
         int id = cursor.getInt(idIndex);
         String userId = cursor.getString(userIdIndex);

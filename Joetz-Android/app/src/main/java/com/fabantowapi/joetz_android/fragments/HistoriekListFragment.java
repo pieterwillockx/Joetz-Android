@@ -13,10 +13,8 @@ import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.activities.MainActivity;
 import com.fabantowapi.joetz_android.adapters.HistoriekAdapter;
 import com.fabantowapi.joetz_android.adapters.itemdecorations.VerticalSpaceItemDecoration;
-import com.fabantowapi.joetz_android.model.Kamp;
-import com.fabantowapi.joetz_android.model.api.Camp;
+import com.fabantowapi.joetz_android.model.Camp;
 
-import java.util.ArrayList;
 import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -30,7 +28,6 @@ public class HistoriekListFragment extends Fragment {
 
     private HistoriekAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private List<Kamp> kampen = null;
 
     private MainActivity mainActivity;
 

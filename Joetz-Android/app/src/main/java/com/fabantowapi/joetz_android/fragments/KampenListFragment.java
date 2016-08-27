@@ -8,15 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.activities.MainActivity;
 import com.fabantowapi.joetz_android.adapters.itemdecorations.VerticalSpaceItemDecoration;
-import com.fabantowapi.joetz_android.model.Kamp;
 import com.fabantowapi.joetz_android.adapters.KampAdapter;
-import java.util.ArrayList;
-import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 

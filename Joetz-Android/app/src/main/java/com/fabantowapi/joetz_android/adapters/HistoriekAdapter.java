@@ -13,9 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.fragments.KampenDetailFragment;
-import com.fabantowapi.joetz_android.model.Kamp;
-import com.fabantowapi.joetz_android.model.api.Adres;
-import com.fabantowapi.joetz_android.model.api.Camp;
+import com.fabantowapi.joetz_android.model.Adres;
+import com.fabantowapi.joetz_android.model.Camp;
 import com.fabantowapi.joetz_android.tasks.ImageDownloadTask;
 import com.fabantowapi.joetz_android.utils.SharedHelper;
 

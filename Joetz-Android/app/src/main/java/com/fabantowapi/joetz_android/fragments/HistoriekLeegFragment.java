@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.activities.MainActivity;
-
-import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 

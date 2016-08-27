@@ -15,11 +15,10 @@ import android.view.ViewGroup;
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.activities.MainActivity;
 import com.fabantowapi.joetz_android.contentproviders.ArticleContentProvider;
-import com.fabantowapi.joetz_android.model.Artikel;
 import com.fabantowapi.joetz_android.adapters.ArtikelAdapter;
+import com.fabantowapi.joetz_android.model.Article;
 import com.fabantowapi.joetz_android.utils.Constants;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -72,7 +71,7 @@ public class ArtikelListFragment extends Fragment implements android.app.LoaderM
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         switch(loader.getId()){
             case Constants.LOADER_ARTICLES:
-                List<Artikel> articles = Artikel.constructListFromCursor(data);
+                List<Article> articles = Article.constructListFromCursor(data);
                 mAdapter.setArtikels(articles);
                 break;
         }

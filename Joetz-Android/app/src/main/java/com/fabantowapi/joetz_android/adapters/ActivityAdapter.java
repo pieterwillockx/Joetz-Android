@@ -1,7 +1,7 @@
 package com.fabantowapi.joetz_android.adapters;
 
 import com.fabantowapi.joetz_android.activities.MainActivity;
-import com.fabantowapi.joetz_android.model.api.Activity;
+import com.fabantowapi.joetz_android.model.Activity;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;

@@ -1,15 +1,13 @@
 package com.fabantowapi.joetz_android.model.api;
 
 import android.content.ContentValues;
-import android.database.Cursor;
 
 import com.fabantowapi.joetz_android.database.ActiviteitTable;
 import com.fabantowapi.joetz_android.database.UserActivityTable;
+import com.fabantowapi.joetz_android.model.Activity;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Pieter on 16-8-2016.

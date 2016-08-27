@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.fragments.ArtikelDetailFragment;
-import com.fabantowapi.joetz_android.model.Artikel;
+import com.fabantowapi.joetz_android.model.Article;
 import com.fabantowapi.joetz_android.tasks.ImageDownloadTask;
 
 import java.util.List;
@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class ArtikelAdapter extends RecyclerView.Adapter<ArtikelAdapter.ViewHolder> {
 
-    public List<Artikel> articles;
+    public List<Article> articles;
     public Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -43,7 +43,7 @@ public class ArtikelAdapter extends RecyclerView.Adapter<ArtikelAdapter.ViewHold
         this.context = context;
     }
 
-    public void setArtikels(List<Artikel> articles) {
+    public void setArtikels(List<Article> articles) {
         this.articles = articles;
         notifyDataSetChanged();
     }
@@ -59,7 +59,7 @@ public class ArtikelAdapter extends RecyclerView.Adapter<ArtikelAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        final Artikel article = articles.get(position);
+        final Article article = articles.get(position);
         holder.articlelTitle.setText(articles.get(position).getArtikelTitel());
         holder.articleImage.setImageDrawable(context.getResources().getDrawable(R.drawable.offline_image));
         new ImageDownloadTask(holder.articleImage, context).execute(article.getArtikelImageUrl());

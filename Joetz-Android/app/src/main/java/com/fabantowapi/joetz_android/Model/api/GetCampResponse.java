@@ -4,6 +4,7 @@ import android.content.ContentValues;
 
 import com.fabantowapi.joetz_android.database.CampTable;
 import com.fabantowapi.joetz_android.database.ContributorCampTable;
+import com.fabantowapi.joetz_android.model.Adres;
 import com.google.gson.annotations.SerializedName;
 
 /**
