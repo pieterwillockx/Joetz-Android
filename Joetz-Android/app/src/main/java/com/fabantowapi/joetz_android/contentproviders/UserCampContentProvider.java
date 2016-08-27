@@ -53,8 +53,8 @@ public class UserCampContentProvider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder){
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-        queryBuilder.setTables(ContributorCampTable.TABLE_NAME);
-        queryBuilder.setProjectionMap(ContributorCampTable.PROJECTION_MAP);
+        queryBuilder.setTables(UserCampTable.TABLE_NAME);
+        queryBuilder.setProjectionMap(UserCampTable.PROJECTION_MAP);
 
         switch(URI_MATCHER.match(uri)){
             case USER_CAMP:

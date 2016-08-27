@@ -27,14 +27,13 @@ public class HistoriekLeegFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         activity = (MainActivity) getActivity();
-
         activity.hideActionBarMenu();;
 
         return view;
     }
 
     @OnClick(R.id.historiekLeeg_btnKiesKamp)
-    public void kiesKamp(){
+    public void choseCamp(){
 
         Fragment fragment = new KampenListFragment();
         Bundle args =new Bundle();

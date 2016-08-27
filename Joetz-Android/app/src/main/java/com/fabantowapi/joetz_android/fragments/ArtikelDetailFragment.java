@@ -39,23 +39,19 @@ public class ArtikelDetailFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         activity = (MainActivity) getActivity();
-
         activity.hideActionBarMenu();;
 
-        Intent i = getActivity().getIntent();
-        artikel = (Artikel) i.getSerializableExtra("artikel");
-        laadArtikel();
+        loaddArticle();
         return view;
     }
 
-    public void laadArtikel(){
+    public void loaddArticle(){
 
+        Intent i = getActivity().getIntent();
+        artikel = (Artikel) i.getSerializableExtra("artikel");
         txtTitel.setText(artikel.getArtikelTitel());
         txtArtikelInhoud.setText(Html.fromHtml(artikel.getArtikelInhoud()));
         artikelImg.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.offline_image));
-
         new ImageDownloadTask(artikelImg, getActivity()).execute(artikel.getArtikelImageUrl());
-
     }
-
 }

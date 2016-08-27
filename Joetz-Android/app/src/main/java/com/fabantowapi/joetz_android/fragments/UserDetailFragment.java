@@ -183,16 +183,10 @@ public class UserDetailFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_edit:
-                // User chose the "Settings" item, show the app settings UI...
                 showEditUserRoleDialog(UserDetailFragment.this.getActivity());
-
                 return true;
-
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
-
         }
     }
 }

@@ -51,6 +51,9 @@ public class UserCamp {
         if(cursor.getPosition() == -1){
             cursor.moveToFirst();
         }
+        System.out.println("In cursor");
+
+        System.out.println(cursor.getColumnCount() +"id" +idIndex + "useridIndex" + userIdIndex);
 
         int id = cursor.getInt(idIndex);
         String userId = cursor.getString(userIdIndex);

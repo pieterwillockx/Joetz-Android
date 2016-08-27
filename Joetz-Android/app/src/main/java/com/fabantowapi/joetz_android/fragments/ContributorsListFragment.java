@@ -43,9 +43,7 @@ public class ContributorsListFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         activity = (MainActivity) getActivity();
-
         contributors = activity.getAllContributors();
-
         activity.hideActionBarMenu();
 
         mRecyclerView.setHasFixedSize(true);

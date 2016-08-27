@@ -36,8 +36,6 @@ public class RegistratieFragment extends Fragment{
     public EditText txtVoornaam;
     @Bind(R.id.txtRijksregisternummer)
     public EditText txtRijksregisternumer;
-    //@Bind(R.id.txtGeboorteDatum)
-    //public EditText txtGeboorteDatum;
     @Bind(R.id.txtGebruikersnaam)
     public EditText txtGebruikersnaam;
 

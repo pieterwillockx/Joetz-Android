@@ -65,7 +65,6 @@ public class ActivityListFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         mainActivity = (MainActivity) getActivity();
-
         mainActivity.hideActionBarMenu();
 
         if(mainActivity.userHasAdminPermissions()){
@@ -73,7 +72,7 @@ public class ActivityListFragment extends Fragment {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // Click action
+
                     mainActivity.navigate(CreateActivityFragment.class, true);
                 }
             });

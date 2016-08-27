@@ -85,7 +85,6 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
     private List<Camp> camps;
     private List<ContributorCamp> contributorCamps;
     private List<UserCamp> userCamps;
-    private List<Artikel> articles;
 
     ActionBarDrawerToggle mDrawerToggle;
     private MaterialDialog dialogProgress;
@@ -178,19 +177,17 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
         User currentUser = getCurrentUser();
         List<Camp> result = new ArrayList<>();
         for(Camp c : getCamps()){
-            System.out.println("Testen sub" + c.getId());
             for(User u: c.getAanwezigen()){
-                System.out.println("Testen u" + u.getId());
-
-                if(u.getId() == currentUser.getId()){
-                    System.out.println("hoera?");
+                System.out.println("Zoeken door users");
+                System.out.println("User id " + u.getId() + " current userId "+ currentUser.getId());
+                if(u.getId().equals(currentUser.getId())){
+                    System.out.println("In check");
                     result.add(c);
                 }
             }
         }
         return  result;
     }
-    public List<Artikel> getArticles(){return articles;}
 
     public boolean userHasAdminPermissions(){ return currentUser.getRole().equals("beheerder"); }
 
@@ -491,6 +488,9 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
                 assignUsersToCamps();
 
                 break;
+
+            default:
+                break;
         }
     }
 
@@ -636,13 +636,4 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
         return super.onOptionsItemSelected(item);
     }
 
-    //@Override
-    //public void onBackPressed(){
-    //    FragmentManager fm = getFragmentManager();
-    //    if(fm.getBackStackEntryCount() == 0){
-    //        showLogoutConfirmDialog(MainActivity.this);
-    //    }else{
-    //        fm.popBackStack();
-    //    }
-    //}
 }

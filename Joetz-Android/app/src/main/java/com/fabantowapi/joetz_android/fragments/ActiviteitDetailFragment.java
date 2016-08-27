@@ -71,7 +71,6 @@ public class ActiviteitDetailFragment extends Fragment {
         setHasOptionsMenu(true);
 
         mainActivity = (MainActivity) getActivity();
-
         mainActivity.showActionBarAddPerson();
 
         Intent i = getActivity().getIntent();
@@ -176,16 +175,11 @@ public class ActiviteitDetailFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add_person:
-                // User chose the "Settings" item, show the app settings UI...
                 gebruikerAanwezig();
-
                 return true;
 
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
-
         }
     }
 

@@ -64,7 +64,7 @@ public class ApiHelper {
 
     private static JoetzApi getService(Context context){
         if(service == null){
-            //String domain = SharedHelper.getDomain();
+
             String domain = "37.139.13.237:8085";
 
             RestAdapter restAdapter = new RestAdapter.Builder()

@@ -24,51 +24,45 @@ import java.util.List;
  */
 public class ArtikelAdapter extends RecyclerView.Adapter<ArtikelAdapter.ViewHolder> {
 
-    public List<Artikel> artikels;
+    public List<Artikel> articles;
     public Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
-        public TextView artikelTitel;
-        public ImageView artikelImage;
+
+        public TextView articlelTitle;
+        public ImageView articleImage;
 
         public ViewHolder(View  itemView) {
             super(itemView);
-            artikelTitel = (TextView) itemView.findViewById(R.id.artikeldetail_titel);
-            artikelImage = (ImageView) itemView.findViewById(R.id.artikel_image);
-
-
+            articlelTitle = (TextView) itemView.findViewById(R.id.artikeldetail_titel);
+            articleImage = (ImageView) itemView.findViewById(R.id.artikel_image);
         }
     }
 
     public ArtikelAdapter (Context context){
         this.context = context;
-
     }
 
-    public void setArtikels(List<Artikel> artikels) {
-        this.artikels = artikels;
+    public void setArtikels(List<Artikel> articles) {
+        this.articles = articles;
         notifyDataSetChanged();
     }
 
     @Override
     public ArtikelAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        // create a new view
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_artikel_item, parent, false);
         ViewHolder vh =  new ViewHolder(view);
-
         return vh;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        final Artikel artikel = artikels.get(position);
-        holder.artikelTitel.setText(artikels.get(position).getArtikelTitel());
-        holder.artikelImage.setImageDrawable(context.getResources().getDrawable(R.drawable.offline_image));
-        new ImageDownloadTask(holder.artikelImage, context).execute(artikel.getArtikelImageUrl());
+
+        final Artikel article = articles.get(position);
+        holder.articlelTitle.setText(articles.get(position).getArtikelTitel());
+        holder.articleImage.setImageDrawable(context.getResources().getDrawable(R.drawable.offline_image));
+        new ImageDownloadTask(holder.articleImage, context).execute(article.getArtikelImageUrl());
 
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -78,7 +72,7 @@ public class ArtikelAdapter extends RecyclerView.Adapter<ArtikelAdapter.ViewHold
                 FragmentTransaction ft = fragmentManager.beginTransaction();
                 ArtikelDetailFragment kampenDetailFragment = new ArtikelDetailFragment();
                 kampenDetailFragment.setArguments(args);
-                ((Activity) context).getIntent().putExtra("artikel", artikel);
+                ((Activity) context).getIntent().putExtra("artikel", article);
                 ft.replace(R.id.mainpage_container, kampenDetailFragment);
                 ft.addToBackStack("FRAGMENT");
                 ft.commit();
@@ -88,6 +82,5 @@ public class ArtikelAdapter extends RecyclerView.Adapter<ArtikelAdapter.ViewHold
     }
 
     @Override
-    public int getItemCount() { return this.artikels != null ? this.artikels.size() : 0; }
-
-}
+    public int getItemCount() { return this.articles != null ? this.articles.size() : 0; }
+    }

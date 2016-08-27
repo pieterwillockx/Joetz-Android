@@ -27,7 +27,7 @@ public class UserListItemAdapter extends RecyclerView.Adapter<UserListItemAdapte
     private List<User> users;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
+
         public ImageView imgAvatar;
         public TextView txtName;
         public TextView txtRole;
@@ -65,8 +65,6 @@ public class UserListItemAdapter extends RecyclerView.Adapter<UserListItemAdapte
 
         holder.txtName.setText(user.getFirstname() + " " + user.getLastname());
         holder.txtRole.setText(user.getRole());
-
-        // get image
 
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override

@@ -67,13 +67,9 @@ public class LoginFragment extends Fragment{
         }
     }
 
-    @OnClick(R.id.txtwwVergeten)
-    public void wachtwoordVergeten(){
-        navigate(2);
-    }
 
     @OnClick(R.id.txtRegistreer)
-    public void registreer(){
+    public void register(){
       navigate(1);
     }
 
@@ -92,8 +88,6 @@ public class LoginFragment extends Fragment{
 
         switch(fragmentId){
             case 1: fragment = new RegistratieFragment();
-                break;
-            case 2: fragment = new WachtwoordVergetenFragment();
                 break;
             default : fragment = new LoginFragment();
         }

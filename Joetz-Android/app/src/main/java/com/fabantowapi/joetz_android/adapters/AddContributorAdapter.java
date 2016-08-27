@@ -26,7 +26,7 @@ public class AddContributorAdapter extends RecyclerView.Adapter<AddContributorAd
     private List<User> checkedUsers;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
+
         public ImageView imgAvatar;
         public TextView txtName;
         public TextView txtRole;
@@ -69,8 +69,6 @@ public class AddContributorAdapter extends RecyclerView.Adapter<AddContributorAd
 
         holder.txtName.setText(user.getFirstname() + " " + user.getLastname());
         holder.txtRole.setText(user.getRole());
-
-        // get image
 
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override

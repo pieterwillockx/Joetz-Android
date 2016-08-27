@@ -43,13 +43,7 @@ public class HistoriekListFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         mainActivity = (MainActivity) getActivity();
-
         mainActivity.hideActionBarMenu();;
-
-        kampen = getkampen();
-
-        if(kampen == null)
-            geenKampen();
 
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
@@ -60,26 +54,15 @@ public class HistoriekListFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
         List<Camp> camps = mainActivity.getSubscribedCamps();
 
-        if(camps == null){
-            geenKampen();
+        if(camps.size()  ==0 ){
+            noCamps();
         }else{
-            mAdapter.setKampen(mainActivity.getSubscribedCamps());
+            mAdapter.setKampen(camps);
         }
-
         return view;
     }
 
-    public List<Kamp> getkampen(){
-       // todo haal camps op
-
-        List<Kamp> testData = new ArrayList<>();
-        testData.add(new Kamp("Smurf's up", "test omschrijving", null, null, 4, 4, "auto", "goede", 20.0, 30.0, 5, 10, 10, 5, 10, "mij", null, null, null));
-        testData.add(new Kamp("Boekenwurmen En Speelvogels","test omschrijving",null,null,4,4,"auto","goede",20.0,30.0,5,10,10,5,10,"mij",null,null,null));
-        testData.add(new Kamp("Sierkus Hatsjoe", "test omschrijving", null, null, 4, 4, "auto", "goede", 20.0, 30.0, 5, 10, 10, 5, 10, "mij", null, null, null));
-        return testData;
-    }
-
-    private void geenKampen(){
+    private void noCamps(){
         Fragment fragment = new HistoriekLeegFragment();
         Bundle args =new Bundle();
         FragmentManager fragmentManager = getFragmentManager();

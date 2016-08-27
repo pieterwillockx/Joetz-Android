@@ -74,11 +74,9 @@ public class ProfielFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profiel, container, false);
 
         activity = (MainActivity) getActivity();
-
         activity.hideActionBarMenu();;
         
         currentUser = activity.getCurrentUser();
-
         ButterKnife.bind(this, view);
 
         btnEditContactperson1.setPaintFlags(btnEditContactperson1.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);

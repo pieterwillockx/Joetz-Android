@@ -49,7 +49,6 @@ public class KampenListFragment extends Fragment {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // Click action
                     mainActivity.navigate(CreateCampFragment.class, true);
                 }
             });

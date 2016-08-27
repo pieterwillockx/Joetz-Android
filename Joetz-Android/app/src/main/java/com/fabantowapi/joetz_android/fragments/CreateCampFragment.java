@@ -84,11 +84,9 @@ public class CreateCampFragment extends Fragment implements DatePickerDialog.OnD
 
         ButterKnife.bind(this, view);
         activity = (MainActivity) getActivity();
-
         activity.hideActionBarMenu();;
 
         Intent i = getActivity().getIntent();
-
         initializeForm();
 
         return view;

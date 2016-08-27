@@ -126,7 +126,6 @@ public class KampenDetailFragment extends Fragment {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         txtNaam.setText(camp.getNaam());
 
-        // image
         imgSfeerfoto.setImageDrawable(KampenDetailFragment.this.getActivity().getResources().getDrawable(R.drawable.offline_image));
         new ImageDownloadTask(imgSfeerfoto, getActivity()).execute(camp.getSfeerfoto());
 
@@ -165,7 +164,6 @@ public class KampenDetailFragment extends Fragment {
 
         txtContact.setText(camp.getContact());
 
-        // change it up
         txtMaxDeelnemers.setText(camp.getMaxDeelnemers() + "");
     }
 
@@ -177,7 +175,6 @@ public class KampenDetailFragment extends Fragment {
                 isInList = true;
             }
         }
-
         return isInList;
     }
 
@@ -261,7 +258,6 @@ public class KampenDetailFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add_person:
-                // User chose the "Settings" item, show the app settings UI...
                 String role = activity.getCurrentUser().getRole();
                 if(role.equals("lid")){
                     addParticipant();
@@ -278,8 +274,6 @@ public class KampenDetailFragment extends Fragment {
                 return true;
 
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
 
         }
