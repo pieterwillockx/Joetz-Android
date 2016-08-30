@@ -142,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
         // if user is not an admin, hide user lists
         if(!userHasAdminPermissions()){
             Menu menu = mLeftDrawer.getMenu();
+            menu.findItem(R.id.nav_activiteiten).setVisible(false);
             menu.findItem(R.id.nav_contibutors).setVisible(false);
             menu.findItem(R.id.nav_all_users).setVisible(false);
         }

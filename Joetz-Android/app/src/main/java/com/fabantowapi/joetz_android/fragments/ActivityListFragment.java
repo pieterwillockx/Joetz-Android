@@ -1,6 +1,7 @@
 package com.fabantowapi.joetz_android.fragments;
 
 import android.app.Fragment;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -48,9 +49,9 @@ public class ActivityListFragment extends Fragment {
         mainActivity = (MainActivity) getActivity();
         mainActivity.hideActionBarMenu();
 
-        if(mainActivity.userHasAdminPermissions()){
-            FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
-            fab.setOnClickListener(new View.OnClickListener() {
+         if(mainActivity.userHasAdminPermissions()){
+             FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 

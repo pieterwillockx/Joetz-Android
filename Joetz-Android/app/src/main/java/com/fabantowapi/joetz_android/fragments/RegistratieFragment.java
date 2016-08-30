@@ -3,10 +3,12 @@ package com.fabantowapi.joetz_android.fragments;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -37,6 +39,8 @@ public class RegistratieFragment extends Fragment{
     public EditText txtRijksregisternumer;
     @Bind(R.id.txtGebruikersnaam)
     public EditText txtGebruikersnaam;
+    @Bind(R.id.be_quick_register)
+    public Button beQuickRegister;
 
 
     @Override
@@ -44,6 +48,7 @@ public class RegistratieFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_registreer, container, false);
         ButterKnife.bind(this, view);
         txtEmail.requestFocus();
+        beQuickRegister.setBackgroundColor(Color.TRANSPARENT);
         return view;
     }
 

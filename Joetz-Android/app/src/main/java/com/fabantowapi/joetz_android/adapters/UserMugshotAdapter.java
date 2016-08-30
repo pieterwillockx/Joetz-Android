@@ -51,7 +51,11 @@ public class UserMugshotAdapter extends RecyclerView.Adapter<UserMugshotAdapter.
     public void onBindViewHolder(UserMugshotAdapter.ViewHolder holder, int position) {
 
         User user = users.get(position);
-        holder.txtName.setText(users.get(position).getFirstname() + " " + users.get(position).getLastname());
+        try{
+            holder.txtName.setText(users.get(position).getFirstname() + " " + users.get(position).getLastname());
+        }catch(NullPointerException npe)
+        {
+        }
     }
 
     @Override

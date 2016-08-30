@@ -54,6 +54,7 @@ public class HistoriekListFragment extends Fragment {
         if(camps.size()  ==0 ){
             noCamps();
         }else{
+            mAdapter.setKampen(null);
             mAdapter.setKampen(camps);
         }
         return view;

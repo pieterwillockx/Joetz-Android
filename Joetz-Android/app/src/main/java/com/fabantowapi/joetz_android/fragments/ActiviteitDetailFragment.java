@@ -127,10 +127,18 @@ public class ActiviteitDetailFragment extends Fragment {
     private boolean isCurrentUserInList(){
         boolean isInList = false;
 
-        for(User u : attendees){
-            if(u.getId().equals(mainActivity.getCurrentUser().getId())){
-                isInList = true;
-            }
+        attendees = activity.getAanwezigen();
+        List<User> users = activity.getAanwezigen();
+        for(User u : users){
+
+                try{
+                    if(u.getId().equals(mainActivity.getCurrentUser().getId())){
+                        isInList = true;
+                    }
+                    }catch(NullPointerException npe){
+
+                }
+
         }
 
         return isInList;

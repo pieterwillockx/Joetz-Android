@@ -5,10 +5,12 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -27,9 +29,11 @@ import butterknife.OnClick;
 public class LoginFragment extends Fragment{
 
     @Bind(R.id.txtEmail)
-    EditText txtEmail;
+    public EditText txtEmail;
     @Bind(R.id.txtWachtwoord)
-    EditText txtWachtwoord;
+    public EditText txtWachtwoord;
+    @Bind(R.id.btnBeQuick)
+    public Button btnBeQuick;
 
     MaterialDialog dialogProgress;
 
@@ -39,6 +43,8 @@ public class LoginFragment extends Fragment{
 
         ButterKnife.bind(this, view);
         txtEmail.requestFocus();
+        btnBeQuick.setBackgroundColor(Color.TRANSPARENT);
+
         return view;
     }
 
