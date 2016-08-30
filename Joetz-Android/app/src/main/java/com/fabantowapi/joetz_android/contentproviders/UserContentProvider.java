@@ -82,7 +82,7 @@ public class UserContentProvider extends ContentProvider{
                 break;
 
             default:
-                throw new IllegalArgumentException("Unknow URI: " + uri);
+                throw new IllegalArgumentException("Unknown URI: " + uri);
         }
 
         if(rowId > 0){

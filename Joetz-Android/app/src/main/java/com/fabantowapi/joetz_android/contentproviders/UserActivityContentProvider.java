@@ -10,10 +10,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.fabantowapi.joetz_android.database.ContactpersoonTable;
 import com.fabantowapi.joetz_android.database.DatabaseHelper;
 import com.fabantowapi.joetz_android.database.UserActivityTable;
+import com.fabantowapi.joetz_android.database.UserTable;
 
 /**
  * Created by Pieter on 17-8-2016.
@@ -85,6 +87,8 @@ public class UserActivityContentProvider extends ContentProvider {
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
 
+        printDatabase();
+
         if(rowId > 0){
             this.getContext().getContentResolver().notifyChange(CONTENT_URI, null);
             return Uri.withAppendedPath(CONTENT_URI, String.valueOf(rowId));
@@ -106,6 +110,8 @@ public class UserActivityContentProvider extends ContentProvider {
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
+
+        printDatabase();
 
         if(rowsDeleted > 0){
             this.getContext().getContentResolver().notifyChange(CONTENT_URI, null);
@@ -170,6 +176,7 @@ public class UserActivityContentProvider extends ContentProvider {
                 finally{
                     db.endTransaction();
                     inserter.close();
+                    printDatabase();
                 }
                 break;
 
@@ -182,5 +189,10 @@ public class UserActivityContentProvider extends ContentProvider {
         }
 
         return rowsInserted;
+    }
+
+    public void printDatabase(){
+        SQLiteDatabase db = this.databaseHelper.getReadableDatabase();
+        Log.d("UserActivityContentProvider", this.databaseHelper.getTableAsString(db, UserTable.TABLE_NAME));
     }
 }

@@ -53,7 +53,6 @@ public class ActivityListFragment extends Fragment {
     private MainActivity mainActivity;
 
     List<Activity> activities;
-    List<UserActivity> userActivities;
 
     private static final int VERTICAL_ITEM_SPACE = 10;
     private static final int PADDING_LEFT_RIGHT = 20;

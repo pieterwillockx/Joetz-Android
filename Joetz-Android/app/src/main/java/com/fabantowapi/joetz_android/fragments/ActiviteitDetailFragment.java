@@ -75,7 +75,7 @@ public class ActiviteitDetailFragment extends Fragment {
         mainActivity.showActionBarAddPerson();
 
         Intent i = getActivity().getIntent();
-        activity =(Activity) i.getSerializableExtra("activity");
+        activity = (Activity) i.getSerializableExtra("activity");
 
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
 
