@@ -43,7 +43,6 @@ public class CampContentProvider extends ContentProvider {
             case CAMPS:
                 return "vnd.android.cursor.dir/" + PROVIDER_NAME;
         }
-
         return null;
     }
 

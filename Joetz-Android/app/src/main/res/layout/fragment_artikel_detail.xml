@@ -40,7 +40,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text=""
             android:id="@+id/artikel_detail_inhoud"
-            android:layout_marginTop="65dp" />
+            android:layout_marginTop="45dp" />
     </LinearLayout>
 
  </ScrollView>

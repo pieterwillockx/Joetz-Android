@@ -20,27 +20,28 @@ import com.fabantowapi.joetz_android.database.ContributorCampTable;
 import com.fabantowapi.joetz_android.database.UserActivityTable;
 import com.fabantowapi.joetz_android.database.UserCampTable;
 import com.fabantowapi.joetz_android.database.UserTable;
-import com.fabantowapi.joetz_android.model.api.Activity;
+import com.fabantowapi.joetz_android.model.Activity;
 import com.fabantowapi.joetz_android.model.api.AddUserToCampRequest;
-import com.fabantowapi.joetz_android.model.api.Camp;
+import com.fabantowapi.joetz_android.model.Camp;
 import com.fabantowapi.joetz_android.model.api.CreateActivityRequest;
 import com.fabantowapi.joetz_android.model.api.CreateCampRequest;
 import com.fabantowapi.joetz_android.model.api.EditUserRoleRequest;
 import com.fabantowapi.joetz_android.model.api.GetActivityResponse;
-import com.fabantowapi.joetz_android.model.api.Adres;
-import com.fabantowapi.joetz_android.model.api.Contactpersoon;
+import com.fabantowapi.joetz_android.model.Adres;
+import com.fabantowapi.joetz_android.model.Contactpersoon;
 import com.fabantowapi.joetz_android.model.api.EditAddressRequest;
 import com.fabantowapi.joetz_android.model.api.EditContactPersonRequest;
 import com.fabantowapi.joetz_android.model.api.EditUserDetailsRequest;
 import com.fabantowapi.joetz_android.model.api.EditUserRequest;
 import com.fabantowapi.joetz_android.model.api.GetArticleResponse;
 import com.fabantowapi.joetz_android.model.api.GetCampResponse;
+import com.fabantowapi.joetz_android.model.api.GetInschrijvingenResponse;
 import com.fabantowapi.joetz_android.model.api.GetUserResponse;
 import com.fabantowapi.joetz_android.model.api.LoginRequest;
 import com.fabantowapi.joetz_android.model.api.LoginResponse;
 import com.fabantowapi.joetz_android.model.api.LogoutRequest;
 import com.fabantowapi.joetz_android.model.api.RegisterRequest;
-import com.fabantowapi.joetz_android.model.api.User;
+import com.fabantowapi.joetz_android.model.User;
 import com.fabantowapi.joetz_android.utils.CookieHelper;
 import com.fabantowapi.joetz_android.utils.PreferencesHelper;
 import com.fabantowapi.joetz_android.utils.SharedHelper;
@@ -64,7 +65,7 @@ public class ApiHelper {
 
     private static JoetzApi getService(Context context){
         if(service == null){
-            //String domain = SharedHelper.getDomain();
+
             String domain = "37.139.13.237:8085";
 
             RestAdapter restAdapter = new RestAdapter.Builder()
@@ -394,6 +395,7 @@ public class ApiHelper {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
     public static Observable<Object> getCamps(Context context){
         ApiHelper.resetService();
 
@@ -432,6 +434,7 @@ public class ApiHelper {
                     ContentResolver contentResolver = context.getContentResolver();
                     contentResolver.delete(CampContentProvider.CONTENT_URI, null, null);
                     contentResolver.delete(ContributorCampContentProvider.CONTENT_URI, null, null);
+                    contentResolver.delete(UserCampContentProvider.CONTENT_URI, null, null);
                 })
                 .flatMap(campResponses -> Observable.from(campResponses))
                 .doOnNext(camp -> {
@@ -441,6 +444,56 @@ public class ApiHelper {
 
                     ContentValues[] cvContributorCamp = camp.getContributorCampContentValues();
                     contentResolver.bulkInsert(ContributorCampContentProvider.CONTENT_URI, cvContributorCamp);
+                })
+                .toList()
+                .flatMap(campResponses -> Observable.empty())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static Observable<Object> getInschrijvingen(Context context){
+        ApiHelper.resetService();
+
+        return ApiHelper.getService(context).getInschrijvingen()
+                .flatMap(response -> {
+                    String applicationCookie = CookieHelper.getApplicationCookie(response.getHeaders());
+                    PreferencesHelper.saveApplicationCookie(context, applicationCookie);
+
+                    GetInschrijvingenResponse[] inschrijvingen;
+
+                    try{
+                        GsonConverter converter = new GsonConverter(new Gson());
+                        inschrijvingen = (GetInschrijvingenResponse[]) converter.fromBody(response.getBody(), GetInschrijvingenResponse[].class);
+                    }
+                    catch(ConversionException e){
+                        return Observable.error(e);
+                    }
+
+                    if(inschrijvingen != null && response.getStatus() == 200){
+                        return Observable.just(inschrijvingen);
+                    }
+                    else{
+                        int statusId = response.getStatus();
+                        String error;
+
+                        switch(statusId){
+                            case 400 : error = "Bad Request"; break;
+                            case 401 : error = "Unauthorized"; break;
+                            default : error = "Unknown Error"; break;
+                        }
+
+                        return Observable.error(new IOException(error));
+                    }
+                })
+                .doOnNext(inschrijvingenResponses -> {
+                    ContentResolver contentResolver = context.getContentResolver();
+                    contentResolver.delete(UserCampContentProvider.CONTENT_URI, null, null);
+                })
+                .flatMap(inschrijvingenResponses -> Observable.from(inschrijvingenResponses))
+                .doOnNext(inschrijving -> {
+                    ContentResolver contentResolver = context.getContentResolver();
+                    ContentValues cvInschrijving = inschrijving.getContentValues();
+                    contentResolver.insert(UserCampContentProvider.CONTENT_URI, cvInschrijving);
                 })
                 .toList()
                 .flatMap(campResponses -> Observable.empty())
@@ -839,14 +892,26 @@ public class ApiHelper {
     public static Observable<Object> addUserToCamp(Context context, String campId, String userId, String extraInfo, Camp currentCamp, User currentUser){
         ApiHelper.resetService();
 
+        Camp campToEdit = currentCamp;
+
         return ApiHelper.getService(context).addUserToCamp(new AddUserToCampRequest(extraInfo, false, false, userId, campId))
                 .flatMap(response -> {
                     String applicationCookie = CookieHelper.getApplicationCookie(response.getHeaders());
                     PreferencesHelper.saveApplicationCookie(context, applicationCookie);
 
+                    String inschrijvingResponse;
+
+                    try{
+                        GsonConverter converter = new GsonConverter(new Gson());
+                        inschrijvingResponse = (String) converter.fromBody(response.getBody(), String.class);
+                    }
+                    catch(ConversionException e){
+                        return Observable.error(e);
+                    }
+
                     if(response.getStatus() == 200){
-                        currentCamp.addAanwezige(currentUser);
-                        return Observable.just(currentCamp);
+                        campToEdit.addAanwezige(currentUser);
+                        return Observable.just(inschrijvingResponse);
                     }
                     else {
                         int status = response.getStatus();
@@ -867,18 +932,19 @@ public class ApiHelper {
                         return Observable.error(new IOException(error));
                     }
                 })
-                .doOnNext(camp -> {
+                .doOnNext(inschrijving -> {
                     String where = CampTable.TABLE_NAME + "." + CampTable.COLUMN_ID + " = ?";
                     String[] selectionArgs = new String[]{
-                            camp.getId()
+                            campToEdit.getId()
                     };
 
                     ContentResolver contentResolver = context.getContentResolver();
-                    ContentValues cvCamp = camp.getContentValues();
+                    ContentValues cvCamp = campToEdit.getContentValues();
 
                     contentResolver.update(CampContentProvider.CONTENT_URI, cvCamp, where, selectionArgs);
 
                     ContentValues cvUserCamp = new ContentValues();
+                    cvUserCamp.put(UserCampTable.COLUMN_ID, inschrijving);
                     cvUserCamp.put(UserCampTable.COLUMN_CAMP_ID, campId);
                     cvUserCamp.put(UserCampTable.COLUMN_USER_ID, currentUser.getId());
 

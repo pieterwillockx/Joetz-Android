@@ -8,8 +8,6 @@ import android.database.Cursor;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.content.CursorLoader;
@@ -32,7 +30,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.api.ApiHelper;
 import com.fabantowapi.joetz_android.contentproviders.ActivityContentProvider;
-import com.fabantowapi.joetz_android.contentproviders.ArticleContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.CampContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.ContactpersoonContentProvider;
 import com.fabantowapi.joetz_android.contentproviders.ContributorCampContentProvider;
@@ -49,14 +46,13 @@ import com.fabantowapi.joetz_android.fragments.HistoriekListFragment;
 import com.fabantowapi.joetz_android.fragments.KampenListFragment;
 import com.fabantowapi.joetz_android.fragments.ProfielFragment;
 import com.fabantowapi.joetz_android.fragments.UserListFragment;
-import com.fabantowapi.joetz_android.model.Artikel;
-import com.fabantowapi.joetz_android.model.api.Activity;
-import com.fabantowapi.joetz_android.model.api.Camp;
-import com.fabantowapi.joetz_android.model.api.Contactpersoon;
-import com.fabantowapi.joetz_android.model.api.User;
-import com.fabantowapi.joetz_android.model.api.UserActivity;
-import com.fabantowapi.joetz_android.model.api.ContributorCamp;
-import com.fabantowapi.joetz_android.model.api.UserCamp;
+import com.fabantowapi.joetz_android.model.Activity;
+import com.fabantowapi.joetz_android.model.Camp;
+import com.fabantowapi.joetz_android.model.Contactpersoon;
+import com.fabantowapi.joetz_android.model.User;
+import com.fabantowapi.joetz_android.model.UserActivity;
+import com.fabantowapi.joetz_android.model.ContributorCamp;
+import com.fabantowapi.joetz_android.model.UserCamp;
 import com.fabantowapi.joetz_android.utils.Constants;
 import com.fabantowapi.joetz_android.utils.Observer;
 import com.fabantowapi.joetz_android.utils.PreferencesHelper;
@@ -85,7 +81,6 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
     private List<Camp> camps;
     private List<ContributorCamp> contributorCamps;
     private List<UserCamp> userCamps;
-    private List<Artikel> articles;
 
     ActionBarDrawerToggle mDrawerToggle;
     private MaterialDialog dialogProgress;
@@ -147,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
         // if user is not an admin, hide user lists
         if(!userHasAdminPermissions()){
             Menu menu = mLeftDrawer.getMenu();
+            menu.findItem(R.id.nav_activiteiten).setVisible(false);
             menu.findItem(R.id.nav_contibutors).setVisible(false);
             menu.findItem(R.id.nav_all_users).setVisible(false);
         }
@@ -178,19 +174,17 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
         User currentUser = getCurrentUser();
         List<Camp> result = new ArrayList<>();
         for(Camp c : getCamps()){
-            System.out.println("Testen sub" + c.getId());
             for(User u: c.getAanwezigen()){
-                System.out.println("Testen u" + u.getId());
-
-                if(u.getId() == currentUser.getId()){
-                    System.out.println("hoera?");
+                System.out.println("Zoeken door users");
+                System.out.println("User id " + u.getId() + " current userId "+ currentUser.getId());
+                if(u.getId().equals(currentUser.getId())){
+                    System.out.println("In check");
                     result.add(c);
                 }
             }
         }
         return  result;
     }
-    public List<Artikel> getArticles(){return articles;}
 
     public boolean userHasAdminPermissions(){ return currentUser.getRole().equals("beheerder"); }
 
@@ -491,6 +485,9 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
                 assignUsersToCamps();
 
                 break;
+
+            default:
+                break;
         }
     }
 
@@ -636,13 +633,4 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
         return super.onOptionsItemSelected(item);
     }
 
-    //@Override
-    //public void onBackPressed(){
-    //    FragmentManager fm = getFragmentManager();
-    //    if(fm.getBackStackEntryCount() == 0){
-    //        showLogoutConfirmDialog(MainActivity.this);
-    //    }else{
-    //        fm.popBackStack();
-    //    }
-    //}
 }

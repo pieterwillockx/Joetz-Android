@@ -1,8 +1,9 @@
 package com.fabantowapi.joetz_android.model.api;
 
+import com.fabantowapi.joetz_android.model.Adres;
+import com.fabantowapi.joetz_android.model.Contactpersoon;
+import com.fabantowapi.joetz_android.model.User;
 import com.google.gson.annotations.SerializedName;
-
-import java.util.Date;
 
 /**
  * Created by Pieter on 14-8-2016.

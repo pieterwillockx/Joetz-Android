@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import com.fabantowapi.joetz_android.R;
+import com.fabantowapi.joetz_android.database.DatabaseHelper;
 import com.fabantowapi.joetz_android.fragments.LoginFragment;
 import butterknife.ButterKnife;
 
@@ -15,12 +16,14 @@ import butterknife.ButterKnife;
  */
 public class LoginActivity extends AppCompatActivity{
 
+    DatabaseHelper dbHelper = new DatabaseHelper(this);
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
         startLogin();
     }
 

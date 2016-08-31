@@ -1,8 +1,7 @@
-package com.fabantowapi.joetz_android.model.api;
+package com.fabantowapi.joetz_android.model;
 
 import android.database.Cursor;
 
-import com.fabantowapi.joetz_android.database.ActiviteitTable;
 import com.fabantowapi.joetz_android.database.UserActivityTable;
 
 import java.util.ArrayList;
@@ -27,8 +26,6 @@ public class UserActivity {
     public String getActivityId() { return activityId; }
 
     public void setId(int id) { this.id = id; }
-    public void setUserId(String userId) { this.userId = userId; }
-    public void setActivityId(String activityId) { this.activityId = activityId; }
 
     public static List<UserActivity> constructListFromCursor(Cursor cursor){
         List<UserActivity> userActivities = new ArrayList<>();

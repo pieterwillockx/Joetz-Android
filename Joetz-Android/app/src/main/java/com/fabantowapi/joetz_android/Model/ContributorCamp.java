@@ -1,4 +1,4 @@
-package com.fabantowapi.joetz_android.model.api;
+package com.fabantowapi.joetz_android.model;
 
 import android.database.Cursor;
 
@@ -26,8 +26,6 @@ public class ContributorCamp {
     public String getCampId() { return campId; }
 
     public void setId(int id) { this.id = id; }
-    public void setUserId(String userId) { this.userId = userId; }
-    public void setCampId(String campId) { this.campId = campId; }
 
     public static List<ContributorCamp> constructListFromCursor(Cursor cursor){
         List<ContributorCamp> contributorCamps = new ArrayList<>();

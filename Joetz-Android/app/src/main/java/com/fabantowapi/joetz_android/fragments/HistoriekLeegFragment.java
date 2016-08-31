@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.activities.MainActivity;
-
-import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -27,14 +25,13 @@ public class HistoriekLeegFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         activity = (MainActivity) getActivity();
-
         activity.hideActionBarMenu();;
 
         return view;
     }
 
     @OnClick(R.id.historiekLeeg_btnKiesKamp)
-    public void kiesKamp(){
+    public void choseCamp(){
 
         Fragment fragment = new KampenListFragment();
         Bundle args =new Bundle();

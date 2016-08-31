@@ -21,9 +21,9 @@ import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.activities.MainActivity;
 import com.fabantowapi.joetz_android.adapters.UserMugshotAdapter;
 import com.fabantowapi.joetz_android.api.ApiHelper;
-import com.fabantowapi.joetz_android.model.api.Adres;
-import com.fabantowapi.joetz_android.model.api.Camp;
-import com.fabantowapi.joetz_android.model.api.User;
+import com.fabantowapi.joetz_android.model.Adres;
+import com.fabantowapi.joetz_android.model.Camp;
+import com.fabantowapi.joetz_android.model.User;
 import com.fabantowapi.joetz_android.tasks.ImageDownloadTask;
 import com.fabantowapi.joetz_android.utils.Observer;
 import com.fabantowapi.joetz_android.utils.SharedHelper;
@@ -126,7 +126,6 @@ public class KampenDetailFragment extends Fragment {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         txtNaam.setText(camp.getNaam());
 
-        // image
         imgSfeerfoto.setImageDrawable(KampenDetailFragment.this.getActivity().getResources().getDrawable(R.drawable.offline_image));
         new ImageDownloadTask(imgSfeerfoto, getActivity()).execute(camp.getSfeerfoto());
 
@@ -165,7 +164,6 @@ public class KampenDetailFragment extends Fragment {
 
         txtContact.setText(camp.getContact());
 
-        // change it up
         txtMaxDeelnemers.setText(camp.getMaxDeelnemers() + "");
     }
 
@@ -177,7 +175,6 @@ public class KampenDetailFragment extends Fragment {
                 isInList = true;
             }
         }
-
         return isInList;
     }
 
@@ -261,7 +258,6 @@ public class KampenDetailFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add_person:
-                // User chose the "Settings" item, show the app settings UI...
                 String role = activity.getCurrentUser().getRole();
                 if(role.equals("lid")){
                     addParticipant();
@@ -278,8 +274,6 @@ public class KampenDetailFragment extends Fragment {
                 return true;
 
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
 
         }

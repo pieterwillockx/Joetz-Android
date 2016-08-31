@@ -28,7 +28,7 @@ public class UserCampTable {
     }
 
     private static final String CREATE_TABLE = "create table IF NOT EXISTS " + TABLE_NAME + "("
-            + COLUMN_ID + " integer primary key autoincrement, "
+            + COLUMN_ID + " text primary key, "
             + COLUMN_USER_ID + " text, "
             + COLUMN_CAMP_ID + " text"
             + ");";

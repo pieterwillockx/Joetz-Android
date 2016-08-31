@@ -3,7 +3,6 @@ package com.fabantowapi.joetz_android.fragments;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -16,14 +15,12 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.activities.MainActivity;
 import com.fabantowapi.joetz_android.api.ApiHelper;
-import com.fabantowapi.joetz_android.model.api.Camp;
-import com.fabantowapi.joetz_android.model.api.User;
+import com.fabantowapi.joetz_android.model.User;
 import com.fabantowapi.joetz_android.utils.Observer;
 import com.fabantowapi.joetz_android.utils.SharedHelper;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by Anton Rooseleer on 11-8-2016.
@@ -183,16 +180,10 @@ public class UserDetailFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_edit:
-                // User chose the "Settings" item, show the app settings UI...
                 showEditUserRoleDialog(UserDetailFragment.this.getActivity());
-
                 return true;
-
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
-
         }
     }
 }

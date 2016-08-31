@@ -15,8 +15,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.activities.MainActivity;
 import com.fabantowapi.joetz_android.api.ApiHelper;
-import com.fabantowapi.joetz_android.model.api.Adres;
-import com.fabantowapi.joetz_android.model.api.Contactpersoon;
+import com.fabantowapi.joetz_android.model.Adres;
+import com.fabantowapi.joetz_android.model.Contactpersoon;
 import com.fabantowapi.joetz_android.utils.Observer;
 
 import butterknife.Bind;

@@ -18,8 +18,8 @@ import com.fabantowapi.joetz_android.activities.MainActivity;
 import com.fabantowapi.joetz_android.adapters.AddContributorAdapter;
 import com.fabantowapi.joetz_android.adapters.itemdecorations.VerticalSpaceItemDecoration;
 import com.fabantowapi.joetz_android.api.ApiHelper;
-import com.fabantowapi.joetz_android.model.api.Camp;
-import com.fabantowapi.joetz_android.model.api.User;
+import com.fabantowapi.joetz_android.model.Camp;
+import com.fabantowapi.joetz_android.model.User;
 import com.fabantowapi.joetz_android.utils.Observer;
 
 import java.util.List;
@@ -106,8 +106,6 @@ public class AddContributorsListFragment extends Fragment {
                 return true;
 
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
 
         }

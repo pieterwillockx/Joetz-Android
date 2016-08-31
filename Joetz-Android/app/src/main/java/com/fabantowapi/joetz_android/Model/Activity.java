@@ -1,10 +1,9 @@
-package com.fabantowapi.joetz_android.model.api;
+package com.fabantowapi.joetz_android.model;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.fabantowapi.joetz_android.database.ActiviteitTable;
-import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -42,21 +41,12 @@ public class Activity implements Serializable {
 
     public String getId() { return id; }
     public String getNaam() { return naam; }
-    public String getDatum() { return datum; }
     public String getLocatie() { return locatie; }
-    public boolean isHeleDag() { return heleDag; }
     public String getBeginUur() { return beginUur; }
     public String getEindUur() { return eindUur; }
     public List<User> getAanwezigen() { return aanwezigen; }
 
     public void setId(String id) { this.id = id; }
-    public void setNaam(String naam) { this.naam = naam; }
-    public void setDatum(String datum) { this.datum = datum; }
-    public void setLocatie(String locatie) { this.locatie = locatie; }
-    public void setHeleDag(boolean heleDag) { this.heleDag = heleDag; }
-    public void setBeginUur(String beginUur) { this.beginUur = beginUur; }
-    public void setEindUur(String eindUur) { this.eindUur = eindUur; }
-    public void setAanwezigen(List<User> aanwezigen) { this.aanwezigen = aanwezigen; }
 
     public void addAanwezige(User user){ this.aanwezigen.add(user); }
 

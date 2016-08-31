@@ -1,6 +1,7 @@
 package com.fabantowapi.joetz_android.fragments;
 
 import android.app.Fragment;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,15 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.activities.MainActivity;
 import com.fabantowapi.joetz_android.adapters.itemdecorations.VerticalSpaceItemDecoration;
-import com.fabantowapi.joetz_android.model.Kamp;
 import com.fabantowapi.joetz_android.adapters.KampAdapter;
-import java.util.ArrayList;
-import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -44,15 +42,16 @@ public class KampenListFragment extends Fragment {
 
         mainActivity.hideActionBarMenu();
 
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         if(mainActivity.userHasAdminPermissions()){
-            FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
-            fab.setOnClickListener(new View.OnClickListener() {
+                fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // Click action
                     mainActivity.navigate(CreateCampFragment.class, true);
                 }
             });
+        }else{
+            fab.setVisibility(View.INVISIBLE);
         }
 
         mRecyclerView.setHasFixedSize(true);

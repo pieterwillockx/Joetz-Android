@@ -1,8 +1,7 @@
-package com.fabantowapi.joetz_android.model.api;
+package com.fabantowapi.joetz_android.model;
 
 import android.database.Cursor;
 
-import com.fabantowapi.joetz_android.database.ContributorCampTable;
 import com.fabantowapi.joetz_android.database.UserCampTable;
 
 import java.util.ArrayList;
@@ -12,23 +11,21 @@ import java.util.List;
  * Created by Pieter on 18-8-2016.
  */
 public class UserCamp {
-    private int id;
+    private String id;
     private String userId;
     private String campId;
 
-    public UserCamp(int id, String userId, String campId) {
+    public UserCamp(String id, String userId, String campId) {
         this.id = id;
         this.userId = userId;
         this.campId = campId;
     }
 
-    public int getId() { return id; }
+    public String getId() { return id; }
     public String getUserId() { return userId; }
     public String getCampId() { return campId; }
 
-    public void setId(int id) { this.id = id; }
-    public void setUserId(String userId) { this.userId = userId; }
-    public void setCampId(String campId) { this.campId = campId; }
+    public void setId(String id) { this.id = id; }
 
     public static List<UserCamp> constructListFromCursor(Cursor cursor){
         List<UserCamp> userCamps = new ArrayList<>();
@@ -52,7 +49,7 @@ public class UserCamp {
             cursor.moveToFirst();
         }
 
-        int id = cursor.getInt(idIndex);
+        String id = cursor.getString(idIndex);
         String userId = cursor.getString(userIdIndex);
         String campId = cursor.getString(campIdIndex);
 

@@ -56,6 +56,7 @@
     <string name="get_activities_progress">Activiteiten ophalen...</string>
     <string name="get_all_users_progress">Alle gebruikers ophalen...</string>
     <string name="get_camps_progress">Kampen ophalen...</string>
+    <string name="get_inschrijvingen_progress">Inschrijvingen ophalen...</string>
     <string name="edit_user_role_progress">Rol bewerken...</string>
     <string name="add_contributor_progress">Medewerkers toevoegen...</string>
     <string name="be_quick">BE QUICK!!!</string>

@@ -12,7 +12,7 @@ import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.activities.MainActivity;
 import com.fabantowapi.joetz_android.adapters.UserListItemAdapter;
 import com.fabantowapi.joetz_android.adapters.itemdecorations.VerticalSpaceItemDecoration;
-import com.fabantowapi.joetz_android.model.api.User;
+import com.fabantowapi.joetz_android.model.User;
 
 import java.util.List;
 
@@ -43,9 +43,7 @@ public class ContributorsListFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         activity = (MainActivity) getActivity();
-
         contributors = activity.getAllContributors();
-
         activity.hideActionBarMenu();
 
         mRecyclerView.setHasFixedSize(true);

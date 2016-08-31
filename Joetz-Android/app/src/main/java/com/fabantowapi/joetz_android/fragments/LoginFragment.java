@@ -5,24 +5,18 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.activities.MainActivity;
 import com.fabantowapi.joetz_android.api.ApiHelper;
-import com.fabantowapi.joetz_android.contentproviders.UserContentProvider;
-import com.fabantowapi.joetz_android.database.UserTable;
-import com.fabantowapi.joetz_android.utils.Constants;
 import com.fabantowapi.joetz_android.utils.Observer;
 
 import butterknife.Bind;
@@ -35,9 +29,11 @@ import butterknife.OnClick;
 public class LoginFragment extends Fragment{
 
     @Bind(R.id.txtEmail)
-    EditText txtEmail;
+    public EditText txtEmail;
     @Bind(R.id.txtWachtwoord)
-    EditText txtWachtwoord;
+    public EditText txtWachtwoord;
+    @Bind(R.id.btnBeQuick)
+    public Button btnBeQuick;
 
     MaterialDialog dialogProgress;
 
@@ -47,6 +43,8 @@ public class LoginFragment extends Fragment{
 
         ButterKnife.bind(this, view);
         txtEmail.requestFocus();
+        btnBeQuick.setBackgroundColor(Color.TRANSPARENT);
+
         return view;
     }
 
@@ -67,13 +65,9 @@ public class LoginFragment extends Fragment{
         }
     }
 
-    @OnClick(R.id.txtwwVergeten)
-    public void wachtwoordVergeten(){
-        navigate(2);
-    }
 
     @OnClick(R.id.txtRegistreer)
-    public void registreer(){
+    public void register(){
       navigate(1);
     }
 
@@ -92,8 +86,6 @@ public class LoginFragment extends Fragment{
 
         switch(fragmentId){
             case 1: fragment = new RegistratieFragment();
-                break;
-            case 2: fragment = new WachtwoordVergetenFragment();
                 break;
             default : fragment = new LoginFragment();
         }
@@ -131,7 +123,7 @@ public class LoginFragment extends Fragment{
                 String email = txtEmail.getText().toString();
 
                 dialogProgress.setContent(R.string.get_user_progress);
-                dialogProgress.setProgress(20);
+                dialogProgress.setProgress(16);
                 ApiHelper.getUser(LoginFragment.this.getActivity(), email).subscribe(LoginFragment.this.getUserObserver);
             }
         }
@@ -154,7 +146,7 @@ public class LoginFragment extends Fragment{
             if(LoginFragment.this.getActivity() != null)
             {
                 dialogProgress.setContent(R.string.get_activities_progress);
-                dialogProgress.setProgress(40);
+                dialogProgress.setProgress(32);
 
                 ApiHelper.getActivities(LoginFragment.this.getActivity()).subscribe(LoginFragment.this.getActivitiesObserver);
             }
@@ -176,7 +168,7 @@ public class LoginFragment extends Fragment{
         public void onCompleted(){
             if(LoginFragment.this.getActivity() != null){
                 dialogProgress.setContent(R.string.get_all_users_progress);
-                dialogProgress.setProgress(60);
+                dialogProgress.setProgress(48);
 
                 ApiHelper.getUsers(LoginFragment.this.getActivity()).subscribe(LoginFragment.this.getUsersObserver);
             }
@@ -198,7 +190,7 @@ public class LoginFragment extends Fragment{
         public void onCompleted(){
             if(LoginFragment.this.getActivity() != null){
                 dialogProgress.setContent(R.string.get_camps_progress);
-                dialogProgress.setProgress(80);
+                dialogProgress.setProgress(64);
 
                 ApiHelper.getCamps(LoginFragment.this.getActivity()).subscribe(LoginFragment.this.getCampsObserver);
             }
@@ -221,9 +213,9 @@ public class LoginFragment extends Fragment{
             if(LoginFragment.this.getActivity() != null){
 
                 dialogProgress.setContent(R.string.get_camps_progress);
-                dialogProgress.setProgress(100);
+                dialogProgress.setProgress(80);
 
-                ApiHelper.getArticles(LoginFragment.this.getActivity()).subscribe(LoginFragment.this.getArticleObserver);
+                ApiHelper.getInschrijvingen(LoginFragment.this.getActivity()).subscribe(LoginFragment.this.getInschrijvingenObserver);
 
             }
         }
@@ -234,7 +226,29 @@ public class LoginFragment extends Fragment{
             if(LoginFragment.this.getActivity() != null)
             {
                 LoginFragment.this.dialogProgress.dismiss();
-                LoginFragment.this.showLoginErrorDialog(LoginFragment.this.getActivity(), "Error while getting all users: " + e.getMessage());
+                LoginFragment.this.showLoginErrorDialog(LoginFragment.this.getActivity(), "Error while getting all camps: " + e.getMessage());
+            }
+        }
+    };
+
+    public Observer<Object> getInschrijvingenObserver = new Observer<Object>(){
+        @Override
+        public void onCompleted(){
+            if(LoginFragment.this.getActivity() != null){
+                dialogProgress.setContent(R.string.get_inschrijvingen_progress);
+                dialogProgress.setProgress(100);
+
+                ApiHelper.getArticles(LoginFragment.this.getActivity()).subscribe(LoginFragment.this.getArticleObserver);
+            }
+        }
+
+        @Override
+        public void onError(Throwable e)
+        {
+            if(LoginFragment.this.getActivity() != null)
+            {
+                LoginFragment.this.dialogProgress.dismiss();
+                LoginFragment.this.showLoginErrorDialog(LoginFragment.this.getActivity(), "Error while getting all subscriptions: " + e.getMessage());
             }
         }
     };
@@ -259,7 +273,7 @@ public class LoginFragment extends Fragment{
             if(LoginFragment.this.getActivity() != null)
             {
                 LoginFragment.this.dialogProgress.dismiss();
-                LoginFragment.this.showLoginErrorDialog(LoginFragment.this.getActivity(), "Error while getting all users: " + e.getMessage());
+                LoginFragment.this.showLoginErrorDialog(LoginFragment.this.getActivity(), "Error while getting all articles: " + e.getMessage());
             }
         }
     };

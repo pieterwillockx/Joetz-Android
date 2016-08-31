@@ -18,8 +18,8 @@ import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.activities.MainActivity;
 import com.fabantowapi.joetz_android.adapters.UserMugshotAdapter;
 import com.fabantowapi.joetz_android.api.ApiHelper;
-import com.fabantowapi.joetz_android.model.api.Activity;
-import com.fabantowapi.joetz_android.model.api.User;
+import com.fabantowapi.joetz_android.model.Activity;
+import com.fabantowapi.joetz_android.model.User;
 import com.fabantowapi.joetz_android.utils.Observer;
 import com.fabantowapi.joetz_android.utils.SharedHelper;
 
@@ -71,7 +71,6 @@ public class ActiviteitDetailFragment extends Fragment {
         setHasOptionsMenu(true);
 
         mainActivity = (MainActivity) getActivity();
-
         mainActivity.showActionBarAddPerson();
 
         Intent i = getActivity().getIntent();
@@ -128,10 +127,18 @@ public class ActiviteitDetailFragment extends Fragment {
     private boolean isCurrentUserInList(){
         boolean isInList = false;
 
-        for(User u : attendees){
-            if(u.getId().equals(mainActivity.getCurrentUser().getId())){
-                isInList = true;
-            }
+        attendees = activity.getAanwezigen();
+        List<User> users = activity.getAanwezigen();
+        for(User u : users){
+
+                try{
+                    if(u.getId().equals(mainActivity.getCurrentUser().getId())){
+                        isInList = true;
+                    }
+                    }catch(NullPointerException npe){
+
+                }
+
         }
 
         return isInList;
@@ -176,16 +183,11 @@ public class ActiviteitDetailFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add_person:
-                // User chose the "Settings" item, show the app settings UI...
                 gebruikerAanwezig();
-
                 return true;
 
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
-
         }
     }
 

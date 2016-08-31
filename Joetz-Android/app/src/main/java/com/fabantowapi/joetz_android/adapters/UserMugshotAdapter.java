@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.fabantowapi.joetz_android.R;
-import com.fabantowapi.joetz_android.model.api.User;
+import com.fabantowapi.joetz_android.model.User;
 
 import java.util.List;
 
@@ -21,12 +21,12 @@ public class UserMugshotAdapter extends RecyclerView.Adapter<UserMugshotAdapter.
     public Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
-        public TextView txtNaam;
+
+        public TextView txtName;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            txtNaam = (TextView) itemView.findViewById(R.id.activity_detail_person_name);
+            txtName = (TextView) itemView.findViewById(R.id.activity_detail_person_name);
         }
     }
 
@@ -49,18 +49,13 @@ public class UserMugshotAdapter extends RecyclerView.Adapter<UserMugshotAdapter.
 
     @Override
     public void onBindViewHolder(UserMugshotAdapter.ViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        final User user = users.get(position);
 
-        holder.txtNaam.setText(users.get(position).getFirstname() + " " + users.get(position).getLastname());
-
-        //holder.itemView.setOnClickListener(new View.OnClickListener(){
-        //    @Override
-        //    public void onClick(View v) {
-//
-        //    }
-        //});
+        User user = users.get(position);
+        try{
+            holder.txtName.setText(users.get(position).getFirstname() + " " + users.get(position).getLastname());
+        }catch(NullPointerException npe)
+        {
+        }
     }
 
     @Override

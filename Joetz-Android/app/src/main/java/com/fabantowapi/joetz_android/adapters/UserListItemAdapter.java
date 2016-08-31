@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.fabantowapi.joetz_android.R;
 import com.fabantowapi.joetz_android.activities.MainActivity;
 import com.fabantowapi.joetz_android.fragments.UserDetailFragment;
-import com.fabantowapi.joetz_android.model.api.User;
+import com.fabantowapi.joetz_android.model.User;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class UserListItemAdapter extends RecyclerView.Adapter<UserListItemAdapte
     private List<User> users;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
+
         public ImageView imgAvatar;
         public TextView txtName;
         public TextView txtRole;
@@ -65,8 +65,6 @@ public class UserListItemAdapter extends RecyclerView.Adapter<UserListItemAdapte
 
         holder.txtName.setText(user.getFirstname() + " " + user.getLastname());
         holder.txtRole.setText(user.getRole());
-
-        // get image
 
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override

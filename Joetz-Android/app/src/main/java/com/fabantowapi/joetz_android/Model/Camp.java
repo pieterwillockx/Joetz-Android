@@ -1,4 +1,4 @@
-package com.fabantowapi.joetz_android.model.api;
+package com.fabantowapi.joetz_android.model;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -73,8 +73,6 @@ public class Camp implements Serializable {
     public String getOmschrijving() { return omschrijving; }
     public String getStartDatum() { return startDatum; }
     public String getEindDatum() { return eindDatum; }
-    public int getAantalDagen() { return aantalDagen; }
-    public int getAantalNachten() { return aantalNachten; }
     public String getVervoer() { return vervoer; }
     public int getPrijs() { return prijs; }
     public int getMaxLeeftijd() { return maxLeeftijd; }
@@ -82,7 +80,6 @@ public class Camp implements Serializable {
     public int getMaxDeelnemers() { return maxDeelnemers; }
     public String getContact() { return contact; }
     public String getSfeerfoto() { return sfeerfoto; }
-    public String[] getFotos() { return fotos; }
     public List<User> getMedewerkers() { return medewerkers; }
     public List<User> getAanwezigen() { return aanwezigen; }
     public Adres getAdres() { return adres; }
